@@ -1,4 +1,7 @@
-﻿namespace SMS.Web;
+﻿using SMS.Web.Extensions;
+using SMS.Web.Infrastructure;
+
+namespace SMS.Web;
 
 public static class DependencyInjection
 {
@@ -7,9 +10,9 @@ public static class DependencyInjection
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         
-        // services.AddCorsPolicy(configuration);
-        //
-        // services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddCorsPolicy(configuration);
+        
+        services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
         
     }
