@@ -6,7 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
+using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.Infrastructure;
@@ -56,6 +58,9 @@ public static class DependencyInjection
         });
 
         services.AddHttpContextAccessor();
+        
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
+
 
         return services;
     }
