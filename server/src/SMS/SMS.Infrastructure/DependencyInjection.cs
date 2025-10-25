@@ -71,7 +71,9 @@ public static class DependencyInjection
 
         services.AddHttpContextAccessor();
         
-        services.AddSingleton<IPasswordHasher, PasswordHasher>();
+        services
+            .AddSingleton<ITokenProvider, TokenProvider>()
+            .AddSingleton<IPasswordHasher, PasswordHasher>();
 
 
         return services;
