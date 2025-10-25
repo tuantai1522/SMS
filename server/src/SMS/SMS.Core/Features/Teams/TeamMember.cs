@@ -21,12 +21,13 @@ public sealed class TeamMember : IDateTracking, ISoftDelete
     {
     }
 
-    internal static TeamMember CreateTeamMember(Guid teamId, Guid userId)
+    internal static TeamMember CreateTeamMember(Guid teamId, Guid userId, TeamMemberRole role)
     {
         return new TeamMember
         {
             TeamId = teamId,
             UserId = userId,
+            Role = role
         };
     }
 

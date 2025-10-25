@@ -14,6 +14,10 @@ public class TeamMemberConfiguration : IEntityTypeConfiguration<TeamMember>
         // TeamId and UserId are primary keys
         builder.HasKey(nameof(TeamMember.TeamId), nameof(TeamMember.UserId));
         
+        builder.Property(c => c.TeamId).ValueGeneratedNever();
+        builder.Property(c => c.UserId).ValueGeneratedNever();
+        
+        
         // To store string in database with enum TeamMemberRole
         builder.Property(p => p.Role)
             .HasConversion(v => v.ToString(), v => Enum.Parse<TeamMemberRole>(v));

@@ -20,7 +20,7 @@ public sealed class Team : AggregateRoot, IDateTracking, ISoftDelete
     
     private Team() { }
 
-    public static Team CreateTeam(string displayName, string? description, IReadOnlyList<Guid> userIds)
+    public static Team CreateTeam(string displayName, string? description, IReadOnlyList<Guid> ownerIds, IReadOnlyList<Guid> memberIds)
     {
         var team = new Team
         {
@@ -28,19 +28,29 @@ public sealed class Team : AggregateRoot, IDateTracking, ISoftDelete
             Description = description,
         };
 
-        _ = userIds.Select(userId => TeamMember.CreateTeamMember(team.Id, userId)).ToList();
-        
+        // Add owners
+        foreach (var ownerId in ownerIds)
+        {
+            team.AddTeamMember(ownerId, TeamMemberRole.Owner);
+        }
+
+        // Add members
+        foreach (var memberId in memberIds)
+        {
+            team.AddTeamMember(memberId, TeamMemberRole.Member);
+        }
+
         return team;
     }
 
-    public Result AddTeamMember(Guid userId)
+    public Result AddTeamMember(Guid userId, TeamMemberRole role)
     {
         if (_teamMembers.Any(teamMember => teamMember.UserId == userId))
         {
             return Result.Failure(TeamErrors.UserAlreadyExistedInTeam);
         }
         
-        _teamMembers.Add(TeamMember.CreateTeamMember(Id, userId));
+        _teamMembers.Add(TeamMember.CreateTeamMember(Id, userId, role));
         
         return Result.Success();
     }

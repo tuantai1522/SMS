@@ -29,6 +29,12 @@ public sealed class UserRepository(ApplicationDbContext context) : IUserReposito
             .AnyAsync(x => x.NickName == nickName, cancellationToken);
     }
 
+    public async Task<bool> VerifyExistedUserIdsAsync(IReadOnlyList<Guid> userIds, CancellationToken cancellationToken)
+    {
+        return await _context.Set<User>()
+            .AnyAsync(x => !userIds.Contains(x.Id), cancellationToken);    
+    }
+
     public async Task<User> AddUserAsync(User user, CancellationToken cancellationToken)
     {
         var result = await _context.Set<User>().AddAsync(user, cancellationToken);

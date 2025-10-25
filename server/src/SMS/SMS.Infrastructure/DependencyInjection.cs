@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
+using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
@@ -44,6 +45,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services
+            .AddScoped<ITeamRepository, TeamRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
@@ -72,6 +74,7 @@ public static class DependencyInjection
         services.AddHttpContextAccessor();
         
         services
+            .AddSingleton<IUserProvider, UserProvider>()
             .AddSingleton<ITokenProvider, TokenProvider>()
             .AddSingleton<IPasswordHasher, PasswordHasher>();
 

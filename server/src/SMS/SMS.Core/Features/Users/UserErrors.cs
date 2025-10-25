@@ -15,4 +15,8 @@ public static class UserErrors
     public static readonly Error InvalidPassword = Error.NotFound(
         "Users.InvalidPassword",
         "Password is not correct. Please try again.");
+    
+    public static readonly Error InvalidUserIds = Error.NotFound(
+        "Users.InvalidUserIds",
+        "List User ids is invalid. Please check again.");
 }
