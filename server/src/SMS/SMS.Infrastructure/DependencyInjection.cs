@@ -6,8 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
+using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.Infrastructure.Repositories;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 
@@ -19,7 +21,9 @@ public static class DependencyInjection
         this IServiceCollection services, IConfiguration configuration) =>
         services
             .AddDatabase(configuration)
-            .AddAuthenticationInternal(configuration);
+            .AddRepositories()
+            .AddAuthenticationInternal(configuration)
+            .AddAuthorizationInternal();
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
@@ -33,6 +37,14 @@ public static class DependencyInjection
             options => options.UseNpgsql(connectionString, npgsqlOptions => 
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default))
                 .UseSnakeCaseNamingConvention());
+
+        return services;
+    }
+    
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
@@ -61,6 +73,14 @@ public static class DependencyInjection
         
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
+
+        return services;
+    }
+
+    private static IServiceCollection AddAuthorizationInternal(
+        this IServiceCollection services)
+    {
+        services.AddAuthorization();
 
         return services;
     }

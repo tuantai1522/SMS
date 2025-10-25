@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SMS.Core.Common;
 using SMS.Core.Features.Countries;
+using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.Infrastructure.Database;
@@ -8,6 +9,7 @@ namespace SMS.Infrastructure.Database;
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IUnitOfWork, IApplicationDbContext
 {
     public DbSet<Country> Countries => Set<Country>();
+    public DbSet<User> Users => Set<User>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
