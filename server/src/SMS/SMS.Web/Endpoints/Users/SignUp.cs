@@ -6,7 +6,7 @@ using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Users;
 
-internal sealed class SignUpUser : IEndpoint
+internal sealed class SignUp : IEndpoint
 {
     private sealed record Request(
         string FirstName,
@@ -27,7 +27,7 @@ internal sealed class SignUpUser : IEndpoint
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var command = new SignUpUserCommand(request.FirstName, 
+            var command = new SignUpCommand(request.FirstName, 
                 request.MiddleName, 
                 request.LastName, 
                 request.NickName, 

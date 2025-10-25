@@ -19,8 +19,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(p => p.LastName).HasMaxLength(128);
         
         builder.Property(p => p.NickName).HasMaxLength(256);
+        builder.HasIndex(p => p.NickName).IsUnique();
         
         builder.Property(p => p.Email).HasMaxLength(128);
+        builder.HasIndex(p => p.Email).IsUnique();
+        
         builder.Property(p => p.Password).HasMaxLength(256);
         
         // To store string in database with enum GenderType

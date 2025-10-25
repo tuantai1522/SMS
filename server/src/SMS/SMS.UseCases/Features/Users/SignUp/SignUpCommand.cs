@@ -4,7 +4,7 @@ using SMS.Core.Features.Users;
 
 namespace SMS.UseCases.Features.Users.SignUp;
 
-public sealed record SignUpUserCommand(
+public sealed record SignUpCommand(
     string FirstName,
     string? MiddleName,
     string? LastName,

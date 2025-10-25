@@ -22,7 +22,13 @@ public sealed class UserRepository(ApplicationDbContext context) : IUserReposito
         return await _context.Set<User>()
             .AnyAsync(x => x.Email == email, cancellationToken);
     }
-    
+
+    public async Task<bool> VerifyExistedNickNameAsync(string nickName, CancellationToken cancellationToken)
+    {
+        return await _context.Set<User>()
+            .AnyAsync(x => x.NickName == nickName, cancellationToken);
+    }
+
     public async Task<User> AddUserAsync(User user, CancellationToken cancellationToken)
     {
         var result = await _context.Set<User>().AddAsync(user, cancellationToken);

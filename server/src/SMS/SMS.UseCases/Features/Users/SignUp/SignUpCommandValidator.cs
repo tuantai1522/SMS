@@ -2,9 +2,9 @@
 
 namespace SMS.UseCases.Features.Users.SignUp;
 
-internal sealed class SignUpUserCommandValidator : AbstractValidator<SignUpUserCommand>
+internal sealed class SignUpCommandValidator : AbstractValidator<SignUpCommand>
 {
-    public SignUpUserCommandValidator()
+    public SignUpCommandValidator()
     {
         RuleFor(c => c.FirstName)
             .NotEmpty().WithMessage("First name can not be empty.");

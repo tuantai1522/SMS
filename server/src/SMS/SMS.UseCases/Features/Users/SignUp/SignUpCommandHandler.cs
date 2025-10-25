@@ -5,18 +5,25 @@ using SMS.UseCases.Abstractions.Authentication;
 
 namespace SMS.UseCases.Features.Users.SignUp;
 
-internal sealed class SignUpUserCommandHandler(
+internal sealed class SignUpCommandHandler(
     IUnitOfWork unitOfWork,
     IUserRepository userRepository,
-    IPasswordHasher passwordHasher): IRequestHandler<SignUpUserCommand, Result<Guid>>
+    IPasswordHasher passwordHasher): IRequestHandler<SignUpCommand, Result<Guid>>
 {
-    public async Task<Result<Guid>> Handle(SignUpUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(SignUpCommand command, CancellationToken cancellationToken)
     {
         var verifyEmail = await userRepository.VerifyExistedEmailAsync(command.Email, cancellationToken);
 
         if (verifyEmail)
         {
             return Result.Failure<Guid>(UserErrors.EmailNotUnique);
+        }
+        
+        var verifyNickName = await userRepository.VerifyExistedNickNameAsync(command.NickName, cancellationToken);
+
+        if (verifyNickName)
+        {
+            return Result.Failure<Guid>(UserErrors.NickNameNotUnique);
         }
 
         var user = User.CreateUser(
