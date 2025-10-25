@@ -61,4 +61,13 @@ public sealed class Team : AggregateRoot, IDateTracking, ISoftDelete
     {
         DeletedAt = DeletedAt.HasValue ? null : DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
+    
+    public void Update(string displayName, string? description)
+    {
+        DisplayName = displayName;
+        Description = description;
+        
+        // Todo: To bring into interceptors
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
 }

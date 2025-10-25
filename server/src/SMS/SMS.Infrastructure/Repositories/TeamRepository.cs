@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SMS.Core.Common;
 using SMS.Core.Features.Teams;
 using SMS.Infrastructure.Database;
@@ -9,6 +10,12 @@ public sealed class TeamRepository(ApplicationDbContext context) : ITeamReposito
     private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
     public IUnitOfWork UnitOfWork => _context;
+
+    public async Task<Team?> FindTeamByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Set<Team>()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);    
+    }
 
     public async Task<Team> AddTeamAsync(Team team, CancellationToken cancellationToken)
     {
