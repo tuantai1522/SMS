@@ -2,7 +2,7 @@
 
 namespace SMS.Core.Features.Users;
 
-public sealed class User : IDateTracking
+public sealed class User : AggregateRoot, IDateTracking
 {
     public Guid Id { get; init; } = Guid.CreateVersion7();
 

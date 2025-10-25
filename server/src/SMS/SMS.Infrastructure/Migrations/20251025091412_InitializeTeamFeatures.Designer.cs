@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SMS.Infrastructure.Database;
@@ -11,9 +12,11 @@ using SMS.Infrastructure.Database;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251025091412_InitializeTeamFeatures")]
+    partial class InitializeTeamFeatures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,10 +82,6 @@ namespace SMS.Infrastructure.Migrations
                     b.Property<long>("CreatedAt")
                         .HasColumnType("bigint")
                         .HasColumnName("created_at");
-
-                    b.Property<long?>("DeletedAt")
-                        .HasColumnType("bigint")
-                        .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
                         .HasMaxLength(1024)
