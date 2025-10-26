@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
+using SMS.Core.Features.Posts;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Data;
@@ -14,6 +15,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<User> Users => Set<User>();
     public DbSet<Team> Teams => Set<Team>();
     public DbSet<Channel> Channels => Set<Channel>();
+    public DbSet<Post> Posts => Set<Post>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
