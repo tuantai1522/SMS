@@ -11,7 +11,7 @@ internal sealed class CreatePost : IEndpoint
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("channels/{channelId:guid}/messages", async (
+        app.MapPost("channels/{channelId:guid}/posts", async (
             Guid channelId,
             Request request,
             IMediator mediator,
