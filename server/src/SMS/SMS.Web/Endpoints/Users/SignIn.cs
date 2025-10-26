@@ -11,7 +11,7 @@ internal sealed class SignIn : IEndpoint
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users/login", async (
+        app.MapPost("users/sign-in", async (
             Request request,
             IMediator mediator,
             CancellationToken cancellationToken) =>
