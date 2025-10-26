@@ -6,7 +6,10 @@ internal sealed class UpdateTeamCommandValidator : AbstractValidator<UpdateTeamC
 {
     public UpdateTeamCommandValidator()
     {
+        RuleFor(c => c.Id)
+            .NotEmpty().WithMessage("Id can not be empty.");
+        
         RuleFor(c => c.DisplayName)
-            .NotEmpty().WithMessage("Email can not be empty.");
+            .NotEmpty().WithMessage("DisplayName can not be empty.");
     }
 }

@@ -7,7 +7,7 @@ internal sealed class CreateTeamCommandValidator : AbstractValidator<CreateTeamC
     public CreateTeamCommandValidator()
     {
         RuleFor(c => c.DisplayName)
-            .NotEmpty().WithMessage("Email can not be empty.");
+            .NotEmpty().WithMessage("DisplayName can not be empty.");
 
         RuleFor(c => c.OwnerIds)
             .NotNull().WithMessage("OwnerIds can not be null.");
