@@ -11,6 +11,12 @@ public sealed class TeamRepository(ApplicationDbContext context) : ITeamReposito
 
     public IUnitOfWork UnitOfWork => _context;
 
+    public async Task<bool> VerifyExistedTeamByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Set<Team>()
+            .AnyAsync(x => x.Id == id, cancellationToken); 
+    }
+
     public async Task<Team?> FindTeamByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _context.Set<Team>()
