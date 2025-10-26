@@ -3,7 +3,7 @@ using SMS.UseCases.Features.Channels.CreateChannel;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 
-namespace SMS.Web.Endpoints.Channels;
+namespace SMS.Web.Endpoints.Teams;
 
 internal sealed class CreateChannel : IEndpoint
 {
@@ -11,7 +11,7 @@ internal sealed class CreateChannel : IEndpoint
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("channels/{teamId:guid}", async (
+        app.MapPost("teams/{teamId:guid}/channels", async (
             Guid teamId,
             Request request,
             IMediator mediator,
@@ -23,7 +23,7 @@ internal sealed class CreateChannel : IEndpoint
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.Channels)
+        .WithTags(Tags.Teams)
         .RequireAuthorization();
     }
 }
