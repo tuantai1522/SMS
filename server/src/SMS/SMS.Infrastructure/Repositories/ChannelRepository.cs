@@ -11,6 +11,13 @@ public sealed class ChannelRepository(ApplicationDbContext context) : IChannelRe
 
     public IUnitOfWork UnitOfWork => _context;
 
+    public async Task<IReadOnlyList<Channel>> GetChannelsByUserIdAndTeamIdAsync(Guid userId, Guid teamId, CancellationToken cancellationToken)
+    {
+        return await _context.Set<Channel>()
+            .Where(channel => channel.TeamId == teamId && channel.ChannelMembers.Any(m => m.UserId == userId))
+            .ToListAsync(cancellationToken);
+    }
+
     public async Task<Channel?> FindChannelByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _context.Set<Channel>()

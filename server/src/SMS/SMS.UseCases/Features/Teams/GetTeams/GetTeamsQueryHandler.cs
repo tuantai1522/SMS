@@ -6,7 +6,7 @@ using SMS.UseCases.Abstractions.Authentication;
 namespace SMS.UseCases.Features.Teams.GetTeams;
 
 internal sealed class GetTeamByIdQueryHandler(
-    IUserProvider  userProvider,
+    IUserProvider userProvider,
     ITeamRepository teamRepository): IRequestHandler<GetTeamsQuery, Result<IReadOnlyList<GetTeamsResponse>>>
 {
     public async Task<Result<IReadOnlyList<GetTeamsResponse>>> Handle(GetTeamsQuery query, CancellationToken cancellationToken)
