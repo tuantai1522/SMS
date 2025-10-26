@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
+using SMS.Core.Features.Channels;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
@@ -46,6 +47,7 @@ public static class DependencyInjection
     {
         services
             .AddScoped<ITeamRepository, TeamRepository>()
+            .AddScoped<IChannelRepository, ChannelRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
