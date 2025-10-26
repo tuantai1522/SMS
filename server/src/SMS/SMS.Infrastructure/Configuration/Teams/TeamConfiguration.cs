@@ -18,7 +18,7 @@ public class TeamConfiguration : IEntityTypeConfiguration<Team>
         
         // One team has multiple team members
         builder.HasMany(team => team.TeamMembers)
-            .WithOne(teamMember => teamMember.Team)
+            .WithOne()
             .HasForeignKey(p => p.TeamId);
     }
 }

@@ -1,29 +1,29 @@
 ﻿using SMS.Core.Common;
 using SMS.Core.Features.Users;
 
-namespace SMS.Core.Features.Teams;
+namespace SMS.Core.Features.Channels;
 
-public sealed class TeamMember : IDateTracking, ISoftDelete
+public sealed class ChannelMember : IDateTracking, ISoftDelete
 {
-    public Guid TeamId { get; init; }
+    public Guid ChannelId { get; init; }
     
     public Guid UserId { get; init; }
 
-    public TeamMemberRole Role { get; private set; } = TeamMemberRole.Member;
+    public ChannelMemberRole Role { get; private set; } = ChannelMemberRole.Member;
 
     public long CreatedAt { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
     public long? UpdatedAt { get; private set; }
 
-    private TeamMember()
+    private ChannelMember()
     {
     }
 
-    internal static TeamMember CreateTeamMember(Guid teamId, Guid userId, TeamMemberRole role)
+    internal static ChannelMember CreateChannelMember(Guid channelId, Guid userId, ChannelMemberRole role)
     {
-        return new TeamMember
+        return new ChannelMember
         {
-            TeamId = teamId,
+            ChannelId = channelId,
             UserId = userId,
             Role = role
         };

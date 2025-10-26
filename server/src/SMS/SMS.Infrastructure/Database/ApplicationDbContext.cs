@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SMS.Core.Common;
+using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
@@ -12,6 +13,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Team> Teams => Set<Team>();
+    public DbSet<Channel> Channels => Set<Channel>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

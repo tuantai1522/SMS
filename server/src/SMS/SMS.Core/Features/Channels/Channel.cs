@@ -1,61 +1,64 @@
 ﻿using SMS.Core.Common;
+using SMS.Core.Features.Teams;
 
-namespace SMS.Core.Features.Teams;
+namespace SMS.Core.Features.Channels;
 
-public sealed class Team : AggregateRoot, IDateTracking, ISoftDelete
+public sealed class Channel : AggregateRoot, IDateTracking, ISoftDelete
 {
     public Guid Id { get; init; } = Guid.CreateVersion7();
 
     public string DisplayName { get; private set; } = null!;
     public string? Description { get; private set; }
+    
 
     public long CreatedAt { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     public long? UpdatedAt { get; private set; }
-    public long? DeletedAt { get; private set; }
     
+    public Guid TeamId { get; private set; }
     
+    private readonly List<ChannelMember> _channelMembers = [];
     
-    private readonly List<TeamMember> _teamMembers = [];
+    public IReadOnlyList<ChannelMember> ChannelMembers => _channelMembers.ToList();
     
-    public IReadOnlyList<TeamMember> TeamMembers => _teamMembers.ToList();
-    
-    private Team() { }
+    private Channel() { }
 
-    public static Team CreateTeam(string displayName, string? description, IReadOnlyList<Guid> ownerIds, IReadOnlyList<Guid> memberIds)
+    public static Channel CreateChannel(string displayName, string? description, Guid teamId, IReadOnlyList<Guid> ownerIds, IReadOnlyList<Guid> memberIds)
     {
-        var team = new Team
+        var channel = new Channel
         {
             DisplayName = displayName,
             Description = description,
+            TeamId = teamId,
         };
-
+        
         // Add owners
         foreach (var ownerId in ownerIds)
         {
-            team.AddTeamMember(ownerId, TeamMemberRole.Owner);
+            channel.AddChannelMember(ownerId, ChannelMemberRole.Owner);
         }
 
         // Add members
         foreach (var memberId in memberIds)
         {
-            team.AddTeamMember(memberId, TeamMemberRole.Member);
+            channel.AddChannelMember(memberId, ChannelMemberRole.Member);
         }
 
-        return team;
+        return channel;
     }
 
-    public Result AddTeamMember(Guid userId, TeamMemberRole role)
+    public Result AddChannelMember(Guid userId, ChannelMemberRole role)
     {
-        if (_teamMembers.Any(teamMember => teamMember.UserId == userId))
+        if (_channelMembers.Any(channelMember => channelMember.UserId == userId))
         {
             return Result.Failure(TeamErrors.UserAlreadyExistedInTeam);
         }
         
-        _teamMembers.Add(TeamMember.CreateTeamMember(Id, userId, role));
+        _channelMembers.Add(ChannelMember.CreateChannelMember(Id, userId, role));
         
         return Result.Success();
     }
 
+    public long? DeletedAt { get; private set; }
     
     public void Delete()
     {
