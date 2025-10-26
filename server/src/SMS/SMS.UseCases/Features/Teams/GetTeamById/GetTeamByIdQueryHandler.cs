@@ -6,9 +6,9 @@ namespace SMS.UseCases.Features.Teams.GetTeamById;
 
 internal sealed class GetTeamByIdQueryHandler(ITeamRepository teamRepository): IRequestHandler<GetTeamByIdQuery, Result<GetTeamByIdResponse>>
 {
-    public async Task<Result<GetTeamByIdResponse>> Handle(GetTeamByIdQuery command, CancellationToken cancellationToken)
+    public async Task<Result<GetTeamByIdResponse>> Handle(GetTeamByIdQuery query, CancellationToken cancellationToken)
     {
-        var team = await teamRepository.FindTeamByIdAsync(command.Id, cancellationToken);
+        var team = await teamRepository.FindTeamByIdAsync(query.Id, cancellationToken);
         
         return team is null ? 
             Result.Failure<GetTeamByIdResponse>(TeamErrors.CanNotFindTeam) : 

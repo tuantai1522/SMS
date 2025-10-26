@@ -9,7 +9,7 @@ internal sealed class GetTeamById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("teams{id:guid}", async (
+        app.MapGet("teams/{id:guid}", async (
             Guid id,
             IMediator mediator,
             CancellationToken cancellationToken) =>
