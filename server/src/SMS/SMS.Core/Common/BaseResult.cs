@@ -17,9 +17,19 @@ public class BaseResult<T>
 
     public static BaseResult<T> FromResult(Result<T> result)
     {
-        return result.IsSuccess ? 
-            new BaseResult<T>(true, result.Value, null) : 
-            new BaseResult<T>(false, default, [result.Error]);
+        if (result.IsSuccess)
+        {
+            return new BaseResult<T>(true, result.Value, null);
+        }
+
+        // Validation failed
+        if (result.Error is ValidationError validationError)
+        {
+            return new BaseResult<T>(false, default, validationError.Errors.ToList());
+        }
+
+        return new BaseResult<T>(false, default, [result.Error]);
+
     }
 
     public static BaseResult<T> FromResult(Result result)
