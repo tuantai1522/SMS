@@ -1,8 +1,7 @@
 ﻿using MediatR;
+using SMS.Core.Common;
 using SMS.Core.Features.Users;
 using SMS.UseCases.Features.Users.SignUp;
-using SMS.Web.Extensions;
-using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Users;
 
@@ -40,7 +39,7 @@ internal sealed class SignUp : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return Results.Ok(BaseResult<SignUpCommand>.FromResult(result));
         })
         .WithTags(Tags.Users);
     }

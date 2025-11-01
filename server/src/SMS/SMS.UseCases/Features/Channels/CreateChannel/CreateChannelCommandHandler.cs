@@ -1,5 +1,7 @@
 ﻿using MediatR;
 using SMS.Core.Common;
+using SMS.Core.Errors.Teams;
+using SMS.Core.Errors.Users;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;

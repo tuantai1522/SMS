@@ -1,28 +1,9 @@
+using SMS.Core.Features;
+
 namespace SMS.Core.Common;
 
-public record Error(string Code, string Description, ErrorType Type)
+public record Error(int Code, string Description)
 {
-    public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
-    public static readonly Error NullValue = new(
-        "General.Null",
-        "Null value was provided",
-        ErrorType.Failure);
-
-    public static Error Validation(string code, string description) =>
-        new(code, description, ErrorType.Validation);
-    
-    public static Error Failure(string code, string description) =>
-        new(code, description, ErrorType.Failure);
-
-    public static Error NotFound(string code, string description) =>
-        new(code, description, ErrorType.NotFound);
-
-    public static Error Problem(string code, string description) =>
-        new(code, description, ErrorType.Problem);
-
-    public static Error Conflict(string code, string description) =>
-        new(code, description, ErrorType.Conflict);
-    
-    public static Error DomainError(string code, ErrorType errorType) =>
-        new(code, string.Empty, errorType);
+    public static readonly Error None = new((int)ErrorCode.None, string.Empty);
+    public static readonly Error NullValue = new((int)ErrorCode.NullValue, "Null value was provided");
 }

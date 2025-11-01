@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SMS.Core.Common;
+using SMS.Core.Errors.Posts;
 using SMS.Core.Features.Posts;
 using SMS.UseCases.Pagination;
 using SMS.UseCases.Pagination.CursorPagination;

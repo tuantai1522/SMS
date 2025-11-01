@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
 using SMS.Core.Common;
+using SMS.Core.Features;
 
 namespace SMS.Web.Infrastructure;
 
@@ -14,7 +14,7 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
     {
         logger.LogError(exception, "Unhandled exception occurred");
 
-        var result = BaseResult<object>.FromResult(new Result(false, new Error("-1", "Server failure", ErrorType.Problem)));
+        var result = BaseResult<object>.FromResult(new Result(false, new Error((int)ErrorCode.ServerFailure, "Server failure")));
         
         httpContext.Response.StatusCode = 200;
 

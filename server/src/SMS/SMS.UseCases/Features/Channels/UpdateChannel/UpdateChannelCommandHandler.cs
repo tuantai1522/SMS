@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SMS.Core.Common;
+using SMS.Core.Errors.Channels;
 using SMS.Core.Features.Channels;
 
 namespace SMS.UseCases.Features.Channels.UpdateChannel;

@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SMS.Core.Errors.Teams;
 
 namespace SMS.UseCases.Features.Teams.GetTeamById;
 
@@ -7,6 +8,8 @@ internal sealed class GetTeamByIdQueryValidator : AbstractValidator<GetTeamByIdQ
     public GetTeamByIdQueryValidator()
     {
         RuleFor(c => c.Id)
-            .NotEmpty().WithMessage("Id can not be empty.");
+            .NotEmpty()
+            .WithErrorCode(TeamErrorCode.TeamIdEmpty.ToString())
+            .WithMessage("Team Id can not be empty.");
     }
 }

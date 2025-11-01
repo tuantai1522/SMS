@@ -1,4 +1,5 @@
 ﻿using SMS.Core.Common;
+using SMS.Core.Errors.Teams;
 
 namespace SMS.Core.Features.Teams;
 

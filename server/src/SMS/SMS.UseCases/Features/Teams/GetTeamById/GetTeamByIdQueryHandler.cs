@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using SMS.Core.Common;
+using SMS.Core.Errors.Teams;
 using SMS.Core.Features.Teams;
 
 namespace SMS.UseCases.Features.Teams.GetTeamById;

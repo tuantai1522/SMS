@@ -1,7 +1,6 @@
 ﻿using MediatR;
+using SMS.Core.Common;
 using SMS.UseCases.Features.Channels.UpdateChannel;
-using SMS.Web.Extensions;
-using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Channels;
 
@@ -21,7 +20,7 @@ internal sealed class UpdateChannel : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return Results.Ok(BaseResult<UpdateChannelCommand>.FromResult(result));
         })
         .WithTags(Tags.Channels)
         .RequireAuthorization();

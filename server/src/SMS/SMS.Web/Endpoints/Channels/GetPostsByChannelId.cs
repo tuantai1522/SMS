@@ -1,8 +1,7 @@
 ﻿using MediatR;
+using SMS.Core.Common;
 using SMS.UseCases.Features.Posts.GetPostsByChannelId;
 using SMS.UseCases.Pagination;
-using SMS.Web.Extensions;
-using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Channels;
 
@@ -28,7 +27,8 @@ internal sealed class GetPostsByChannelId : IEndpoint
 
             var result = await mediator.Send(query, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return Results.Ok(BaseResult<GetPostsByChannelIdQuery>.FromResult(result));
+            
         })
         .WithTags(Tags.Channels)
         .RequireAuthorization();

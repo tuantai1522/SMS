@@ -1,7 +1,6 @@
 ﻿using MediatR;
+using SMS.Core.Common;
 using SMS.UseCases.Features.Posts.CreatePost;
-using SMS.Web.Extensions;
-using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Channels;
 
@@ -21,7 +20,7 @@ internal sealed class CreatePost : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return Results.Ok(BaseResult<CreatePostCommand>.FromResult(result));
         })
         .WithTags(Tags.Channels)
         .RequireAuthorization();

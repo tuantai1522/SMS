@@ -1,7 +1,6 @@
 ﻿using MediatR;
+using SMS.Core.Common;
 using SMS.UseCases.Features.Teams.GetTeams;
-using SMS.Web.Extensions;
-using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Teams;
 
@@ -17,7 +16,7 @@ internal sealed class GetTeams : IEndpoint
 
             var result = await mediator.Send(query, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return Results.Ok(BaseResult<GetTeamsQuery>.FromResult(result));
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();
