@@ -1,8 +1,11 @@
 namespace SMS.UseCases.Pagination.CursorPagination;
 
-public sealed class CursorPaginationResponse<TResponse> : BasePaginationResponse<TResponse> where TResponse : class
+public class CursorPaginationResponse<TResponse> : BasePaginationResponse<TResponse> where TResponse : class
 {
-    public string? Cursor { get; set; }
+    public string? NextCursor { get; set; }
+    public string? BeforeCursor { get; set; }
     
     public bool HasMore { get; set; }
+    
+    public PaginationOrder CurrentOrder { get; set; }
 }
