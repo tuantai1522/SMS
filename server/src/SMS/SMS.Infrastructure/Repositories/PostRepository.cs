@@ -41,4 +41,10 @@ public sealed class PostRepository(ApplicationDbContext context) : IPostReposito
         
         return result.Entity;
     }
+
+    public async Task<Post?> GetPostByIdAsync(Guid postId, CancellationToken cancellationToken)
+    {
+        return await _context.Set<Post>()
+            .FirstOrDefaultAsync(post => postId == post.Id, cancellationToken);
+    }
 }
