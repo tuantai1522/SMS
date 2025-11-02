@@ -27,7 +27,7 @@ internal sealed class TokenProvider(IConfiguration configuration) : ITokenProvid
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.Name, user.FirstName),
             ]),
-            Expires = DateTime.UtcNow.AddMinutes(configuration.GetValue<int>("JwtOptions:ExpiredAccessToken")),
+            Expires = DateTime.UtcNow.AddSeconds(configuration.GetValue<int>("JwtOptions:ExpiredAccessToken")),
             SigningCredentials = credentials,
             Issuer = configuration["JwtOptions:Issuer"],
             Audience = configuration["JwtOptions:Audience"]
@@ -43,13 +43,8 @@ internal sealed class TokenProvider(IConfiguration configuration) : ITokenProvid
     public (string token, long expiredAt) CreateRefreshToken()
     {
         var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
-        var expiredAtConfig = configuration["JwtOptions:ExpiredRefreshToken"];
 
-        long expiredAt;
-
-        expiredAt = long.TryParse(expiredAtConfig, out var parsed) ? 
-            DateTimeOffset.UtcNow.AddSeconds(parsed).ToUnixTimeSeconds() : 
-            DateTimeOffset.UtcNow.AddSeconds(10).ToUnixTimeSeconds();
+        var expiredAt = DateTimeOffset.UtcNow.AddSeconds(configuration.GetValue<long>("JwtOptions:ExpiredRefreshToken")).ToUnixTimeSeconds();
 
         return (token, expiredAt);
     }
