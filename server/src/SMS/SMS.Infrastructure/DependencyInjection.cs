@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
 using SMS.Core.Features.Channels;
+using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Teams;
@@ -55,6 +56,7 @@ public static class DependencyInjection
             .AddScoped<IChannelRepository, ChannelRepository>()
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
+            .AddScoped<ICountryRepository, CountryRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
