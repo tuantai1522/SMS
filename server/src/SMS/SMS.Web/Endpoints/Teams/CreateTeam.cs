@@ -19,7 +19,7 @@ internal sealed class CreateTeam : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<CreateTeamCommand>.FromResult(result));
+            return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();

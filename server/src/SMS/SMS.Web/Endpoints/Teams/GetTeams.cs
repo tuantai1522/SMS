@@ -16,7 +16,7 @@ internal sealed class GetTeams : IEndpoint
 
             var result = await mediator.Send(query, cancellationToken);
 
-            return Results.Ok(BaseResult<GetTeamsQuery>.FromResult(result));
+            return Results.Ok(BaseResult<IReadOnlyList<GetTeamsResponse>>.FromResult(result));
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();

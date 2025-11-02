@@ -17,7 +17,7 @@ internal sealed class GetChannelsByTeamId : IEndpoint
 
             var result = await mediator.Send(query, cancellationToken);
 
-            return Results.Ok(BaseResult<GetChannelsByTeamIdQuery>.FromResult(result));
+            return Results.Ok(BaseResult<IReadOnlyList<GetChannelsByTeamIdResponse>>.FromResult(result));
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();

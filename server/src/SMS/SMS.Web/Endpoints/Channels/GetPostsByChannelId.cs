@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.UseCases.Features.Posts.GetPostsByChannelId;
 using SMS.UseCases.Pagination;
+using SMS.UseCases.Pagination.CursorPagination;
 
 namespace SMS.Web.Endpoints.Channels;
 
@@ -27,7 +28,7 @@ internal sealed class GetPostsByChannelId : IEndpoint
 
             var result = await mediator.Send(query, cancellationToken);
 
-            return Results.Ok(BaseResult<GetPostsByChannelIdQuery>.FromResult(result));
+            return Results.Ok(BaseResult<CursorPaginationResponse<GetPostsByChannelIdResponse>>.FromResult(result));
             
         })
         .WithTags(Tags.Channels)

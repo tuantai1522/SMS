@@ -20,7 +20,7 @@ internal sealed class UpdateChannel : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<UpdateChannelCommand>.FromResult(result));
+            return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
         .WithTags(Tags.Channels)
         .RequireAuthorization();

@@ -39,7 +39,7 @@ internal sealed class SignUp : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<SignUpCommand>.FromResult(result));
+            return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
         .WithTags(Tags.Users);
     }

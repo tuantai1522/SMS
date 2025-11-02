@@ -14,7 +14,7 @@ internal sealed class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> log
     {
         logger.LogError(exception, "Unhandled exception occurred");
 
-        var result = BaseResult<object>.FromResult(new Result(false, new Error((int)ErrorCode.ServerFailure, "Server failure")));
+        var result = BaseResult<object>.FromResult(new Result(false, new Error(ErrorCode.ServerFailure, "Server failure")));
         
         httpContext.Response.StatusCode = 200;
 

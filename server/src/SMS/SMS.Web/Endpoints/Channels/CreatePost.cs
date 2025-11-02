@@ -20,7 +20,7 @@ internal sealed class CreatePost : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<CreatePostCommand>.FromResult(result));
+            return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
         .WithTags(Tags.Channels)
         .RequireAuthorization();

@@ -20,7 +20,7 @@ internal sealed class CreateChannel : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<CreateChannelCommand>.FromResult(result));
+            return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();
