@@ -16,6 +16,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Team> Teams => Set<Team>();
     public DbSet<Channel> Channels => Set<Channel>();
     public DbSet<Post> Posts => Set<Post>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

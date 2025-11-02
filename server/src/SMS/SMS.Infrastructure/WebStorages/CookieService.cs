@@ -5,14 +5,16 @@ namespace SMS.Infrastructure.WebStorages;
 
 public sealed class CookieService(IHttpContextAccessor http) : ICookieService
 {
-    public void Set(string key, string value, DateTimeOffset expiresAt)
+    public void Set(string key, string value, long expiresAt)
     {
+        var expiresAtOffset = DateTimeOffset.FromUnixTimeSeconds(expiresAt);
+
         http.HttpContext?.Response.Cookies.Append(key, value, new CookieOptions
         {
             HttpOnly = true,
             Secure = true,                
             SameSite = SameSiteMode.None,
-            Expires = expiresAt,
+            Expires = expiresAtOffset,
             Path = "/"
         });
     }

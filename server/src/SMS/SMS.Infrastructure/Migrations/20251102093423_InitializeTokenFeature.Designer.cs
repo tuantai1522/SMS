@@ -12,8 +12,8 @@ using SMS.Infrastructure.Database;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251102083310_InitializeTokenData")]
-    partial class InitializeTokenData
+    [Migration("20251102093423_InitializeTokenFeature")]
+    partial class InitializeTokenFeature
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -320,8 +320,8 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("ExpiredAt")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<long>("ExpiredAt")
+                        .HasColumnType("bigint")
                         .HasColumnName("expired_at");
 
                     b.Property<string>("Token")

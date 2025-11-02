@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SMS.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitializeTokenData : Migration
+    public partial class InitializeTokenFeature : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace SMS.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     token = table.Column<string>(type: "character varying(1024)", maxLength: 1024, nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    expired_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    expired_at = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

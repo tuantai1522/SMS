@@ -8,14 +8,14 @@ public sealed class RefreshToken
     
     public Guid UserId { get; private set; }
     
-    public DateTime ExpiredAt { get; private set; }
+    public long ExpiredAt { get; private set; }
 
     private RefreshToken()
     {
         
     }
 
-    internal static RefreshToken Create(string token, Guid userId, DateTime expiredAt)
+    internal static RefreshToken Create(string token, Guid userId, long expiredAt)
     {
         return new RefreshToken
         {
@@ -25,6 +25,6 @@ public sealed class RefreshToken
         };
     }
 
-    internal void UpdateExpiredAt(DateTime expiredAt) => ExpiredAt = expiredAt;
+    internal void UpdateExpiredAt(long expiredAt) => ExpiredAt = expiredAt;
     internal void UpdateToken(string token) => Token = token;
 }

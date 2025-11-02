@@ -317,8 +317,8 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<DateTime>("ExpiredAt")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<long>("ExpiredAt")
+                        .HasColumnType("bigint")
                         .HasColumnName("expired_at");
 
                     b.Property<string>("Token")

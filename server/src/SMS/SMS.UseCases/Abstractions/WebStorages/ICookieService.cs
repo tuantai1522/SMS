@@ -2,7 +2,7 @@ namespace SMS.UseCases.Abstractions.WebStorages;
 
 public interface ICookieService
 {
-    void Set(string key, string value, DateTimeOffset expiresAt);
+    void Set(string key, string value, long expiresAt);
 
     string? Get(string key);
 
