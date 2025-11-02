@@ -18,6 +18,7 @@ internal sealed class SignOut : IEndpoint
             
             return Results.Ok(BaseResult<bool>.FromResult(result));
         })
-        .WithTags(Tags.Users);
+        .WithTags(Tags.Users)
+        .RequireAuthorization();
     }
 }

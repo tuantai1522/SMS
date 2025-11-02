@@ -22,6 +22,7 @@ internal sealed class EditPost : IEndpoint
             
             return Results.Ok(BaseResult<Guid>.FromResult(result));
         })
-        .WithTags(Tags.Posts);
+        .WithTags(Tags.Posts)
+        .RequireAuthorization();
     }
 }

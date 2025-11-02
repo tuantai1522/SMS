@@ -18,6 +18,7 @@ internal sealed class RefreshToken : IEndpoint
 
             return Results.Ok(BaseResult<RefreshTokenResponse>.FromResult(result));
         })
-        .WithTags(Tags.Tokens);
+        .WithTags(Tags.Tokens)
+        .RequireAuthorization();
     }
 }
