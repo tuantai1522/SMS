@@ -39,7 +39,7 @@ internal sealed class GetPostsByChannelIdQueryHandler(IPostRepository postReposi
             ? Cursor.Encode(posts[0].CreatedAt, posts[0].Id)
             : null;
         
-        var result = posts.Select(p => new GetPostsByChannelIdResponse(p.Id, p.Message, p.RootId, p.UserId, p.CreatedAt, p.UpdatedAt)).ToList();
+        var result = posts.Select(p => new GetPostsByChannelIdResponse(p.Id, p.Message, p.RootId, p.UserId, p.CreatedAt, p.UpdatedAt, p.DeletedAt)).ToList();
 
         var response = new CursorPaginationResponse<GetPostsByChannelIdResponse>
         {
