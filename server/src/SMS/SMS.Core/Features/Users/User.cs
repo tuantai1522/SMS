@@ -56,15 +56,10 @@ public sealed class User : AggregateRoot, IDateTracking
         _refreshTokens.Add(RefreshToken.Create(token, Id, expiredAt));
     }
 
-    public void UpdateRefreshToken(Guid refreshTokenId, string token, long? expiredAt)
+    public void UpdateRefreshToken(Guid refreshTokenId, string token, long expiredAt)
     {
         var refreshToken = _refreshTokens.FirstOrDefault(currentToken => currentToken.Id == refreshTokenId);
 
-        if (expiredAt.HasValue)
-        {
-            refreshToken?.UpdateExpiredAt(expiredAt.Value);
-        }
-        
-        refreshToken?.UpdateToken(token);
+        refreshToken?.Update(token, expiredAt);
     }
 }

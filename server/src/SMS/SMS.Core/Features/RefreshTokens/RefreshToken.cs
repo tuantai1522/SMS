@@ -25,6 +25,9 @@ public sealed class RefreshToken
         };
     }
 
-    internal void UpdateExpiredAt(long expiredAt) => ExpiredAt = expiredAt;
-    internal void UpdateToken(string token) => Token = token;
+    internal void Update(string token, long expiredAt)
+    {
+        Token = token;
+        ExpiredAt = expiredAt;
+    }
 }

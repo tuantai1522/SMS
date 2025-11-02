@@ -17,6 +17,12 @@ public sealed class UserRepository(ApplicationDbContext context) : IUserReposito
             .FirstOrDefaultAsync(x => x.Email == email, cancellationToken);
     }
 
+    public async Task<User?> FindUserByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Set<User>()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);    
+    }
+
     public async Task<bool> VerifyExistedEmailAsync(string email, CancellationToken cancellationToken)
     {
         return await _context.Set<User>()
