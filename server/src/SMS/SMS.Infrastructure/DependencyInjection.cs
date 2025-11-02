@@ -13,8 +13,10 @@ using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
 using SMS.Infrastructure.Repositories;
+using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
+using SMS.UseCases.Abstractions.WebStorages;
 
 namespace SMS.Infrastructure;
 
@@ -26,7 +28,8 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddRepositories()
             .AddAuthenticationInternal(configuration)
-            .AddAuthorizationInternal();
+            .AddAuthorizationInternal()
+            .AddWebStorages();
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
@@ -76,12 +79,11 @@ public static class DependencyInjection
         });
 
         services.AddHttpContextAccessor();
-        
+
         services
             .AddSingleton<IUserProvider, UserProvider>()
             .AddSingleton<ITokenProvider, TokenProvider>()
             .AddSingleton<IPasswordHasher, PasswordHasher>();
-
 
         return services;
     }
@@ -90,6 +92,15 @@ public static class DependencyInjection
         this IServiceCollection services)
     {
         services.AddAuthorization();
+
+        return services;
+    }
+    
+    private static IServiceCollection AddWebStorages(
+        this IServiceCollection services)
+    {
+        services
+            .AddScoped<ICookieService, CookieService>();
 
         return services;
     }
