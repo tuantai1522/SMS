@@ -7,7 +7,7 @@ public sealed class CookieService(IHttpContextAccessor http) : ICookieService
 {
     public void Set(string key, string value, long expiresAt)
     {
-        var expiresAtOffset = DateTimeOffset.FromUnixTimeSeconds(expiresAt);
+        var expiresAtOffset = DateTimeOffset.FromUnixTimeMilliseconds(expiresAt);
 
         http.HttpContext?.Response.Cookies.Append(key, value, new CookieOptions
         {

@@ -44,7 +44,7 @@ internal sealed class TokenProvider(IConfiguration configuration) : ITokenProvid
     {
         var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
 
-        var expiredAt = DateTimeOffset.UtcNow.AddSeconds(configuration.GetValue<long>("JwtOptions:ExpiredRefreshToken")).ToUnixTimeSeconds();
+        var expiredAt = DateTimeOffset.UtcNow.AddSeconds(configuration.GetValue<long>("JwtOptions:ExpiredRefreshToken")).ToUnixTimeMilliseconds();
 
         return (token, expiredAt);
     }
