@@ -24,6 +24,13 @@ public sealed class User : AggregateRoot, IDateTracking
 
     public GenderType GenderType { get; private set; } = GenderType.Male;
     
+    /// <summary>
+    /// List refresh tokens of this user.
+    /// </summary>
+    private readonly List<RefreshToken> _refreshTokens = [];
+    
+    public IReadOnlyList<RefreshToken> RefreshTokens => _refreshTokens.ToList();
+    
     private User() { }
 
     public static User CreateUser(string firstName, string? middleName, string? lastName, string nickName, string email,
@@ -41,5 +48,22 @@ public sealed class User : AggregateRoot, IDateTracking
             GenderType = genderType,
             Address = Address.CreateAddress(street, cityId)
         };
+    }
+    
+    public void AddRefreshToken(string token, DateTime expiredAt)
+    {
+        _refreshTokens.Add(RefreshToken.Create(token, Id, expiredAt));
+    }
+
+    public void UpdateRefreshToken(Guid refreshTokenId, string token, DateTime? expiredAt)
+    {
+        var refreshToken = _refreshTokens.FirstOrDefault(currentToken => currentToken.Id == refreshTokenId);
+
+        if (expiredAt.HasValue)
+        {
+            refreshToken?.UpdateExpiredAt(expiredAt.Value);
+        }
+        
+        refreshToken?.UpdateToken(token);
     }
 }

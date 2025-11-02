@@ -37,6 +37,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasOne(e => e.Address)
             .WithOne(e => e.User)
             .HasForeignKey<Address>(e => e.UserId);
+        
+        // One user has multiple RefreshTokens
+        builder.HasMany(x => x.RefreshTokens)
+            .WithOne()
+            .HasForeignKey(u => u.UserId);
 
     }
 }
