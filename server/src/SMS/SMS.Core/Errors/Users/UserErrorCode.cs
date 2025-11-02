@@ -13,4 +13,5 @@ public static class UserErrorCode
     public const int InvalidGenderType = -5008;
     public const int AddressStreetEmpty = -5009;
     public const int CityIdEmpty = -5009;
+    public const int IdNotFound = -5010;
 }

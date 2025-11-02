@@ -19,4 +19,8 @@ public static class UserErrors
     public static readonly Error InvalidUserIds = new(
         UserErrorCode.InvalidUserIds,
         "List User ids is invalid. Please check again.");
+    
+    public static readonly Error IdNotFound = new(
+        UserErrorCode.IdNotFound,
+        "Can not find this user");
 }
