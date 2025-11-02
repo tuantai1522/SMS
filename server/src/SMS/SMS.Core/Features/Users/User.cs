@@ -1,4 +1,5 @@
 ﻿using SMS.Core.Common;
+using SMS.Core.Features.RefreshTokens;
 
 namespace SMS.Core.Features.Users;
 

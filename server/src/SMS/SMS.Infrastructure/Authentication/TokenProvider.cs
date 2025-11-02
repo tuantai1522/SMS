@@ -40,9 +40,18 @@ internal sealed class TokenProvider(IConfiguration configuration) : ITokenProvid
         return token;
     }
 
-    public string CreateRefreshToken()
+    public (string token, long expiredAt) CreateRefreshToken()
     {
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        var token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(32));
+        var expiredAtConfig = configuration["JwtOptions:ExpiredRefreshToken"];
+
+        long expiredAt;
+
+        expiredAt = long.TryParse(expiredAtConfig, out var parsed) ? 
+            DateTimeOffset.UtcNow.AddSeconds(parsed).ToUnixTimeSeconds() : 
+            DateTimeOffset.UtcNow.AddSeconds(10).ToUnixTimeSeconds();
+
+        return (token, expiredAt);
     }
 
 }

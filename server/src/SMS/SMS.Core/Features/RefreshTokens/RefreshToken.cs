@@ -1,4 +1,4 @@
-namespace SMS.Core.Features.Users;
+namespace SMS.Core.Features.RefreshTokens;
 
 public sealed class RefreshToken
 {

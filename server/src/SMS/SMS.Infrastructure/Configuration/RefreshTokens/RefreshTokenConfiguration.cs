@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SMS.Core.Features.Users;
+using SMS.Core.Features.RefreshTokens;
 
-namespace SMS.Infrastructure.Configuration.Users;
+namespace SMS.Infrastructure.Configuration.RefreshTokens;
 
 public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
 {
