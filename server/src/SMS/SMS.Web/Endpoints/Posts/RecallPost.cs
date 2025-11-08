@@ -1,6 +1,7 @@
 ﻿using MediatR;
-using SMS.Core.Common;
 using SMS.UseCases.Features.Posts.RecallPost;
+using SMS.Web.Extensions;
+using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Posts;
 
@@ -17,7 +18,7 @@ internal sealed class RecallPost : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
             
-            return Results.Ok(BaseResult<Guid>.FromResult(result));
+            return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Posts)
         .RequireAuthorization();

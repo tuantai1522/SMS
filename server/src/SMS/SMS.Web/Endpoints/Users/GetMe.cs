@@ -1,6 +1,7 @@
 ﻿using MediatR;
-using SMS.Core.Common;
 using SMS.UseCases.Features.Users.GetMe;
+using SMS.Web.Extensions;
+using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Users;
 
@@ -12,11 +13,11 @@ internal sealed class GetMe : IEndpoint
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var command = new GetMeQuery();
+            var query = new GetMeQuery();
 
-            var result = await mediator.Send(command, cancellationToken);
+            var result = await mediator.Send(query, cancellationToken);
             
-            return Results.Ok(BaseResult<GetMeResponse>.FromResult(result));
+            return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Users)
         .RequireAuthorization();

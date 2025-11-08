@@ -1,6 +1,7 @@
 ﻿using MediatR;
-using SMS.Core.Common;
 using SMS.UseCases.Features.Teams.UpdateTeam;
+using SMS.Web.Extensions;
+using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.Teams;
 
@@ -20,7 +21,7 @@ internal sealed class UpdateTeam : IEndpoint
 
             var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<Guid>.FromResult(result));
+            return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Teams)
         .RequireAuthorization();

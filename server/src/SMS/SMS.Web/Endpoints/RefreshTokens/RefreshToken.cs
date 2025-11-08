@@ -1,6 +1,7 @@
 ﻿using MediatR;
-using SMS.Core.Common;
 using SMS.UseCases.Features.RefreshTokens.GetAccessToken;
+using SMS.Web.Extensions;
+using SMS.Web.Infrastructure;
 
 namespace SMS.Web.Endpoints.RefreshTokens;
 
@@ -12,11 +13,11 @@ internal sealed class RefreshToken : IEndpoint
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var query = new RefreshTokenCommand();
+            var command = new RefreshTokenCommand();
 
-            var result = await mediator.Send(query, cancellationToken);
+            var result = await mediator.Send(command, cancellationToken);
 
-            return Results.Ok(BaseResult<RefreshTokenResponse>.FromResult(result));
+            return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Tokens)
         .RequireAuthorization();

@@ -4,23 +4,23 @@ namespace SMS.Core.Errors.Users;
 
 public static class UserErrors
 {
-    public static readonly Error EmailNotUnique = new(
+    public static readonly Error EmailNotUnique = Error.Validation(
         UserErrorCode.EmailNotUnique,
         "The provided email is already existed.");
 
-    public static readonly Error NickNameNotUnique = new(
+    public static readonly Error NickNameNotUnique = Error.Validation(
         UserErrorCode.NickNameNotUnique,
         "The provided nick name is not unique");
 
-    public static readonly Error InvalidPassword = new(
+    public static readonly Error InvalidPassword = Error.Validation(
         UserErrorCode.InvalidPassword,
         "Password is not correct. Please try again.");
 
-    public static readonly Error InvalidUserIds = new(
+    public static readonly Error InvalidUserIds = Error.Validation(
         UserErrorCode.InvalidUserIds,
         "List User ids is invalid. Please check again.");
     
-    public static readonly Error IdNotFound = new(
+    public static readonly Error IdNotFound = Error.NotFound(
         UserErrorCode.IdNotFound,
         "Can not find this user");
 }
