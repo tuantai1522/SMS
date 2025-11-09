@@ -3,10 +3,15 @@ using SMS.Core.Common;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
+using SMS.Core.Features.Projects;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
+using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
+using SMS.Core.Features.Tasks;
+using Task = SMS.Core.Features.Tasks.Task;
+using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
 
 namespace SMS.Infrastructure.Database;
 
@@ -18,6 +23,15 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Channel> Channels => Set<Channel>();
     public DbSet<Post> Posts => Set<Post>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    
+    
+    public DbSet<Workspace> Workspaces => Set<Workspace>();
+    public DbSet<Project> Projects => Set<Project>();
+    public DbSet<Task> Tasks => Set<Task>();
+    public DbSet<TaskStatus> TaskStatuses => Set<TaskStatus>();
+    public DbSet<TaskPriority> TaskPriorities => Set<TaskPriority>();
+    public DbSet<Role> Roles => Set<Role>();
+    public DbSet<Permission> Permissions => Set<Permission>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
