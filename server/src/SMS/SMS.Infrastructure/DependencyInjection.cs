@@ -10,6 +10,7 @@ using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.RefreshTokens;
+using SMS.Core.Features.Tasks;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
@@ -57,6 +58,10 @@ public static class DependencyInjection
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
             .AddScoped<ICountryRepository, CountryRepository>()
+            
+            .AddScoped<ITaskStatusRepository, TaskStatusRepository>()
+            .AddScoped<ITaskPriorityRepository, TaskPriorityRepository>()
+            
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
