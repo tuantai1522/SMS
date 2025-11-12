@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SMS.Core.Common;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
@@ -10,12 +12,14 @@ using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
 using SMS.Core.Features.Tasks;
-using Task = SMS.Core.Features.Tasks.Task;
+using TaskDomain = SMS.Core.Features.Tasks.Task;
 using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
+
+using Task = System.Threading.Tasks.Task;
 
 namespace SMS.Infrastructure.Database;
 
-public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options), IUnitOfWork, IApplicationDbContext
+public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator) : DbContext(options), IUnitOfWork, IApplicationDbContext
 {
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<User> Users => Set<User>();
@@ -27,7 +31,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     
     public DbSet<Workspace> Workspaces => Set<Workspace>();
     public DbSet<Project> Projects => Set<Project>();
-    public DbSet<Task> Tasks => Set<Task>();
+    public DbSet<TaskDomain> Tasks => Set<TaskDomain>();
     public DbSet<TaskStatus> TaskStatuses => Set<TaskStatus>();
     public DbSet<TaskPriority> TaskPriorities => Set<TaskPriority>();
     public DbSet<Role> Roles => Set<Role>();
@@ -53,8 +57,28 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         // performed through the DbContext will be committed
         int result = await base.SaveChangesAsync(cancellationToken);
 
-        // Todo: To publish domain events
-
+        await PublishDomainEvents(cancellationToken);
+        
         return result;
+    }
+    
+    /// <summary>
+    /// Publishes and then clears all the domain events that exist within the current transaction.
+    /// </summary>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    private async Task PublishDomainEvents(CancellationToken cancellationToken)
+    {
+        List<EntityEntry<AggregateRoot>> aggregateRoots = ChangeTracker
+            .Entries<AggregateRoot>()
+            .Where(entityEntry => entityEntry.Entity.DomainEvents.Any())
+            .ToList();
+
+        List<IDomainEvent> domainEvents = aggregateRoots.SelectMany(entityEntry => entityEntry.Entity.DomainEvents).ToList();
+
+        aggregateRoots.ForEach(entityEntry => entityEntry.Entity.ClearDomainEvents());
+
+        IEnumerable<Task> tasks = domainEvents.Select(domainEvent => mediator.Publish(domainEvent, cancellationToken));
+
+        await Task.WhenAll(tasks);
     }
 }

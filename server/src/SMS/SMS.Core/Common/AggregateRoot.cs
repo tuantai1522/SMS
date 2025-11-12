@@ -8,5 +8,5 @@ public abstract class AggregateRoot : IBaseEntity
 
     public void ClearDomainEvents() => _domainEvents.Clear();
 
-    public void AddDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
+    protected void RaiseDomainEvent(IDomainEvent domainEvent) => _domainEvents.Add(domainEvent);
 }
