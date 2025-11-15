@@ -42,4 +42,10 @@ public sealed class Workspace : AggregateRoot, IDateTracking
     }
 
     private static string CreateInvitationToken() => Guid.NewGuid().ToString();
+
+    public void Update(string name, string? description)
+    {
+        Name = name;
+        Description = description;
+    }
 }
