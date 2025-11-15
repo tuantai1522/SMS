@@ -18,4 +18,12 @@ public sealed class WorkspaceRepository(IApplicationDbContext context) : IWorksp
         return await context.Set<Workspace>()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
+
+    public async Task<IReadOnlyList<Workspace>> GetWorkspacesByUserIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        return await context.Set<Workspace>()
+            .Where(x => x.WorkspaceMembers.Any(workspaceMember => workspaceMember.UserId == userId &&
+                                                                  !workspaceMember.DeletedAt.HasValue))
+            .ToListAsync(cancellationToken);
+    }
 }

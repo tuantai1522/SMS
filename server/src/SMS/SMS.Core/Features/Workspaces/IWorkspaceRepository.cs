@@ -5,5 +5,7 @@ public interface IWorkspaceRepository
     Task<Workspace> AddWorkspaceAsync(Workspace workspace, CancellationToken cancellationToken);
     
     Task<Workspace?> FindWorkspaceByIdAsync(Guid id, CancellationToken cancellationToken);
-    
+
+    Task<IReadOnlyList<Workspace>> GetWorkspacesByUserIdAsync(Guid userId, CancellationToken cancellationToken);
+
 }
