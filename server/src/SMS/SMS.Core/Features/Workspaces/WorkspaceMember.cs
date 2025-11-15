@@ -34,4 +34,10 @@ public sealed class WorkspaceMember : IDateTracking, ISoftDelete
     {
         DeletedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
+    
+    public void UpdateRoleId(Guid roleId)
+    {
+        RoleId = roleId;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
 }

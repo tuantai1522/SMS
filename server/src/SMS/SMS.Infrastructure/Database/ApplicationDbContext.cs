@@ -30,6 +30,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     
     
     public DbSet<Workspace> Workspaces => Set<Workspace>();
+    public DbSet<WorkspaceMember> WorkspaceMembers => Set<WorkspaceMember>();
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<TaskDomain> Tasks => Set<TaskDomain>();
     public DbSet<TaskStatus> TaskStatuses => Set<TaskStatus>();

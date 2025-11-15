@@ -11,4 +11,10 @@ public sealed class RoleRepository(IApplicationDbContext context) : IRoleReposit
         return await context.Set<Role>()
             .FirstOrDefaultAsync(role => role.Name.Equals(name), cancellationToken);
     }
+
+    public async Task<Role?> GetRoleByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await context.Set<Role>()
+            .FirstOrDefaultAsync(role => role.Id == id, cancellationToken);
+    }
 }
