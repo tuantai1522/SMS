@@ -9,10 +9,12 @@ using SMS.Core.Common;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
+using SMS.Core.Features.Projects;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Tasks;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
+using SMS.Core.Features.Workspaces;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
 using SMS.Infrastructure.Repositories;
@@ -62,6 +64,10 @@ public static class DependencyInjection
             .AddScoped<ITaskStatusRepository, TaskStatusRepository>()
             .AddScoped<ITaskPriorityRepository, TaskPriorityRepository>()
             
+            .AddScoped<IRoleRepository, RoleRepository>()
+            .AddScoped<IProjectRepository, ProjectRepository>()
+            .AddScoped<IWorkspaceRepository, WorkspaceRepository>()
+            .AddScoped<IWorkspaceMemberRepository, WorkspaceMemberRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
