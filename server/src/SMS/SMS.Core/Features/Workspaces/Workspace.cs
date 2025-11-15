@@ -28,13 +28,17 @@ public sealed class Workspace : AggregateRoot, IDateTracking
 
     public static Workspace CreateWorkspace(string name, string? description, Guid ownerId)
     {
-        return new Workspace
+        var workspace = new Workspace
         {
             Name = name,
             Description = description,
             OwnerId = ownerId,
             InvitationCode = CreateInvitationToken(),
         };
+        
+        workspace.RaiseDomainEvent(new WorkspaceCreatedDomainEvent(workspace.Id, ownerId));
+
+        return workspace;
     }
 
     private static string CreateInvitationToken() => Guid.NewGuid().ToString();

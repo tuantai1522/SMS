@@ -37,7 +37,7 @@ public sealed class User : AggregateRoot, IDateTracking
     public static User CreateUser(string firstName, string? middleName, string? lastName, string nickName, string email,
         string password, DateOnly dateOfBirth, GenderType genderType, string street, int cityId)
     {
-        return new User
+        var user = new User
         {
             FirstName = firstName,
             MiddleName = middleName,
@@ -49,6 +49,11 @@ public sealed class User : AggregateRoot, IDateTracking
             GenderType = genderType,
             Address = Address.CreateAddress(street, cityId)
         };
+
+        // Raise domain event 
+        user.RaiseDomainEvent(new UserSignedUpDomainEvent(user.Id));
+        
+        return user;
     }
     
     public void AddRefreshToken(string token, long expiredAt)
