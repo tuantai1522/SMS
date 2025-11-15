@@ -11,4 +11,6 @@ public static class Tags
     
     public const string TaskStatuses = "TaskStatuses";
     public const string TaskPriorities = "TaskPriorities";
+    
+    public const string Workspaces = "Workspaces";
 }
