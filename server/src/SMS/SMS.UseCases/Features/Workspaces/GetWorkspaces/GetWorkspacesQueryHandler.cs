@@ -9,7 +9,7 @@ internal sealed class GetWorkspacesQueryHandler(
     IUserProvider userProvider,
     IWorkspaceRepository workspaceRepository): IRequestHandler<GetWorkspacesQuery, Result<IReadOnlyList<GetWorkspacesResponse>>>
 {
-    public async Task<Result<IReadOnlyList<GetWorkspacesResponse>>> Handle(GetWorkspacesQuery command, CancellationToken cancellationToken)
+    public async Task<Result<IReadOnlyList<GetWorkspacesResponse>>> Handle(GetWorkspacesQuery query, CancellationToken cancellationToken)
     {
         var workspaces = await workspaceRepository.GetWorkspacesByUserIdAsync(userProvider.UserId, cancellationToken);
         

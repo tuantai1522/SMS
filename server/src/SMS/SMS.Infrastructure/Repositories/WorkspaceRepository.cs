@@ -13,7 +13,7 @@ public sealed class WorkspaceRepository(IApplicationDbContext context) : IWorksp
         return result.Entity;
     }
 
-    public async Task<Workspace?> FindWorkspaceByIdAsync(Guid id, CancellationToken cancellationToken)
+    public async Task<Workspace?> GetWorkspaceByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Set<Workspace>()
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
