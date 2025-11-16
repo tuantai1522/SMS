@@ -32,7 +32,7 @@ public sealed class Project : AggregateRoot, IDateTracking, ISoftDelete
     
     private Project() { }
 
-    public static Project CreateProject(string name, string code, string emoji, string? description, Guid workspaceId, Guid createdBy)
+    public static Project CreateProject(string name, string code, string? emoji, string? description, Guid workspaceId, Guid createdBy)
     {
         return new Project
         {
