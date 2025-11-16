@@ -54,4 +54,12 @@ public sealed class Project : AggregateRoot, IDateTracking, ISoftDelete
     {
         TotalTasks += 1;
     }
+    
+    public void Update(string name, string code, string? emoji, string? description)
+    {
+        Name = name;
+        Code = code;
+        Emoji = emoji;
+        Description = description;
+    }
 }
