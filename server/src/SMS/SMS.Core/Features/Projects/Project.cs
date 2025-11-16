@@ -9,9 +9,11 @@ public sealed class Project : AggregateRoot, IDateTracking, ISoftDelete
 
     public string Name { get; private set; } = null!;
     public string Code { get; private set; } = null!;
-    public string Emoji { get; private set; } = null!;
+    public string? Emoji { get; private set; }
     
     public string? Description { get; private set; }
+
+    public int TotalTasks { get; private set; }
     
     public Guid WorkspaceId { get; init; }
     public Guid CreatorId { get; init; }
@@ -46,5 +48,10 @@ public sealed class Project : AggregateRoot, IDateTracking, ISoftDelete
     public void Delete()
     {
         DeletedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
+
+    public void UpdateTotalTasks()
+    {
+        TotalTasks += 1;
     }
 }

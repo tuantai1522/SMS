@@ -21,6 +21,9 @@ public class ProjectConfiguration : IEntityTypeConfiguration<Project>
         
         builder.Property(p => p.Emoji).HasMaxLength(256);
         
+        // Must unique code in workspace
+        builder.HasIndex(x => new { x.Code, x.WorkspaceId }).IsUnique();
+        
         // One project belongs to one workspace
         builder.HasOne<Workspace>()
             .WithMany()
