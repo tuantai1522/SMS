@@ -13,11 +13,9 @@ public sealed class ProjectRepository(IApplicationDbContext context) : IProjectR
         return result.Entity;
     }
 
-    public async Task<Project?> GetProjectByIdAndWorkspaceIdAsync(Guid id, Guid workspaceId, CancellationToken cancellationToken)
+    public async Task<Project?> GetProjectByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         return await context.Set<Project>()
-            .FirstOrDefaultAsync(p => p.Id == id && 
-                                      p.WorkspaceId == workspaceId && 
-                                      !p.DeletedAt.HasValue, cancellationToken);
+            .FirstOrDefaultAsync(p => p.Id == id && !p.DeletedAt.HasValue, cancellationToken);
     }
 }

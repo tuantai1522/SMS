@@ -14,11 +14,6 @@ internal sealed class UpdateProjectCommandValidator : AbstractValidator<UpdatePr
             .WithErrorCode(ProjectErrorCode.IdEmpty.ToString())
             .WithMessage("Id can not be empty.");
         
-        RuleFor(c => c.WorkspaceId)
-            .NotEmpty()
-            .WithErrorCode(ProjectErrorCode.WorkspaceIdEmpty.ToString())
-            .WithMessage("Workspace Id can not be empty.");
-        
         RuleFor(c => c.Name)
             .NotEmpty()
             .WithErrorCode(ProjectErrorCode.NameEmpty.ToString())

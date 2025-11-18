@@ -61,5 +61,6 @@ public sealed class Project : AggregateRoot, IDateTracking, ISoftDelete
         Code = code;
         Emoji = emoji;
         Description = description;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 }

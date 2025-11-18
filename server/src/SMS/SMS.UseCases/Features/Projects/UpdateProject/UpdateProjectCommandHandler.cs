@@ -11,7 +11,7 @@ internal sealed class UpdateProjectCommandHandler(
 {
     public async Task<Result<Guid>> Handle(UpdateProjectCommand command, CancellationToken cancellationToken)
     {
-        var project = await projectRepository.GetProjectByIdAndWorkspaceIdAsync(command.Id, command.WorkspaceId, cancellationToken);
+        var project = await projectRepository.GetProjectByIdAsync(command.Id, cancellationToken);
 
         if (project is null)
         {

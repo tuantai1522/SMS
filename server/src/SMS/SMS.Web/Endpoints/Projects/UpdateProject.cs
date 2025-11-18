@@ -14,12 +14,11 @@ internal sealed class UpdateProject : IEndpoint
     {
         app.MapPut("projects/{id:guid}", async (
                 Guid id,
-                [FromQuery] Guid workspaceId,
                 Request request,
                 IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
-                var command = new UpdateProjectCommand(id, request.Name, request.Code, request.Emoji, request.Description, workspaceId);
+                var command = new UpdateProjectCommand(id, request.Name, request.Code, request.Emoji, request.Description);
 
                 var result = await mediator.Send(command, cancellationToken);
 

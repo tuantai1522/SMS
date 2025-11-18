@@ -47,5 +47,6 @@ public sealed class Workspace : AggregateRoot, IDateTracking
     {
         Name = name;
         Description = description;
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
 }
