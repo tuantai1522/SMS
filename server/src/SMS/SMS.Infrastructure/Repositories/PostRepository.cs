@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using SMS.Core.Common;
 using SMS.Core.Features.Posts;
 using SMS.Infrastructure.Database;
 
@@ -7,13 +6,9 @@ namespace SMS.Infrastructure.Repositories;
 
 public sealed class PostRepository(ApplicationDbContext context) : IPostRepository
 {
-    private readonly ApplicationDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
-
-    public IUnitOfWork UnitOfWork => _context;
-
     public async Task<List<Post>> GetPostsByChannelIdAsync(Guid channelId, Guid? rootId, long? createdAt, Guid? lastId, bool isAscending, int pageSize, CancellationToken cancellationToken)
     {
-        var query = _context.Set<Post>()
+        var query = context.Set<Post>()
             .Where(post => (rootId.HasValue ? post.RootId == rootId : post.RootId == null) &&
                            post.ChannelId == channelId)
             .AsQueryable();
@@ -37,14 +32,14 @@ public sealed class PostRepository(ApplicationDbContext context) : IPostReposito
 
     public async Task<Post> AddPostAsync(Post post, CancellationToken cancellationToken)
     {
-        var result = await _context.Set<Post>().AddAsync(post, cancellationToken);
+        var result = await context.Set<Post>().AddAsync(post, cancellationToken);
         
         return result.Entity;
     }
 
     public async Task<Post?> GetPostByIdAsync(Guid postId, CancellationToken cancellationToken)
     {
-        return await _context.Set<Post>()
+        return await context.Set<Post>()
             .FirstOrDefaultAsync(post => postId == post.Id, cancellationToken);
     }
 }

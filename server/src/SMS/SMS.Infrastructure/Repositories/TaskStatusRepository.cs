@@ -12,4 +12,10 @@ public sealed class TaskStatusRepository(ApplicationDbContext context) : ITaskSt
         return await context.Set<TaskStatus>()
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<bool> VerifyExistedStatusByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await context.Set<TaskStatus>()
+            .AnyAsync(x => x.Id == id, cancellationToken);
+    }
 }

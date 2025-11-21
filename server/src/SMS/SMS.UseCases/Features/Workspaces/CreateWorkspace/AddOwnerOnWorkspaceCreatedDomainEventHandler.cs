@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SMS.Core.Common;
 using SMS.Core.Features.Workspaces;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Workspaces.CreateWorkspace;
 

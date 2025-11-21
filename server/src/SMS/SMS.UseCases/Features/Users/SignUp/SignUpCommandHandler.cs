@@ -3,6 +3,7 @@ using SMS.Core.Common;
 using SMS.Core.Errors.Users;
 using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Authentication;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Users.SignUp;
 

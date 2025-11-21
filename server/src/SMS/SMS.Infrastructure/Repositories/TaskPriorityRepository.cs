@@ -11,4 +11,10 @@ public sealed class TaskPriorityRepository(ApplicationDbContext context) : ITask
         return await context.Set<TaskPriority>()
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<bool> VerifyExistedPriorityByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        return await context.Set<TaskPriority>()
+            .AnyAsync(x => x.Id == id, cancellationToken);
+    }
 }

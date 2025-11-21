@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Errors.Teams;
 using SMS.Core.Features.Teams;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Teams.UpdateTeam;
 

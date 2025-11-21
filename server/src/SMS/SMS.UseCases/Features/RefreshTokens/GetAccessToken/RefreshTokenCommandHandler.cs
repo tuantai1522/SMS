@@ -4,6 +4,7 @@ using SMS.Core.Errors.RefreshTokens;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Authentication;
+using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 
 namespace SMS.UseCases.Features.RefreshTokens.GetAccessToken;

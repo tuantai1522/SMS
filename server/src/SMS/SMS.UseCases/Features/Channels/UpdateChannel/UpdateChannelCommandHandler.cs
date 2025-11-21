@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Errors.Channels;
 using SMS.Core.Features.Channels;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Channels.UpdateChannel;
 

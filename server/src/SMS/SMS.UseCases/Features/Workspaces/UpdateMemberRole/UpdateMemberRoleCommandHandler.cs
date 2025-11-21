@@ -3,6 +3,7 @@ using SMS.Core.Common;
 using SMS.Core.Errors.Roles;
 using SMS.Core.Errors.Workspaces;
 using SMS.Core.Features.Workspaces;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Workspaces.UpdateMemberRole;
 

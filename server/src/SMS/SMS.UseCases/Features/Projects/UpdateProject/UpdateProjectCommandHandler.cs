@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Errors.Projects;
 using SMS.Core.Features.Projects;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Projects.UpdateProject;
 

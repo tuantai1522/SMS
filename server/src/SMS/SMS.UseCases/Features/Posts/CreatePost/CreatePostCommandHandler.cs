@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Features.Posts;
 using SMS.UseCases.Abstractions.Authentication;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Posts.CreatePost;
 

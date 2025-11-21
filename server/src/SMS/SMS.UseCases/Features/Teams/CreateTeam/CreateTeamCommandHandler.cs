@@ -4,6 +4,7 @@ using SMS.Core.Errors.Users;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Authentication;
+using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.UseCases.Features.Teams.CreateTeam;
 

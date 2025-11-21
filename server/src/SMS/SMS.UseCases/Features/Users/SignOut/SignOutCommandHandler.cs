@@ -2,6 +2,7 @@
 using SMS.Core.Common;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Users;
+using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 
 namespace SMS.UseCases.Features.Users.SignOut;
