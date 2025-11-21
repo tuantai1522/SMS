@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 using SMS.Core.Common;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
@@ -12,6 +14,7 @@ using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
 using SMS.Core.Features.Tasks;
+using SMS.UseCases.Exceptions;
 using TaskDomain = SMS.Core.Features.Tasks.Task;
 using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
 
@@ -47,22 +50,34 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        // Dispatch Domain Events collection. 
-        // Choices:
-        // A) Right BEFORE committing data (EF SaveChanges) into the DB will make a single transaction including  
-        // side effects from the domain event handlers which are using the same DbContext with "InstancePerLifetimeScope" or "scoped" lifetime
-        // B) Right AFTER committing data (EF SaveChanges) into the DB will make multiple transactions. 
-        // You will need to handle eventual consistency and compensatory actions in case of failures in any of the Handlers. 
+        try
+        {
+            int result = await base.SaveChangesAsync(cancellationToken);
 
-        // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
-        // performed through the DbContext will be committed
-        int result = await base.SaveChangesAsync(cancellationToken);
+            await PublishDomainEvents(cancellationToken);
 
-        await PublishDomainEvents(cancellationToken);
-        
-        return result;
+            return result;
+        }
+        // Throw exception in case there is violation conflict in database
+        catch (DbUpdateException e) when (e.InnerException is PostgresException { SqlState: PostgresErrorCodes.UniqueViolation })
+        {
+            throw new DuplicateKeyException("Duplicate key error", e);
+        }
     }
-    
+
+    public async Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+    {
+        return await Database.BeginTransactionAsync(cancellationToken);
+    }
+
+    public async Task CommitAsync(CancellationToken cancellationToken = default) 
+        => await Database.CommitTransactionAsync(cancellationToken);
+
+    public async Task RollbackAsync(CancellationToken cancellationToken = default)
+    {
+        await Database.RollbackTransactionAsync(cancellationToken);
+    }
+
     /// <summary>
     /// Publishes and then clears all the domain events that exist within the current transaction.
     /// </summary>
