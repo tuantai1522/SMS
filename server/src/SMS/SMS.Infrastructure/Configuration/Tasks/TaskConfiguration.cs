@@ -21,6 +21,9 @@ public class TaskConfiguration : IEntityTypeConfiguration<Task>
         builder.Property(p => p.Code).IsRequired();
         builder.Property(p => p.Code).HasMaxLength(256);
         
+        // Must unique code in project
+        builder.HasIndex(x => new { x.Code, x.ProjectId }).IsUnique();
+        
         // One task belongs to one project
         builder.HasOne<Project>()
             .WithMany(p => p.Tasks)

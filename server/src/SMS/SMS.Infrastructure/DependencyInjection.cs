@@ -61,6 +61,7 @@ public static class DependencyInjection
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
             .AddScoped<ICountryRepository, CountryRepository>()
             
+            .AddScoped<ITaskRepository, TaskRepository>()
             .AddScoped<ITaskStatusRepository, TaskStatusRepository>()
             .AddScoped<ITaskPriorityRepository, TaskPriorityRepository>()
             
