@@ -18,12 +18,14 @@ using SMS.Core.Features.Workspaces;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
 using SMS.Infrastructure.Queries.Tasks;
+using SMS.Infrastructure.Queries.Workspaces;
 using SMS.Infrastructure.Repositories;
 using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
+using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
 
 namespace SMS.Infrastructure;
 
@@ -127,6 +129,7 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
+            .AddScoped<IGetMembersByWorkspaceIdService, GetMembersByWorkspaceIdService>()
             .AddScoped<IGetTasksByWorkspaceIdService, GetTasksByWorkspaceIdService>();
 
         return services;
