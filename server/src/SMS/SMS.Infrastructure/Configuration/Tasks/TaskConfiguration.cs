@@ -1,10 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SMS.Core.Features.Projects;
-using SMS.Core.Features.Users;
 using Task = SMS.Core.Features.Tasks.Task;
-using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
-using TaskPriority = SMS.Core.Features.Tasks.TaskPriority;
 
 namespace SMS.Infrastructure.Configuration.Tasks;
 
@@ -25,27 +21,27 @@ public class TaskConfiguration : IEntityTypeConfiguration<Task>
         builder.HasIndex(x => new { x.Code, x.ProjectId }).IsUnique();
         
         // One task belongs to one project
-        builder.HasOne<Project>()
+        builder.HasOne(t => t.Project)
             .WithMany(p => p.Tasks)
             .HasForeignKey(p => p.ProjectId);
         
         // One task belongs to one task status
-        builder.HasOne<TaskStatus>()
+        builder.HasOne(t => t.TaskStatus)
             .WithMany()
             .HasForeignKey(p => p.StatusId);
 
         // One task belongs to one task priority
-        builder.HasOne<TaskPriority>()
+        builder.HasOne(t => t.TaskPriority)
             .WithMany()
             .HasForeignKey(p => p.PriorityId);
 
         // One task is assigned to one user
-        builder.HasOne<User>()
+        builder.HasOne(t => t.AssignedTo)
             .WithMany()
-            .HasForeignKey(p => p.AssignedTo);
+            .HasForeignKey(p => p.AssignedToId);
 
         // One task is created by one user
-        builder.HasOne<User>()
+        builder.HasOne(t => t.Creator)
             .WithMany()
             .HasForeignKey(p => p.CreatorId);
     }

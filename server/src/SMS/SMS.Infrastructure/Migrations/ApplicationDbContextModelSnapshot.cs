@@ -310,9 +310,9 @@ namespace SMS.Infrastructure.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid?>("AssignedTo")
+                    b.Property<Guid?>("AssignedToId")
                         .HasColumnType("uuid")
-                        .HasColumnName("assigned_to");
+                        .HasColumnName("assigned_to_id");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -369,8 +369,8 @@ namespace SMS.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_tasks");
 
-                    b.HasIndex("AssignedTo")
-                        .HasDatabaseName("ix_tasks_assigned_to");
+                    b.HasIndex("AssignedToId")
+                        .HasDatabaseName("ix_tasks_assigned_to_id");
 
                     b.HasIndex("CreatorId")
                         .HasDatabaseName("ix_tasks_creator_id");
@@ -874,38 +874,48 @@ namespace SMS.Infrastructure.Migrations
 
             modelBuilder.Entity("SMS.Core.Features.Tasks.Task", b =>
                 {
-                    b.HasOne("SMS.Core.Features.Users.User", null)
+                    b.HasOne("SMS.Core.Features.Users.User", "AssignedTo")
                         .WithMany()
-                        .HasForeignKey("AssignedTo")
-                        .HasConstraintName("fk_tasks_users_assigned_to");
+                        .HasForeignKey("AssignedToId")
+                        .HasConstraintName("fk_tasks_users_assigned_to_id");
 
-                    b.HasOne("SMS.Core.Features.Users.User", null)
+                    b.HasOne("SMS.Core.Features.Users.User", "Creator")
                         .WithMany()
                         .HasForeignKey("CreatorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tasks_users_creator_id");
 
-                    b.HasOne("SMS.Core.Features.Tasks.TaskPriority", null)
+                    b.HasOne("SMS.Core.Features.Tasks.TaskPriority", "TaskPriority")
                         .WithMany()
                         .HasForeignKey("PriorityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tasks_task_priorities_priority_id");
 
-                    b.HasOne("SMS.Core.Features.Projects.Project", null)
+                    b.HasOne("SMS.Core.Features.Projects.Project", "Project")
                         .WithMany("Tasks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tasks_projects_project_id");
 
-                    b.HasOne("SMS.Core.Features.Tasks.TaskStatus", null)
+                    b.HasOne("SMS.Core.Features.Tasks.TaskStatus", "TaskStatus")
                         .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_tasks_task_statuses_status_id");
+
+                    b.Navigation("AssignedTo");
+
+                    b.Navigation("Creator");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("TaskPriority");
+
+                    b.Navigation("TaskStatus");
                 });
 
             modelBuilder.Entity("SMS.Core.Features.Teams.TeamMember", b =>
