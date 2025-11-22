@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using SMS.Core.Common;
 using SMS.UseCases.Pagination.OffsetPagination;
+using SMS.UseCases.Queries.Tasks;
 
 namespace SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 

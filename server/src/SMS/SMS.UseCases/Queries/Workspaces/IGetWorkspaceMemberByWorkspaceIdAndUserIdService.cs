@@ -1,6 +1,6 @@
 ﻿using SMS.Core.Features.Workspaces;
 
-namespace SMS.UseCases.Features.Workspaces.UpdateMemberRole;
+namespace SMS.UseCases.Queries.Workspaces;
 
 public interface IGetWorkspaceMemberByWorkspaceIdAndUserIdService
 {

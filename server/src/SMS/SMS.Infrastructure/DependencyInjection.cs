@@ -28,6 +28,8 @@ using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetWorkspaces;
 using SMS.UseCases.Features.Workspaces.UpdateMemberRole;
+using SMS.UseCases.Queries.Tasks;
+using SMS.UseCases.Queries.Workspaces;
 
 namespace SMS.Infrastructure;
 

@@ -1,6 +1,7 @@
-﻿using SMS.UseCases.Pagination.OffsetPagination;
+﻿using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
+using SMS.UseCases.Pagination.OffsetPagination;
 
-namespace SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
+namespace SMS.UseCases.Queries.Tasks;
 
 public interface IGetTasksByWorkspaceIdService
 {

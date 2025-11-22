@@ -1,6 +1,7 @@
 ﻿using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 using SMS.UseCases.Pagination.OffsetPagination;
+using SMS.UseCases.Queries.Tasks;
 using Task = SMS.Core.Features.Tasks.Task;
 
 namespace SMS.Infrastructure.Queries.Tasks;

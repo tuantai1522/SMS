@@ -4,6 +4,7 @@ using SMS.Core.Errors.Roles;
 using SMS.Core.Errors.Workspaces;
 using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
+using SMS.UseCases.Queries.Workspaces;
 
 namespace SMS.UseCases.Features.Workspaces.UpdateMemberRole;
 

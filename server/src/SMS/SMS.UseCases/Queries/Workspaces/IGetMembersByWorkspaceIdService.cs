@@ -1,6 +1,7 @@
-﻿using SMS.UseCases.Pagination.OffsetPagination;
+﻿using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
+using SMS.UseCases.Pagination.OffsetPagination;
 
-namespace SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
+namespace SMS.UseCases.Queries.Workspaces;
 
 public interface IGetMembersByWorkspaceIdService
 {

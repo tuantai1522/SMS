@@ -2,6 +2,7 @@
 using SMS.Core.Features.Workspaces;
 using SMS.Infrastructure.Database;
 using SMS.UseCases.Features.Workspaces.UpdateMemberRole;
+using SMS.UseCases.Queries.Workspaces;
 
 namespace SMS.Infrastructure.Queries.Workspaces;
 

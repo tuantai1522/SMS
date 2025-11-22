@@ -3,6 +3,7 @@ using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
 using SMS.UseCases.Pagination.OffsetPagination;
+using SMS.UseCases.Queries.Workspaces;
 
 namespace SMS.Infrastructure.Queries.Workspaces;
 
