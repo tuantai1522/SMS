@@ -1,4 +1,6 @@
 ﻿using SMS.Core.Common;
+using SMS.Core.Features.Projects;
+using SMS.Core.Features.Users;
 
 namespace SMS.Core.Features.Tasks;
 
@@ -11,15 +13,20 @@ public sealed class Task : AggregateRoot, IDateTracking, ISoftDelete
     
     public string? Description { get; private set; }
     
-    public Guid ProjectId { get; init; }
+    public Guid ProjectId { get; private set; }
+    public Project Project { get; private set; } = null!;
     
     public Guid StatusId { get; private set; }
+    public TaskStatus TaskStatus { get; private set; } = null!;
     
     public Guid PriorityId { get; private set; }
+    public TaskPriority TaskPriority { get; private set; } = null!;
     
-    public Guid? AssignedTo { get; private set; }
+    public Guid? AssignedToId { get; private set; }
+    public User? AssignedTo { get; private set; }
     
     public Guid CreatorId { get; private set; }
+    public User Creator { get; private set; } = null!;
     
     
     public long? StartDate { get; private set; }
@@ -33,7 +40,7 @@ public sealed class Task : AggregateRoot, IDateTracking, ISoftDelete
     private Task() { }
 
     public static Task CreateTask(string name, string code, string? description, Guid projectId, Guid statusId,
-        Guid priorityId, Guid? assignedTo, Guid createdBy, long? startDate, long? dueDate)
+        Guid priorityId, Guid? assignedToId, Guid createdBy, long? startDate, long? dueDate)
     {
         return new Task
         {
@@ -43,7 +50,7 @@ public sealed class Task : AggregateRoot, IDateTracking, ISoftDelete
             ProjectId = projectId,
             StatusId = statusId,
             PriorityId = priorityId,
-            AssignedTo = assignedTo,
+            AssignedToId = assignedToId,
             CreatorId = createdBy,
             StartDate = startDate,
             DueDate = dueDate,
