@@ -16,7 +16,7 @@ internal sealed class CreateTaskCommandHandler(
     IProjectRepository projectRepository,
     ITaskStatusRepository taskStatusRepository,
     ITaskPriorityRepository taskPriorityRepository,
-    ITaskRepository taskRepository): IRequestHandler<CreateTaskCommand, Result<Guid>>
+    IRepository<Task> taskRepository): IRequestHandler<CreateTaskCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateTaskCommand command, CancellationToken cancellationToken)
     {
@@ -54,7 +54,7 @@ internal sealed class CreateTaskCommandHandler(
             var task = Task.CreateTask(command.Name, project.TotalTasks.ToString(), command.Description, command.ProjectId, command.StatusId,
                 command.PriorityId, command.AssignedTo, userId, command.StartDate, command.DueDate);
 
-            await taskRepository.AddTaskAsync(task, cancellationToken);
+            await taskRepository.AddAsync(task, cancellationToken);
 
             // Try to save
             try
