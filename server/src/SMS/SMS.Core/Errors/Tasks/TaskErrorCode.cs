@@ -10,4 +10,7 @@ public static class TaskErrorCode
     public const int CanNotCreateTask = -15005;
     public const int CanNotFindStatusById = -15006;
     public const int CanNotFindPriorityById = -15007;
+    public const int WorkspaceIdEmpty = -15008;
+    public const int InvalidPage = -15009;
+    public const int InvalidPageSize = -15010;
 }
