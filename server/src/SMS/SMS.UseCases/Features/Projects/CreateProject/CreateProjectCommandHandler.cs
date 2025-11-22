@@ -9,7 +9,7 @@ namespace SMS.UseCases.Features.Projects.CreateProject;
 internal sealed class CreateProjectCommandHandler(
     IUserProvider userProvider,
     IUnitOfWork unitOfWork,
-    IProjectRepository projectRepository): IRequestHandler<CreateProjectCommand, Result<Guid>>
+    IRepository<Project> projectRepository): IRequestHandler<CreateProjectCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateProjectCommand command, CancellationToken cancellationToken)
     {
@@ -17,7 +17,7 @@ internal sealed class CreateProjectCommandHandler(
         
         var project = Project.CreateProject(command.Name, command.Code, command.Emoji, command.Description, command.WorkspaceId, userId);
         
-        await projectRepository.AddProjectAsync(project, cancellationToken);
+        await projectRepository.AddAsync(project, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Result.Success(project.Id);

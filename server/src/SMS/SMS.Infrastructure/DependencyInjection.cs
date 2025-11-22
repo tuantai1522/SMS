@@ -55,6 +55,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services
+            .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
             .AddScoped<ITeamRepository, TeamRepository>()
             .AddScoped<IChannelRepository, ChannelRepository>()
             .AddScoped<IPostRepository, PostRepository>()
