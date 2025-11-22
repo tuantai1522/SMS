@@ -8,11 +8,11 @@ namespace SMS.UseCases.Features.Projects.UpdateProject;
 
 internal sealed class UpdateProjectCommandHandler(
     IUnitOfWork unitOfWork,
-    IProjectRepository projectRepository): IRequestHandler<UpdateProjectCommand, Result<Guid>>
+    IRepository<Project> projectRepository): IRequestHandler<UpdateProjectCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(UpdateProjectCommand command, CancellationToken cancellationToken)
     {
-        var project = await projectRepository.GetProjectByIdAsync(command.Id, cancellationToken);
+        var project = await projectRepository.FindByIdAsync(command.Id, cancellationToken);
 
         if (project is null)
         {

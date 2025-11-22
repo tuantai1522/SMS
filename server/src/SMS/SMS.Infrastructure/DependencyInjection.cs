@@ -17,6 +17,7 @@ using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.Infrastructure.Queries.Projects;
 using SMS.Infrastructure.Queries.Tasks;
 using SMS.Infrastructure.Queries.Workspaces;
 using SMS.Infrastructure.Repositories;
@@ -28,6 +29,7 @@ using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetWorkspaces;
 using SMS.UseCases.Features.Workspaces.UpdateMemberRole;
+using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
 using SMS.UseCases.Queries.Workspaces;
 
@@ -71,7 +73,6 @@ public static class DependencyInjection
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
             .AddScoped<ICountryRepository, CountryRepository>()
             
-            .AddScoped<IProjectRepository, ProjectRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
@@ -127,6 +128,8 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
+            .AddScoped<IGetProjectByIdAndLockService, GetProjectByIdAndLockService>()
+            
             .AddScoped<IGetRoleByNameService, GetRoleByNameService>()
             .AddScoped<IGetMembersByWorkspaceIdService, GetMembersByWorkspaceIdService>()
             .AddScoped<IGetWorkspacesService, GetWorkspacesService>()

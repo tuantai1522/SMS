@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using SMS.Core.Common;
 using SMS.Core.Errors.Tasks;
-using SMS.Core.Features.Projects;
 using SMS.Core.Features.Tasks;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Exceptions;
+using SMS.UseCases.Queries.Projects;
 using Task = SMS.Core.Features.Tasks.Task;
 using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
 
@@ -14,7 +14,7 @@ namespace SMS.UseCases.Features.Tasks.CreateTask;
 internal sealed class CreateTaskCommandHandler(
     IUserProvider userProvider,
     IUnitOfWork unitOfWork,
-    IProjectRepository projectRepository,
+    IGetProjectByIdAndLockService getProjectByIdAndLockService,
     IRepository<TaskStatus> taskStatusRepository,
     IRepository<TaskPriority> taskPriorityRepository,
     IRepository<Task> taskRepository): IRequestHandler<CreateTaskCommand, Result<Guid>>
@@ -40,7 +40,7 @@ internal sealed class CreateTaskCommandHandler(
         {
             await unitOfWork.BeginTransactionAsync(cancellationToken);
 
-            var project = await projectRepository.GetProjectByIdAndLockAsync(command.ProjectId, cancellationToken);
+            var project = await getProjectByIdAndLockService.Handle(command.ProjectId, cancellationToken);
 
             if (project == null)
             {
