@@ -27,6 +27,7 @@ using SMS.UseCases.Abstractions.WebStorages;
 using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
 using SMS.UseCases.Features.Workspaces.GetWorkspaces;
+using SMS.UseCases.Features.Workspaces.UpdateMemberRole;
 
 namespace SMS.Infrastructure;
 
@@ -73,7 +74,6 @@ public static class DependencyInjection
             
             .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IProjectRepository, ProjectRepository>()
-            .AddScoped<IWorkspaceMemberRepository, WorkspaceMemberRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
         return services;
@@ -131,6 +131,7 @@ public static class DependencyInjection
         services
             .AddScoped<IGetMembersByWorkspaceIdService, GetMembersByWorkspaceIdService>()
             .AddScoped<IGetWorkspacesService, GetWorkspacesService>()
+            .AddScoped<IGetWorkspaceMemberByWorkspaceIdAndUserIdService, GetWorkspaceMemberByWorkspaceIdAndUserIdService>()
             .AddScoped<IGetTasksByWorkspaceIdService, GetTasksByWorkspaceIdService>();
 
         return services;

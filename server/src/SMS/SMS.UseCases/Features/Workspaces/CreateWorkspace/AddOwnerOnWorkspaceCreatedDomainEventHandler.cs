@@ -7,7 +7,7 @@ namespace SMS.UseCases.Features.Workspaces.CreateWorkspace;
 
 internal sealed class AddOwnerOnWorkspaceCreatedDomainEventHandler(
     IRoleRepository roleRepository,
-    IWorkspaceMemberRepository workspaceMemberRepository,
+    IRepository<Workspace> workspaceRepository,
     IUnitOfWork unitOfWork) : INotificationHandler<WorkspaceCreatedDomainEvent>
 {
     public async Task Handle(WorkspaceCreatedDomainEvent notification, CancellationToken cancellationToken)
@@ -19,9 +19,13 @@ internal sealed class AddOwnerOnWorkspaceCreatedDomainEventHandler(
             return;
         }
         
-        var workspaceMember = WorkspaceMember.Create(notification.WorkspaceId, notification.UserId, ownerRole.Id);
+        var workspace = await workspaceRepository.FindByIdAsync(notification.WorkspaceId, cancellationToken);
+        if (workspace is null)
+        {
+            return;
+        }
         
-        await workspaceMemberRepository.AddWorkspaceMemberAsync(workspaceMember, cancellationToken);
+        workspace.AddMember(notification.UserId, ownerRole.Id);
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }

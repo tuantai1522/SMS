@@ -12,6 +12,8 @@ public class WorkspaceMemberConfiguration : IEntityTypeConfiguration<WorkspaceMe
         // Rename to snake case
         builder.ToTable("workspace_members");
         
+        builder.Property(c => c.Id).ValueGeneratedNever();
+        
         // One workspace member belongs to one workspace
         builder.HasOne<Workspace>()
             .WithMany(w => w.WorkspaceMembers)

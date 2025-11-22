@@ -47,4 +47,11 @@ public sealed class Workspace : AggregateRoot, IDateTracking
         Description = description;
         UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     }
+
+    public void AddMember(Guid userId, Guid roleId)
+    {
+        var workspaceMember = WorkspaceMember.Create(Id, userId, roleId);
+        
+        _workspaceMembers.Add(workspaceMember);
+    }
 }

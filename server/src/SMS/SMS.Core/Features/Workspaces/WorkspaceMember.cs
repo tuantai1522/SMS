@@ -18,7 +18,7 @@ public sealed class WorkspaceMember : BaseEntity, IDateTracking, ISoftDelete
     
     private WorkspaceMember() { }
 
-    public static WorkspaceMember Create(Guid workspaceId, Guid userId, Guid roleId)
+    internal static WorkspaceMember Create(Guid workspaceId, Guid userId, Guid roleId)
     {
         return new WorkspaceMember
         {

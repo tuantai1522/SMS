@@ -10,7 +10,7 @@ namespace SMS.UseCases.Features.Workspaces.UpdateMemberRole;
 internal sealed class UpdateMemberRoleCommandHandler(
     IUnitOfWork unitOfWork,
     IRoleRepository roleRepository,
-    IWorkspaceMemberRepository workspaceMemberRepository,
+    IGetWorkspaceMemberByWorkspaceIdAndUserIdService getWorkspaceMemberByWorkspaceIdAndUserIdService,
     IRepository<Workspace> workspaceRepository): IRequestHandler<UpdateMemberRoleCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(UpdateMemberRoleCommand command, CancellationToken cancellationToken)
@@ -29,7 +29,7 @@ internal sealed class UpdateMemberRoleCommandHandler(
             return Result.Failure<bool>(RoleErrors.CanNotFindRole);
         }
         
-        var workspaceMember = await workspaceMemberRepository.GetWorkspaceMemberByWorkspaceIdAndUserIdAsync(command.WorkspaceId, command.UserId, cancellationToken);
+        var workspaceMember = await getWorkspaceMemberByWorkspaceIdAndUserIdService.Handle(command.WorkspaceId, command.UserId, cancellationToken);
 
         if (workspaceMember is null)
         {
