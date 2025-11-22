@@ -2,10 +2,8 @@
 
 namespace SMS.Core.Features.Workspaces;
 
-public sealed class WorkspaceMember : IDateTracking, ISoftDelete
+public sealed class WorkspaceMember : BaseEntity, IDateTracking, ISoftDelete
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-    
     public Guid WorkspaceId { get; init; }
 
     public Guid UserId { get; init; }

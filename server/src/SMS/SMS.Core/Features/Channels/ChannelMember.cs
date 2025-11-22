@@ -3,7 +3,7 @@ using SMS.Core.Features.Users;
 
 namespace SMS.Core.Features.Channels;
 
-public sealed class ChannelMember : IDateTracking, ISoftDelete
+public sealed class ChannelMember : BaseEntity, IDateTracking, ISoftDelete
 {
     public Guid ChannelId { get; init; }
     

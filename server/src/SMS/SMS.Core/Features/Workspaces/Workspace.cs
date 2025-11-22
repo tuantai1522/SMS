@@ -4,8 +4,6 @@ namespace SMS.Core.Features.Workspaces;
 
 public sealed class Workspace : AggregateRoot, IDateTracking
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-        
     public string Name { get; private set; } = null!;
     public string? Description { get; private set; }
     

@@ -5,8 +5,6 @@ namespace SMS.Core.Features.Posts;
 
 public sealed class Post : AggregateRoot, IDateTracking, ISoftDelete
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-    
     public Guid ChannelId { get; init; }
     public Guid UserId { get; init; }
     

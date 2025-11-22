@@ -1,11 +1,10 @@
-﻿using SMS.Core.Features.Countries;
+﻿using SMS.Core.Common;
+using SMS.Core.Features.Countries;
 
 namespace SMS.Core.Features.Users;
 
-public sealed class Address
+public sealed class Address : BaseEntity
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-
     public Guid UserId { get; private set; }
     public User User { get; private set; } = null!;
 

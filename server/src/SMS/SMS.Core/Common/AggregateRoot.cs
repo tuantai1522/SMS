@@ -1,6 +1,6 @@
 namespace SMS.Core.Common;
 
-public abstract class AggregateRoot : IBaseEntity
+public abstract class AggregateRoot : BaseEntity
 {
     private readonly List<IDomainEvent> _domainEvents = [];
 

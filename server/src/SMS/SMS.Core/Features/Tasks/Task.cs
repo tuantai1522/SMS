@@ -6,8 +6,6 @@ namespace SMS.Core.Features.Tasks;
 
 public sealed class Task : AggregateRoot, IDateTracking, ISoftDelete
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-        
     public string Name { get; private set; } = null!;
     public string Code { get; private set; } = null!;
     

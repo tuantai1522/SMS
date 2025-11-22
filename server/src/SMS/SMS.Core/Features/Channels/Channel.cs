@@ -5,8 +5,6 @@ namespace SMS.Core.Features.Channels;
 
 public sealed class Channel : AggregateRoot, IDateTracking, ISoftDelete
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-
     public string DisplayName { get; private set; } = null!;
     public string? Description { get; private set; }
     

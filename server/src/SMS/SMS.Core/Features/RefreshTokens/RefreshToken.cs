@@ -1,9 +1,9 @@
+using SMS.Core.Common;
+
 namespace SMS.Core.Features.RefreshTokens;
 
-public sealed class RefreshToken
+public sealed class RefreshToken : AggregateRoot
 {
-    public Guid Id { get; init; } = Guid.CreateVersion7();
-
     public string Token { get; private set; } = null!;
     
     public Guid UserId { get; private set; }
