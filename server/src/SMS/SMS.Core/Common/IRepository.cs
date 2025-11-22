@@ -32,4 +32,14 @@ public interface IRepository<TEntity>
     /// Delete item
     /// </summary>
     void Delete(TEntity entity);
+    
+    /// <summary>
+    /// To find all
+    /// </summary>
+    Task<IReadOnlyList<TEntity>> FindAllAsync(CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// To verify existed entity by Id
+    /// </summary>
+    Task<bool> VerifyExistedEntityByIdAsync(Guid id, CancellationToken cancellationToken);
 }

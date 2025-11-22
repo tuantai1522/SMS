@@ -21,4 +21,10 @@ public sealed class EfRepository<TEntity>(IApplicationDbContext context) : IRepo
 
     public void Delete(TEntity entity)
         => context.Set<TEntity>().Remove(entity);
+
+    public async Task<IReadOnlyList<TEntity>> FindAllAsync(CancellationToken cancellationToken)
+        => await context.Set<TEntity>().ToListAsync(cancellationToken);
+
+    public async Task<bool> VerifyExistedEntityByIdAsync(Guid id, CancellationToken cancellationToken)
+        => await context.Set<TEntity>().AnyAsync(x => x.Id == id, cancellationToken);
 }
