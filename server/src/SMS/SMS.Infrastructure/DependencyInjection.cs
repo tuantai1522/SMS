@@ -17,11 +17,13 @@ using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.Infrastructure.Queries.Tasks;
 using SMS.Infrastructure.Repositories;
 using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
+using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
 
 namespace SMS.Infrastructure;
 
@@ -34,7 +36,8 @@ public static class DependencyInjection
             .AddRepositories()
             .AddAuthenticationInternal(configuration)
             .AddAuthorizationInternal()
-            .AddWebStorages();
+            .AddWebStorages()
+            .AddQueriesService();
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
     {
@@ -118,6 +121,14 @@ public static class DependencyInjection
     {
         services
             .AddScoped<ICookieService, CookieService>();
+
+        return services;
+    }
+    
+    private static IServiceCollection AddQueriesService(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IGetTasksByWorkspaceIdService, GetTasksByWorkspaceIdService>();
 
         return services;
     }

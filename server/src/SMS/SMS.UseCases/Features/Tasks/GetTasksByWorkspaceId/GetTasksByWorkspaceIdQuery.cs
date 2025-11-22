@@ -10,7 +10,8 @@ public sealed class GetTasksByWorkspaceIdQuery(
     IReadOnlyList<Guid>? assignedToIds,
     string? keyWord,
     long? dueDate,
-    bool isAscending) : OffsetPaginationRequest<GetTasksByWorkspaceIdResponse>
+    bool isAscending,
+    GetTasksOrder order) : OffsetPaginationRequest<GetTasksByWorkspaceIdResponse>
 {
     public Guid WorkspaceId { get; } = workspaceId;
     public Guid? ProjectId { get; } = projectId;
@@ -19,7 +20,7 @@ public sealed class GetTasksByWorkspaceIdQuery(
     public IReadOnlyList<Guid>? AssignedToIds { get; } = assignedToIds;
     public string? KeyWord { get; } = keyWord;
     public long? DueDate { get; } = dueDate;
-    
     public bool IsAscending { get; } = isAscending;
+    public GetTasksOrder Order { get; } = order;
 }
 
