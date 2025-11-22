@@ -7,6 +7,7 @@ using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Exceptions;
 using Task = SMS.Core.Features.Tasks.Task;
+using TaskStatus = SMS.Core.Features.Tasks.TaskStatus;
 
 namespace SMS.UseCases.Features.Tasks.CreateTask;
 
@@ -14,20 +15,20 @@ internal sealed class CreateTaskCommandHandler(
     IUserProvider userProvider,
     IUnitOfWork unitOfWork,
     IProjectRepository projectRepository,
-    ITaskStatusRepository taskStatusRepository,
-    ITaskPriorityRepository taskPriorityRepository,
+    IRepository<TaskStatus> taskStatusRepository,
+    IRepository<TaskPriority> taskPriorityRepository,
     IRepository<Task> taskRepository): IRequestHandler<CreateTaskCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateTaskCommand command, CancellationToken cancellationToken)
     {
-        var verifyExistedStatus = await taskStatusRepository.VerifyExistedStatusByIdAsync(command.StatusId, cancellationToken);
+        var verifyExistedStatus = await taskStatusRepository.VerifyExistedEntityByIdAsync(command.StatusId, cancellationToken);
 
         if (!verifyExistedStatus)
         {
             return Result.Failure<Guid>(TaskErrors.CanNotFindStatusById);
         }
         
-        var verifyExistedPriority = await taskPriorityRepository.VerifyExistedPriorityByIdAsync(command.PriorityId, cancellationToken);
+        var verifyExistedPriority = await taskPriorityRepository.VerifyExistedEntityByIdAsync(command.PriorityId, cancellationToken);
 
         if (!verifyExistedPriority)
         {
