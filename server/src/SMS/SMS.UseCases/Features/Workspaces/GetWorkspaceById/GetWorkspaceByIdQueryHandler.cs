@@ -6,11 +6,11 @@ using SMS.Core.Features.Workspaces;
 namespace SMS.UseCases.Features.Workspaces.GetWorkspaceById;
 
 internal sealed class GetWorkspaceByIdQueryHandler(
-    IWorkspaceRepository workspaceRepository): IRequestHandler<GetWorkspaceByIdQuery, Result<GetWorkspaceByIdResponse>>
+    IRepository<Workspace> workspaceRepository): IRequestHandler<GetWorkspaceByIdQuery, Result<GetWorkspaceByIdResponse>>
 {
     public async Task<Result<GetWorkspaceByIdResponse>> Handle(GetWorkspaceByIdQuery query, CancellationToken cancellationToken)
     {
-        var workspace = await workspaceRepository.GetWorkspaceByIdAsync(query.Id, cancellationToken);
+        var workspace = await workspaceRepository.FindByIdAsync(query.Id, cancellationToken);
 
         return workspace is null ? 
             Result.Failure<GetWorkspaceByIdResponse>(WorkspaceErrors.CanNotFindWorkspace) : 

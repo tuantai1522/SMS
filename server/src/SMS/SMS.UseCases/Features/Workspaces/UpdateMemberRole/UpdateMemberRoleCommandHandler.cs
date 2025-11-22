@@ -11,11 +11,11 @@ internal sealed class UpdateMemberRoleCommandHandler(
     IUnitOfWork unitOfWork,
     IRoleRepository roleRepository,
     IWorkspaceMemberRepository workspaceMemberRepository,
-    IWorkspaceRepository workspaceRepository): IRequestHandler<UpdateMemberRoleCommand, Result<bool>>
+    IRepository<Workspace> workspaceRepository): IRequestHandler<UpdateMemberRoleCommand, Result<bool>>
 {
     public async Task<Result<bool>> Handle(UpdateMemberRoleCommand command, CancellationToken cancellationToken)
     {
-        var workspace = await workspaceRepository.GetWorkspaceByIdAsync(command.WorkspaceId, cancellationToken);
+        var workspace = await workspaceRepository.FindByIdAsync(command.WorkspaceId, cancellationToken);
 
         if (workspace is null)
         {

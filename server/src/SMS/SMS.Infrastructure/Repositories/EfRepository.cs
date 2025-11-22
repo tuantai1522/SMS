@@ -1,9 +1,11 @@
+using Microsoft.EntityFrameworkCore;
 using SMS.Core.Common;
 using SMS.UseCases.Abstractions.Data;
 
 namespace SMS.Infrastructure.Repositories;
 
-public sealed class EfRepository<TEntity>(IApplicationDbContext context) : IRepository<TEntity> where TEntity : AggregateRoot
+public sealed class EfRepository<TEntity>(IApplicationDbContext context) : IRepository<TEntity> 
+    where TEntity : AggregateRoot
 {
     public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default)
         => await context.Set<TEntity>().AddAsync(entity, cancellationToken);
@@ -11,9 +13,12 @@ public sealed class EfRepository<TEntity>(IApplicationDbContext context) : IRepo
     public async Task AddRangeAsync(IReadOnlyList<TEntity> entites, CancellationToken cancellationToken = default)
         => await context.Set<TEntity>().AddRangeAsync(entites, cancellationToken);
 
-    public void UpdateAsync(TEntity entity)
+    public async Task<TEntity?> FindByIdAsync(Guid id, CancellationToken cancellationToken)
+        => await context.Set<TEntity>().FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+    public void Update(TEntity entity)
         => context.Set<TEntity>().Update(entity);
 
-    public void DeleteAsync(TEntity entity)
+    public void Delete(TEntity entity)
         => context.Set<TEntity>().Remove(entity);
 }

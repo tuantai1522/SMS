@@ -9,13 +9,13 @@ namespace SMS.UseCases.Features.Workspaces.CreateWorkspace;
 internal sealed class CreateWorkspaceCommandHandler(
     IUserProvider userProvider,
     IUnitOfWork unitOfWork,
-    IWorkspaceRepository workspaceRepository): IRequestHandler<CreateWorkspaceCommand, Result<Guid>>
+    IRepository<Workspace> workspaceRepository): IRequestHandler<CreateWorkspaceCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateWorkspaceCommand command, CancellationToken cancellationToken)
     {
         var workspace = Workspace.CreateWorkspace(command.Name, command.Description, userProvider.UserId);
         
-        await workspaceRepository.AddWorkspaceAsync(workspace, cancellationToken);
+        await workspaceRepository.AddAsync(workspace, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
         return Result.Success(workspace.Id);

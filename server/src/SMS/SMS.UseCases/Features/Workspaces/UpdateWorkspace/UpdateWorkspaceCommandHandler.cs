@@ -8,11 +8,11 @@ namespace SMS.UseCases.Features.Workspaces.UpdateWorkspace;
 
 internal sealed class UpdateWorkspaceCommandHandler(
     IUnitOfWork unitOfWork,
-    IWorkspaceRepository workspaceRepository): IRequestHandler<UpdateWorkspaceCommand, Result<Guid>>
+    IRepository<Workspace> workspaceRepository): IRequestHandler<UpdateWorkspaceCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(UpdateWorkspaceCommand command, CancellationToken cancellationToken)
     {
-        var workspace = await workspaceRepository.GetWorkspaceByIdAsync(command.Id, cancellationToken);
+        var workspace = await workspaceRepository.FindByIdAsync(command.Id, cancellationToken);
 
         if (workspace is null)
         {
