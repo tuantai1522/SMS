@@ -71,7 +71,6 @@ public static class DependencyInjection
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
             .AddScoped<ICountryRepository, CountryRepository>()
             
-            .AddScoped<IRoleRepository, RoleRepository>()
             .AddScoped<IProjectRepository, ProjectRepository>()
             .AddScoped<IUserRepository, UserRepository>();
 
@@ -128,6 +127,7 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
+            .AddScoped<IGetRoleByNameService, GetRoleByNameService>()
             .AddScoped<IGetMembersByWorkspaceIdService, GetMembersByWorkspaceIdService>()
             .AddScoped<IGetWorkspacesService, GetWorkspacesService>()
             .AddScoped<IGetWorkspaceMemberByWorkspaceIdAndUserIdService, GetWorkspaceMemberByWorkspaceIdAndUserIdService>()
