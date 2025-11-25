@@ -9,7 +9,7 @@ public sealed class Role : AggregateRoot
     /// <summary>
     /// List role permissions of current role
     /// </summary>
-    private readonly List<RolePermission> _rolePermissions = [];
+    private readonly List<ViewRole> _viewRoles = [];
     
-    public IReadOnlyList<RolePermission> RolePermissions => _rolePermissions.ToList();
+    public IReadOnlyList<ViewRole> ViewRoles => _viewRoles.ToList();
 }

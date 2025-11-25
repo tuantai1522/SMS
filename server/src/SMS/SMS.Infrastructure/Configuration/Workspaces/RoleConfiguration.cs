@@ -15,5 +15,10 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
         builder.HasIndex(p => p.Name).IsUnique();
         builder.Property(p => p.Name).HasMaxLength(256);
 
+        // One role has multiple view roles
+        builder.HasMany(role => role.ViewRoles)
+            .WithOne()
+            .HasForeignKey(p => p.RoleId);
+
     }
 }

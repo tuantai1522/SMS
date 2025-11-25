@@ -2,18 +2,23 @@
 
 public enum PermissionConstant
 {
-    CreateWorkspace,
-    DeleteWorkspace,
-    EditWorkspace,
-    ManageWorkspaceSettings,
-    AddMember,
-    ChangeMemberRole,
-    RemoveMember,
-    CreateProject,
-    EditProject,
-    DeleteProject,
+    Dashboard, // IsMenu = true
+    
+    Tasks, // IsMenu = true
     CreateTask,
     EditTask,
     DeleteTask,
-    ViewOnly,
+    
+    Members, // IsMenu = true
+    AddMember,
+    ChangeMemberRole,
+    RemoveMember,
+    
+    Settings, // IsMenu = true
+    DeleteWorkspace,
+    EditWorkspace,
+    
+    CreateProject,
+    EditProject,
+    DeleteProject,
 }

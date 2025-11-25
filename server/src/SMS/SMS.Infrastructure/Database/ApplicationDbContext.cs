@@ -39,7 +39,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<TaskStatus> TaskStatuses => Set<TaskStatus>();
     public DbSet<TaskPriority> TaskPriorities => Set<TaskPriority>();
     public DbSet<Role> Roles => Set<Role>();
-    public DbSet<Permission> Permissions => Set<Permission>();
+    public DbSet<View> Views => Set<View>();
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
