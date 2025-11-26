@@ -25,10 +25,6 @@ using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
-using SMS.UseCases.Features.Tasks.GetTasksByWorkspaceId;
-using SMS.UseCases.Features.Workspaces.GetMembersByWorkspaceId;
-using SMS.UseCases.Features.Workspaces.GetWorkspaces;
-using SMS.UseCases.Features.Workspaces.UpdateMemberRole;
 using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
 using SMS.UseCases.Queries.Workspaces;
@@ -134,7 +130,10 @@ public static class DependencyInjection
             .AddScoped<IGetMembersByWorkspaceIdService, GetMembersByWorkspaceIdService>()
             .AddScoped<IGetWorkspacesService, GetWorkspacesService>()
             .AddScoped<IGetWorkspaceMemberByWorkspaceIdAndUserIdService, GetWorkspaceMemberByWorkspaceIdAndUserIdService>()
-            .AddScoped<IGetTasksByWorkspaceIdService, GetTasksByWorkspaceIdService>();
+            .AddScoped<IGetTasksByWorkspaceIdService, GetTasksByWorkspaceIdService>()
+            
+            .AddScoped<IGetMenuViewsByRoleIdService, GetMenuViewsByRoleIdService>()
+            .AddScoped<IGetRoleByWorkspaceIdAndUserIdService, GetRoleByWorkspaceIdAndUserIdService>();
 
         return services;
     }
