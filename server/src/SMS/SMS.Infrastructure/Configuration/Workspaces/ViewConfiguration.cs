@@ -18,6 +18,8 @@ public class ViewConfiguration : IEntityTypeConfiguration<View>
         builder.HasIndex(p => p.Vid).IsUnique();
         builder.Property(p => p.Vid).HasMaxLength(256);
         
+        builder.Property(p => p.Icon).HasMaxLength(256);
+        
         // One view has multiple view roles
         builder.HasMany(team => team.ViewRoles)
             .WithOne()

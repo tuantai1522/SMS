@@ -29,6 +29,7 @@ namespace SMS.Infrastructure.Migrations
                     code = table.Column<int>(type: "integer", nullable: false),
                     vid = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     is_menu = table.Column<bool>(type: "boolean", nullable: false),
+                    order = table.Column<int>(type: "integer", nullable: false),
                     AllowRead = table.Column<int>(type: "integer", nullable: false),
                     AllowUpdate = table.Column<int>(type: "integer", nullable: false),
                     AllowDelete = table.Column<int>(type: "integer", nullable: false),

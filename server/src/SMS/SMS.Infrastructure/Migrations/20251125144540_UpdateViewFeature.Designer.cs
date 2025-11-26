@@ -12,7 +12,7 @@ using SMS.Infrastructure.Database;
 namespace SMS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251125125203_UpdateViewFeature")]
+    [Migration("20251125144540_UpdateViewFeature")]
     partial class UpdateViewFeature
     {
         /// <inheritdoc />
@@ -661,6 +661,10 @@ namespace SMS.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("name");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("integer")
+                        .HasColumnName("order");
 
                     b.Property<string>("Vid")
                         .HasMaxLength(256)

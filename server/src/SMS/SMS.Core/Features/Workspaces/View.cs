@@ -12,6 +12,10 @@ public sealed class View : AggregateRoot
     
     public bool IsMenu { get; private set; }
     
+    public int Order { get; private set; }
+    
+    public string? Icon { get; private set; }
+    
     public ViewPermission ViewPermission { get; set; } = null!;
         
     /// <summary>
