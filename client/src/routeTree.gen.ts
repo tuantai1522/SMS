@@ -9,12 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
+import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
+import { Route as ProtectedWorkspacesWorkspaceIdRouteRouteImport } from './routes/_protected/workspaces/$workspaceId/route'
+import { Route as ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/projects/index'
+import { Route as ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/dashboard/index'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -22,40 +25,91 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthSignInRoute = AuthSignInRouteImport.update({
+  id: '/_auth/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedWorkspacesWorkspaceIdRouteRoute =
+  ProtectedWorkspacesWorkspaceIdRouteRouteImport.update({
+    id: '/workspaces/$workspaceId',
+    path: '/workspaces/$workspaceId',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdProjectsIndexRoute =
+  ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport.update({
+    id: '/projects/',
+    path: '/projects/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdDashboardIndexRoute =
+  ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/workspaces/$workspaceId/projects': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/sign-in': typeof AuthSignInRoute
+  '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/workspaces/$workspaceId/projects': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
+  '/_protected': typeof ProtectedRouteWithChildren
+  '/_auth/sign-in': typeof AuthSignInRoute
+  '/_protected/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/_protected/workspaces/$workspaceId/dashboard/': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/_protected/workspaces/$workspaceId/projects/': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths:
+    | '/'
+    | '/sign-in'
+    | '/workspaces/$workspaceId'
+    | '/workspaces/$workspaceId/dashboard'
+    | '/workspaces/$workspaceId/projects'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to:
+    | '/'
+    | '/sign-in'
+    | '/workspaces/$workspaceId'
+    | '/workspaces/$workspaceId/dashboard'
+    | '/workspaces/$workspaceId/projects'
+  id:
+    | '__root__'
+    | '/'
+    | '/_protected'
+    | '/_auth/sign-in'
+    | '/_protected/workspaces/$workspaceId'
+    | '/_protected/workspaces/$workspaceId/dashboard/'
+    | '/_protected/workspaces/$workspaceId/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
+  ProtectedRoute: typeof ProtectedRouteWithChildren
+  AuthSignInRoute: typeof AuthSignInRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -65,12 +119,72 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/sign-in': {
+      id: '/_auth/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof AuthSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/workspaces/$workspaceId': {
+      id: '/_protected/workspaces/$workspaceId'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/workspaces/$workspaceId/projects/': {
+      id: '/_protected/workspaces/$workspaceId/projects/'
+      path: '/projects'
+      fullPath: '/workspaces/$workspaceId/projects'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/dashboard/': {
+      id: '/_protected/workspaces/$workspaceId/dashboard/'
+      path: '/dashboard'
+      fullPath: '/workspaces/$workspaceId/dashboard'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
   }
 }
 
+interface ProtectedWorkspacesWorkspaceIdRouteRouteChildren {
+  ProtectedWorkspacesWorkspaceIdDashboardIndexRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  ProtectedWorkspacesWorkspaceIdProjectsIndexRoute: typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
+}
+
+const ProtectedWorkspacesWorkspaceIdRouteRouteChildren: ProtectedWorkspacesWorkspaceIdRouteRouteChildren =
+  {
+    ProtectedWorkspacesWorkspaceIdDashboardIndexRoute:
+      ProtectedWorkspacesWorkspaceIdDashboardIndexRoute,
+    ProtectedWorkspacesWorkspaceIdProjectsIndexRoute:
+      ProtectedWorkspacesWorkspaceIdProjectsIndexRoute,
+  }
+
+const ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren =
+  ProtectedWorkspacesWorkspaceIdRouteRoute._addFileChildren(
+    ProtectedWorkspacesWorkspaceIdRouteRouteChildren,
+  )
+
+interface ProtectedRouteChildren {
+  ProtectedWorkspacesWorkspaceIdRouteRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedWorkspacesWorkspaceIdRouteRoute:
+    ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
+  ProtectedRoute: ProtectedRouteWithChildren,
+  AuthSignInRoute: AuthSignInRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

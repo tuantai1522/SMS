@@ -1,18 +1,34 @@
+import { QueryClientProvider } from "@tanstack/react-query";
+import { createRouter as createTanStackRouter } from "@tanstack/react-router";
+
 import { routeTree } from "./routeTree.gen";
-import { createRouter } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { queryClient } from "./features/shared/lib/queryClient";
 
 // Set up a Router instance
-export function createMyRouter() {
-  const router = createRouter({
+export function createRouter() {
+  const router = createTanStackRouter({
     routeTree,
+    context: {
+      queryClient,
+    },
+    Wrap: function WrapComponent({ children }) {
+      return (
+        // Every component in routes can use React Query
+        <QueryClientProvider client={queryClient}>
+          {/* Todo: To add Spinner Suspense */}
+          <Suspense fallback={<p>Loading....</p>}>{children}</Suspense>
+        </QueryClientProvider>
+      );
+    },
   });
 
   return router;
 }
 
-// Register the router instance for type safety
+// Register things for typesafety
 declare module "@tanstack/react-router" {
   interface Register {
-    router: typeof createMyRouter;
+    router: ReturnType<typeof createRouter>;
   }
 }
