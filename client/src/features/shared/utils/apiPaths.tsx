@@ -1,5 +1,3 @@
-export const BASE_URL = "https://localhost:49990";
-
 export const API_PATHS = {
   TOKENS: {
     REFRESH_TOKEN: "/tokens/refresh-token",
@@ -10,6 +8,6 @@ export const API_PATHS = {
     GET_ME: "/users/me",
   },
   WORKSPACES: {
-    GET_WORKSPACES: "/workspaces"
-  }
+    GET_WORKSPACES: "/workspaces",
+  },
 };

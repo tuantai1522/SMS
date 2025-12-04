@@ -1,9 +1,9 @@
 import axios from "axios";
 import { setupInterceptors } from "./interceptors";
-import { BASE_URL } from "../../utils/apiPaths";
+import { Config } from "../../config";
 
 export const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: Config.shared.API_URL,
   withCredentials: true, // cookie refresh token
   timeout: 15000,
 });
