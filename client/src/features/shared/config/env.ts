@@ -22,5 +22,3 @@ export const SharedEnv = {
   PAGE: parsed.data.VITE_DEFAULT_PAGE,
   PAGE_SIZE: parsed.data.VITE_DEFAULT_PAGE_SIZE,
 } as const;
-
-console.log(SharedEnv);
