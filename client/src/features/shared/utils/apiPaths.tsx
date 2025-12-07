@@ -9,5 +9,6 @@ export const API_PATHS = {
   },
   WORKSPACES: {
     GET_WORKSPACES: "/workspaces",
+    GET_MENU_VIEWS_BY_WORKSPACE_ID: "/workspaces/views",
   },
 };
