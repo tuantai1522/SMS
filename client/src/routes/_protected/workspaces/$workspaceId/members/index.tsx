@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/_protected/workspaces/$workspaceId/projects/")({
+export const Route = createFileRoute("/_protected/workspaces/$workspaceId/members/")({
   component: ProjectPage,
 });
 

@@ -31,7 +31,7 @@ export function useSignInForm() {
         // this re-runs all beforeLoad guards
         router.invalidate();
 
-        navigate({ to: "/dashboard" });
+        navigate({ to: "/" });
       },
       onError: (error) => {
         // toast({

@@ -13,7 +13,9 @@ import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as ProtectedWorkspacesWorkspaceIdRouteRouteImport } from './routes/_protected/workspaces/$workspaceId/route'
-import { Route as ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/projects/index'
+import { Route as ProtectedWorkspacesWorkspaceIdTasksIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/tasks/index'
+import { Route as ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/settings/index'
+import { Route as ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/members/index'
 import { Route as ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/dashboard/index'
 
 const ProtectedRoute = ProtectedRouteImport.update({
@@ -36,10 +38,22 @@ const ProtectedWorkspacesWorkspaceIdRouteRoute =
     path: '/workspaces/$workspaceId',
     getParentRoute: () => ProtectedRoute,
   } as any)
-const ProtectedWorkspacesWorkspaceIdProjectsIndexRoute =
-  ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport.update({
-    id: '/projects/',
-    path: '/projects/',
+const ProtectedWorkspacesWorkspaceIdTasksIndexRoute =
+  ProtectedWorkspacesWorkspaceIdTasksIndexRouteImport.update({
+    id: '/tasks/',
+    path: '/tasks/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdSettingsIndexRoute =
+  ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdMembersIndexRoute =
+  ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport.update({
+    id: '/members/',
+    path: '/members/',
     getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
   } as any)
 const ProtectedWorkspacesWorkspaceIdDashboardIndexRoute =
@@ -54,14 +68,18 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof AuthSignInRoute
   '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
   '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/workspaces/$workspaceId/projects': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
+  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/workspaces/$workspaceId/tasks': typeof ProtectedWorkspacesWorkspaceIdTasksIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/sign-in': typeof AuthSignInRoute
   '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
   '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/workspaces/$workspaceId/projects': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
+  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/workspaces/$workspaceId/tasks': typeof ProtectedWorkspacesWorkspaceIdTasksIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -70,7 +88,9 @@ export interface FileRoutesById {
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_protected/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
   '/_protected/workspaces/$workspaceId/dashboard/': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/_protected/workspaces/$workspaceId/projects/': typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
+  '/_protected/workspaces/$workspaceId/members/': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/_protected/workspaces/$workspaceId/settings/': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/_protected/workspaces/$workspaceId/tasks/': typeof ProtectedWorkspacesWorkspaceIdTasksIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -79,14 +99,18 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/workspaces/$workspaceId'
     | '/workspaces/$workspaceId/dashboard'
-    | '/workspaces/$workspaceId/projects'
+    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/sign-in'
     | '/workspaces/$workspaceId'
     | '/workspaces/$workspaceId/dashboard'
-    | '/workspaces/$workspaceId/projects'
+    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/tasks'
   id:
     | '__root__'
     | '/'
@@ -94,7 +118,9 @@ export interface FileRouteTypes {
     | '/_auth/sign-in'
     | '/_protected/workspaces/$workspaceId'
     | '/_protected/workspaces/$workspaceId/dashboard/'
-    | '/_protected/workspaces/$workspaceId/projects/'
+    | '/_protected/workspaces/$workspaceId/members/'
+    | '/_protected/workspaces/$workspaceId/settings/'
+    | '/_protected/workspaces/$workspaceId/tasks/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -133,11 +159,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRouteImport
       parentRoute: typeof ProtectedRoute
     }
-    '/_protected/workspaces/$workspaceId/projects/': {
-      id: '/_protected/workspaces/$workspaceId/projects/'
-      path: '/projects'
-      fullPath: '/workspaces/$workspaceId/projects'
-      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRouteImport
+    '/_protected/workspaces/$workspaceId/tasks/': {
+      id: '/_protected/workspaces/$workspaceId/tasks/'
+      path: '/tasks'
+      fullPath: '/workspaces/$workspaceId/tasks'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdTasksIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/settings/': {
+      id: '/_protected/workspaces/$workspaceId/settings/'
+      path: '/settings'
+      fullPath: '/workspaces/$workspaceId/settings'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/members/': {
+      id: '/_protected/workspaces/$workspaceId/members/'
+      path: '/members'
+      fullPath: '/workspaces/$workspaceId/members'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport
       parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
     }
     '/_protected/workspaces/$workspaceId/dashboard/': {
@@ -152,15 +192,21 @@ declare module '@tanstack/react-router' {
 
 interface ProtectedWorkspacesWorkspaceIdRouteRouteChildren {
   ProtectedWorkspacesWorkspaceIdDashboardIndexRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  ProtectedWorkspacesWorkspaceIdProjectsIndexRoute: typeof ProtectedWorkspacesWorkspaceIdProjectsIndexRoute
+  ProtectedWorkspacesWorkspaceIdMembersIndexRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  ProtectedWorkspacesWorkspaceIdSettingsIndexRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  ProtectedWorkspacesWorkspaceIdTasksIndexRoute: typeof ProtectedWorkspacesWorkspaceIdTasksIndexRoute
 }
 
 const ProtectedWorkspacesWorkspaceIdRouteRouteChildren: ProtectedWorkspacesWorkspaceIdRouteRouteChildren =
   {
     ProtectedWorkspacesWorkspaceIdDashboardIndexRoute:
       ProtectedWorkspacesWorkspaceIdDashboardIndexRoute,
-    ProtectedWorkspacesWorkspaceIdProjectsIndexRoute:
-      ProtectedWorkspacesWorkspaceIdProjectsIndexRoute,
+    ProtectedWorkspacesWorkspaceIdMembersIndexRoute:
+      ProtectedWorkspacesWorkspaceIdMembersIndexRoute,
+    ProtectedWorkspacesWorkspaceIdSettingsIndexRoute:
+      ProtectedWorkspacesWorkspaceIdSettingsIndexRoute,
+    ProtectedWorkspacesWorkspaceIdTasksIndexRoute:
+      ProtectedWorkspacesWorkspaceIdTasksIndexRoute,
   }
 
 const ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren =
