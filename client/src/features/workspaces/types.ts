@@ -8,7 +8,7 @@ export type Workspace = {
   name: string;
 };
 
-export type GetMenuViewsResponse = {
+export type GetMenuViewsByWorkspaceIdResponse = {
   id: string;
   name: string;
   int: number;
@@ -16,7 +16,13 @@ export type GetMenuViewsResponse = {
   icon: string;
 };
 
-export type MenuViewSidebarItem = GetMenuViewsResponse & {
+export type MenuViewSidebarItem = GetMenuViewsByWorkspaceIdResponse & {
   targetPath: string;
   isActive: boolean;
+};
+
+export type GetProjectViewsByWorkspaceIdResponse = {
+  id: string;
+  name: string;
+  emoji?: string;
 };

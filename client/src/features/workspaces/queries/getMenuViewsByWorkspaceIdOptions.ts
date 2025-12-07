@@ -1,5 +1,5 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getMenuViewsByWorkspaceId } from "../apis/getMenuViews.api";
+import { getMenuViewsByWorkspaceId } from "../apis/getMenuViewsByWorkspaceId.api";
 
 export const getMenuViewsByWorkspaceIdOptions = (workspaceId: string) =>
   queryOptions({
@@ -7,3 +7,4 @@ export const getMenuViewsByWorkspaceIdOptions = (workspaceId: string) =>
     queryFn: () => getMenuViewsByWorkspaceId(workspaceId),
     staleTime: 0,
   });
+

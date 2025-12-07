@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 const SharedEnvSchema = z.object({
-  VITE_API_URL: z.string().optional(),
-  VITE_DEFAULT_PAGE: z.coerce.number().optional(),
-  VITE_DEFAULT_PAGE_SIZE: z.coerce.number().optional(),
+  VITE_API_URL: z.string(),
+  VITE_DEFAULT_PAGE: z.coerce.number(),
+  VITE_DEFAULT_PAGE_SIZE: z.coerce.number(),
 });
 
 const parsed = SharedEnvSchema.safeParse(import.meta.env);
