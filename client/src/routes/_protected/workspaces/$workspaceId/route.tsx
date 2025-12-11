@@ -13,6 +13,7 @@ import { WorkspaceSidebar } from "../../../../features/workspaces/components/Wor
 import { Separator } from "../../../../features/shared/components/ui/Seperator";
 import { MenuViewSidebar } from "../../../../features/workspaces/components/MenuViewSidebar";
 import { ProjectSidebar } from "../../../../features/workspaces/components/ProjectSidebar";
+import { DialogHost } from "../../../../features/shared/components/dialog/DialogHost";
 
 // This will basically be workspace layout of application
 export const Route = createFileRoute("/_protected/workspaces/$workspaceId")({
@@ -64,6 +65,8 @@ function WorkspacePage() {
           </SidebarInset>
         </div>
       </SidebarProvider>
+
+      <DialogHost />
     </>
   );
 }
