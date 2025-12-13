@@ -1,9 +1,8 @@
-// src/shared/dialog/dialogRegistry.tsx
-
-import CreateProjectDialog from "../../../projects/components/CreateProjectDialog";
+import type { ComponentType } from "react";
+import CreateProjectDialog from "../../../projects/components/CreateProjectDialog/CreateProjectDialog";
 import type { DialogId, DialogPayloads } from "../../types/dialog.types";
 
-export type DialogComponent<K extends DialogId> = React.ComponentType<{
+export type DialogComponent<K extends DialogId> = ComponentType<{
   payload: DialogPayloads[K];
   onClose: () => void;
 }>;
