@@ -12,4 +12,7 @@ export const API_PATHS = {
     GET_MENU_VIEWS_BY_WORKSPACE_ID: "/workspaces/views",
     GET_PROJECT_VIEWS_BY_WORKSPACE_ID: "/workspaces/projects",
   },
+  PROJECTS: {
+    CREATE_PROJECT: "/projects",
+  },
 };

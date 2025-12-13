@@ -15,6 +15,7 @@ public sealed class GetProjectsByWorkspaceIdService(IApplicationDbContext contex
             from p in context.Set<Project>() 
             join w in context.Set<Workspace>() on workspaceId equals w.Id
             join wm in context.Set<WorkspaceMember>() on w.Id equals wm.WorkspaceId
+            orderby p.CreatedAt descending
             select new GetProjectsByWorkspaceIdResponse(p.Id, p.Name, p.Emoji);
         
         return await OffsetPaginationResponse<GetProjectsByWorkspaceIdResponse>.CreateAsync(baseQuery, page, pageSize, cancellationToken);
