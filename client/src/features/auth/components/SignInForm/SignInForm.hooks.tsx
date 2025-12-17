@@ -5,10 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signInFormSchema, type SignInFormSchema } from "./SignInForm.schema";
 import { useAuthStore } from "../../stores/auth.store";
 import { queryClient } from "../../../shared/lib/queryClient";
+import { useToast } from "../../../shared/hooks/useToast";
 
 export function useSignInForm() {
   const navigate = useNavigate();
   const router = useRouter();
+
+  const { toast } = useToast();
 
   const signInMutation = useSignIn();
 
@@ -34,11 +37,15 @@ export function useSignInForm() {
         navigate({ to: "/" });
       },
       onError: (error) => {
-        // toast({
-        //   title: "Error",
-        //   description: error.message,
-        //   variant: "destructive",
-        // });
+        const apiError = error.response?.data;
+
+        const message = apiError?.errors?.map((e) => e.description).join(", ");
+
+        toast({
+          title: "Error",
+          description: message || "Invalid request",
+          variant: "destructive",
+        });
       },
     });
   });
