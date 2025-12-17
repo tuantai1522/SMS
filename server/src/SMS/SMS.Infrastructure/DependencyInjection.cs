@@ -131,6 +131,7 @@ public static class DependencyInjection
             
             .AddScoped<IGetMenuViewsByRoleIdService, GetMenuViewsByRoleIdService>()
             .AddScoped<IGetProjectsByWorkspaceIdService, GetProjectsByWorkspaceIdService>()
+            .AddScoped<IVerifyExistedProjectCodeByWorkspaceIdService, VerifyExistedProjectCodeByWorkspaceIdService>()
             .AddScoped<IGetRoleByWorkspaceIdAndUserIdService, GetRoleByWorkspaceIdAndUserIdService>();
 
         return services;

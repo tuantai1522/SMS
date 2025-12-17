@@ -19,6 +19,11 @@ public static class CustomResults
         {
             return Results.NotFound(baseResult);
         }
+        
+        if (baseResult.Errors?.Any(e => e.ErrorType == ErrorType.Conflict) == true)
+        {
+            return Results.Conflict(baseResult);
+        }
 
         // Return 500 error
         return Results.Problem();
