@@ -2,10 +2,14 @@ import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
   SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
   SidebarProvider,
 } from "../../../../features/shared/components/ui/Sidebar";
 import Logo from "../../../../features/shared/components/logo";
@@ -14,6 +18,15 @@ import { Separator } from "../../../../features/shared/components/ui/Seperator";
 import { MenuViewSidebar } from "../../../../features/workspaces/components/MenuViewSidebar";
 import { ProjectSidebar } from "../../../../features/workspaces/components/ProjectSidebar";
 import { DialogHost } from "../../../../features/shared/components/dialog/DialogHost";
+import { EllipsisIcon } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../../../../features/shared/components/ui/DropdownMenu";
+import UserAvatar from "../../../../features/users/components/UserAvatar";
+import { SignOutMenuItem } from "../../../../features/auth/components/SignOutMenuItem/SignOutMenuItem";
 
 // This will basically be workspace layout of application
 export const Route = createFileRoute("/_protected/workspaces/$workspaceId")({
@@ -53,6 +66,33 @@ function WorkspacePage() {
                   </SidebarGroupContent>
                 </SidebarGroup>
               </SidebarContent>
+
+              <SidebarFooter className="dark:bg-background">
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuButton
+                          size="lg"
+                          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                        >
+                          <UserAvatar />
+                          <EllipsisIcon className="ml-auto size-4" />
+                        </SidebarMenuButton>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+                        side={"top"}
+                        align="start"
+                        sideOffset={4}
+                      >
+                        <DropdownMenuSeparator />
+                        <SignOutMenuItem />
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarFooter>
             </Sidebar>
           </div>
 

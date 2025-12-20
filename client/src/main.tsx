@@ -10,6 +10,6 @@ const router = createRouter();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <RouterProvider router={router} />
-    <TanStackRouterDevtools router={router} />
+    <TanStackRouterDevtools router={router} position="top-left" />
   </StrictMode>
 );

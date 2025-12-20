@@ -1,6 +1,5 @@
 import type { AxiosInstance } from "axios";
 import { useAuthStore } from "../../../auth/stores/auth.store";
-import { queryClient } from "../queryClient";
 import { API_PATHS } from "../../utils/apiPaths";
 
 export function setupInterceptors(api: AxiosInstance) {
@@ -35,7 +34,6 @@ export function setupInterceptors(api: AxiosInstance) {
           return api(original);
         } catch {
           useAuthStore.getState().clearAccessToken();
-          queryClient.invalidateQueries({ queryKey: ["session"] });
         }
       }
 
