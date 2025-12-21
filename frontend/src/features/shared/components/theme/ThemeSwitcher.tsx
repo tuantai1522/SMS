@@ -1,5 +1,5 @@
-import { useTheme } from "../../theme/ThemeContext";
-import type { ThemeMode } from "../../theme/themeTypes";
+import { useTheme } from "../../lib/theme/ThemeContext";
+import type { ThemeMode } from "../../lib/theme/themeTypes";
 
 const OPTIONS: Array<{ value: ThemeMode; label: string }> = [
   { value: "light", label: "Light" },
