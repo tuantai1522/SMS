@@ -2,8 +2,6 @@ import { z } from "zod";
 
 const SharedEnvSchema = z.object({
   VITE_API_URL: z.string(),
-  VITE_DEFAULT_PAGE: z.coerce.number(),
-  VITE_DEFAULT_PAGE_SIZE: z.coerce.number(),
 });
 
 const parsed = SharedEnvSchema.safeParse(import.meta.env);
@@ -16,6 +14,4 @@ if (!parsed.success) {
 // 4) Export object sạch, dễ dùng
 export const SharedEnv = {
   API_URL: parsed.data.VITE_API_URL,
-  PAGE: parsed.data.VITE_DEFAULT_PAGE,
-  PAGE_SIZE: parsed.data.VITE_DEFAULT_PAGE_SIZE,
 } as const;
