@@ -6,9 +6,13 @@ import type { SignInRequest, SignInResponse } from "../types/signIn.types";
 export const signIn = async (
   payload: SignInRequest
 ): Promise<BaseResult<SignInResponse>> => {
-  const { data } = await api.post<BaseResult<SignInResponse>>(
-    API_PATHS.USERS.SIGN_IN,
-    payload
-  );
-  return data;
+  try {
+    const { data } = await api.post<BaseResult<SignInResponse>>(
+      API_PATHS.AUTHS.SIGN_IN,
+      payload
+    );
+    return data;
+  } catch (error: any) {
+    return error.response.data as BaseResult<SignInResponse>;
+  }
 };

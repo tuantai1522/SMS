@@ -13,14 +13,8 @@ export type ApiError = {
 };
 
 // Mirrors `SMS.Core.Common.BaseResult<T>` on the backend.
-export type BaseResult<T> = {
+export type BaseResult<T = unknown> = {
   success: boolean;
   data: T | null;
   errors: ApiError[] | null;
 };
-
-export function getFirstApiErrorDescription(
-  errors: ApiError[] | null | undefined
-): string | undefined {
-  return errors?.[0]?.description;
-}

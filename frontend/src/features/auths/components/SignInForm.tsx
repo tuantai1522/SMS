@@ -23,9 +23,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../apis/signIn.api";
-import { queryClient } from "../../shared/lib/queryClient";
-import type { BaseResult } from "../../shared/types/baseResult";
-import type { SignInResponse } from "../types/signIn.types";
 
 const signInSchema = z.object({
   email: z.email("Enter a valid email address.").min(1, "Email is required."),
@@ -46,38 +43,28 @@ export function SignInForm() {
     mode: "onTouched",
   });
 
-  const navigate = useNavigate();
   const router = useRouter();
+  const navigate = useNavigate();
+  const setToken = useAuthStore((s) => s.setAccessToken);
 
-  const signInMutation = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: signIn,
-    async onSuccess(res) {
-      setToken(res.data!.token);
+    onSuccess: async (res) => {
+      if (res.success && res.data) {
+        setToken(res.data.token);
 
-      await queryClient.invalidateQueries({ queryKey: ["me"] });
+        router.invalidate();
 
-      await router.invalidate();
+        navigate({ to: "/", replace: true });
+        return;
+      }
 
-      await navigate({ to: "/" });
-    },
-    async onError(error: BaseResult<SignInResponse>) {
-      const apiError = error.errors;
-
-      const message = apiError?.map((e: any) => e.description).join(", ");
-
-      //   toast({
-      //     title: "Error",
-      //     description: message || "Invalid request",
-      //     variant: "destructive",
-      //   });
+      const message = res?.errors?.map((e: any) => e.description).join(", ");
+      console.error("Sign-in failed:", message);
     },
   });
 
-  const setToken = useAuthStore((s) => s.setAccessToken);
-
-  const handleSubmit = form.handleSubmit(
-    async (payload) => await signInMutation.mutateAsync(payload)
-  );
+  const handleSubmit = form.handleSubmit((payload) => mutate(payload));
 
   return (
     <>
@@ -218,7 +205,7 @@ export function SignInForm() {
                         <Button
                           className="w-full"
                           type="submit"
-                          disabled={signInMutation.isPending}
+                          disabled={isPending}
                         >
                           Sign in
                         </Button>

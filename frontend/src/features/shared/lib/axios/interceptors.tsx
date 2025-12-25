@@ -24,7 +24,7 @@ export function setupInterceptors(api: AxiosInstance) {
         original._retry = true;
 
         try {
-          const refreshToken = await api.get(API_PATHS.TOKENS.REFRESH_TOKEN);
+          const refreshToken = await api.get(API_PATHS.AUTHS.REFRESH_TOKEN);
           const newToken = refreshToken.data.data.token;
 
           useAuthStore.getState().setAccessToken(newToken);
