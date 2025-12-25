@@ -1,11 +1,15 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
+using SMS.Core.Errors.Authentications;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
@@ -75,6 +79,11 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
+        var jsonOptions = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -88,6 +97,32 @@ public static class DependencyInjection
                 ValidIssuer = configuration["JwtOptions:Issuer"],
                 ValidAudience = configuration["JwtOptions:Audience"],
                 ClockSkew = TimeSpan.Zero
+            };
+
+            opt.Events = new JwtBearerEvents
+            {
+                OnChallenge = async context =>
+                {
+                    context.HandleResponse();
+
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                    context.Response.ContentType = "application/json";
+
+                    var payload = BaseResult.FailureResult(AuthenticationErrors.UnAuthorized);
+
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(payload, jsonOptions));
+
+                },
+
+                OnForbidden = async context =>
+                {
+                    context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                    context.Response.ContentType = "application/json";
+
+                    var payload = BaseResult.FailureResult(AuthenticationErrors.UnAuthenticated);
+
+                    await context.Response.WriteAsync(JsonSerializer.Serialize(payload, jsonOptions));
+                }
             };
         });
 

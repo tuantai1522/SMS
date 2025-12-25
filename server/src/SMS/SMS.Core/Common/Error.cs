@@ -18,4 +18,10 @@ public record Error(int Code, string Description, ErrorType ErrorType)
     
     public static Error Server(int code, string description) =>
         new(code, description, ErrorType.Server);
+
+    public static Error Authorization(int code, string description) =>
+        new(code, description, ErrorType.Authorization);
+
+    public static Error Authentication(int code, string description) =>
+        new(code, description, ErrorType.Authentication);
 }

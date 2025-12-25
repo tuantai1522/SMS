@@ -6,5 +6,7 @@ public enum ErrorType
     NotFound = 1, // 404: Not found
     Conflict = 2, // 409: Conflict
     Server = 4, // 500: Server error
-    Failure = 5 // Don't have error
+    Failure = 5, // Don't have error
+    Authentication = 6, // 401: Authentication error
+    Authorization = 7, // 403: Authorization error
 }
