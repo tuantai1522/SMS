@@ -1,19 +1,21 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "../../shared/components/ui/Button";
-import { Card, CardContent } from "../../shared/components/ui/Card";
 import {
+  Button,
+  Card,
+  CardContent,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../shared/components/ui/Form";
-import { Input, PasswordInput, Separator } from "../../shared/components/ui";
-import { GoogleIcon } from "../../shared/components/icons/GoogleIcon";
-
-import Spinner from "../../shared/components/ui/Spinner";
+  GoogleIcon,
+  Input,
+  PasswordInput,
+  Separator,
+} from "../../shared";
 import { useSignIn } from "../hooks/useSignIn";
+import Spinner from "../../shared/components/ui/Spinner";
 
 export function SignInForm() {
   const { form, handleSubmit, errorMessage, isPending } = useSignIn();

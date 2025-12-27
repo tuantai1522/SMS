@@ -6,7 +6,7 @@ import { useAuthStore } from "../stores/auth.store";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../apis/signIn.api";
-import type { ApiError } from "../../shared/types/baseResult";
+import type { ApiError } from "../../shared";
 
 export function useSignIn() {
   const form = useForm<SignInFormValues>({

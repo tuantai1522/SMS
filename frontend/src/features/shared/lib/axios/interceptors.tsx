@@ -1,6 +1,6 @@
 import type { AxiosInstance } from "axios";
-import { useAuthStore } from "../../../auths/stores/auth.store";
-import { API_PATHS } from "../../utils/apiPaths";
+import { useAuthStore } from "../../../auths";
+import { API_PATHS } from "../../utils";
 
 export function setupInterceptors(api: AxiosInstance) {
   // REQUEST: attach token

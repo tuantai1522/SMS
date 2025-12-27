@@ -9,7 +9,5 @@ export const api = axios.create({
   timeout: 15000,
 });
 
-// // attach interceptors
+// attach interceptors
 setupInterceptors(api);
-
-export default api;

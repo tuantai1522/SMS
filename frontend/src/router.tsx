@@ -3,7 +3,7 @@ import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Suspense } from "react";
-import { queryClient } from "./features/shared/lib/queryClient";
+import { queryClient } from "./features/shared/lib/queryClient/queryClient";
 
 // Set up a Router instance
 export function createRouter() {

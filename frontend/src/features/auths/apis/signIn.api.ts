@@ -1,6 +1,4 @@
-import api from "../../shared/lib/axios";
-import type { BaseResult } from "../../shared/types/baseResult";
-import { API_PATHS } from "../../shared/utils/apiPaths";
+import { api, API_PATHS, type BaseResult } from "../../shared";
 import type { SignInRequest, SignInResponse } from "../types/signIn.types";
 
 export const signIn = async (
