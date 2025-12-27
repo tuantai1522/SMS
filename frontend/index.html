@@ -4,31 +4,6 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      (function () {
-        try {
-          var key = "sms.theme";
-          var stored = localStorage.getItem(key);
-          var theme =
-            stored === "light" || stored === "dark" || stored === "system"
-              ? stored
-              : "light";
-          var prefersDark =
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches;
-          var resolved =
-            theme === "system" ? (prefersDark ? "dark" : "light") : theme;
-          var root = document.documentElement;
-          root.dataset.theme = theme;
-          if (resolved === "dark") root.classList.add("dark");
-          else root.classList.remove("dark");
-        } catch (e) {
-          // ignore
-        }
-      })();
-    </script>
-    <title>SMS</title>
-
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
       rel="stylesheet"

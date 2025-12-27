@@ -1,15 +1,15 @@
 import { createContext, useContext } from "react";
 
-import type { ThemeMode } from "./themeTypes";
+import type { UserTheme } from "./themeTypes";
 
-export type ThemeContextValue = {
-  themeMode: ThemeMode;
-  setThemeMode: (themeMode: ThemeMode) => void;
+type ThemeContextProps = {
+  themeMode: UserTheme;
+  setThemeMode: (theme: UserTheme) => void;
 };
 
-export const ThemeContext = createContext<ThemeContextValue | null>(null);
+export const ThemeContext = createContext<ThemeContextProps | null>(null);
 
-export function useTheme(): ThemeContextValue {
+export function useTheme() {
   const value = useContext(ThemeContext);
   if (!value) {
     throw new Error("useTheme must be used within ThemeProvider");

@@ -1,52 +1,47 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 
-import { applyThemeToDocument } from "./applyThemeToDocument";
-import { getStoredThemeMode, setStoredThemeMode } from "./themeStorage";
-import type { ThemeMode } from "./themeTypes";
 import { ThemeContext } from "./ThemeContext";
-
-export type ThemeProviderProps = {
-  children: React.ReactNode;
+import { UserThemeSchema, type UserTheme } from "./themeTypes";
+import {
+  getStoredUserTheme,
+  handleThemeChange,
+  setStoredTheme,
+  setupPreferredListener,
+} from "./themeStorage";
+type ThemeProviderProps = {
+  children: ReactNode;
 };
 
-const DEFAULT_THEME: ThemeMode = "light";
-
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  const [themeMode, setThemeModeState] = useState<ThemeMode>(() => {
-    return getStoredThemeMode() ?? DEFAULT_THEME;
-  });
+  const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
 
+  useLayoutEffect(() => {
+    handleThemeChange(userTheme);
+  }, []);
+
+  // This will handle theme related to "System" preference changes
   useEffect(() => {
-    applyThemeToDocument(themeMode);
-    setStoredThemeMode(themeMode);
-  }, [themeMode]);
+    if (userTheme !== "system") return;
+    return setupPreferredListener();
+  }, [userTheme]);
 
-  useEffect(() => {
-    if (themeMode !== "system") return;
+  // const appTheme = userTheme === "system" ? getSystemTheme() : userTheme;
 
-    const media = window.matchMedia?.("(prefers-color-scheme: dark)");
-    if (!media) return;
-
-    const handler = () => applyThemeToDocument("system");
-
-    if (typeof media.addEventListener === "function") {
-      media.addEventListener("change", handler);
-      return () => media.removeEventListener("change", handler);
-    }
-
-    media.addListener(handler);
-    return () => media.removeListener(handler);
-  }, [themeMode]);
-
-  const value = useMemo(
-    () => ({
-      themeMode,
-      setThemeMode: setThemeModeState,
-    }),
-    [themeMode]
-  );
+  const setTheme = (newUserTheme: UserTheme) => {
+    const validatedTheme = UserThemeSchema.parse(newUserTheme);
+    setUserTheme(validatedTheme);
+    setStoredTheme(validatedTheme);
+    handleThemeChange(validatedTheme);
+  };
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext
+      value={{
+        themeMode: userTheme,
+        setThemeMode: setTheme,
+      }}
+    >
+      {children}
+    </ThemeContext>
   );
 }

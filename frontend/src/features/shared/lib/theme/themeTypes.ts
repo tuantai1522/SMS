@@ -1,7 +1,13 @@
-export type ThemeMode = "light" | "dark" | "system";
+import { z } from "zod";
+
+export const UserThemeSchema = z
+  .enum(["light", "dark", "system"])
+  .catch("system");
+export const AppThemeSchema = z.enum(["light", "dark"]).catch("light");
+
+export type UserTheme = z.infer<typeof UserThemeSchema>;
+export type AppTheme = z.infer<typeof AppThemeSchema>;
+
+export type ThemeMode = UserTheme;
 
 export const THEME_STORAGE_KEY = "sms.theme";
-
-export function isThemeMode(value: unknown): value is ThemeMode {
-  return value === "light" || value === "dark" || value === "system";
-}

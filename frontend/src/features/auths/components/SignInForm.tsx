@@ -1,12 +1,6 @@
 import { Link, useNavigate, useRouter } from "@tanstack/react-router";
 import { Button } from "../../shared/components/ui/Button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../../shared/components/ui/Card";
+import { Card, CardContent } from "../../shared/components/ui/Card";
 import {
   Form,
   FormControl,
@@ -15,7 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../../shared/components/ui/Form";
-import { Input, Separator } from "../../shared/components/ui";
+import { Input, PasswordInput, Separator } from "../../shared/components/ui";
 import { GoogleIcon } from "../../shared/components/icons/GoogleIcon";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -23,6 +17,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../stores/auth.store";
 import { useMutation } from "@tanstack/react-query";
 import { signIn } from "../apis/signIn.api";
+import type { ApiError } from "../../shared/types/baseResult";
+import { useState } from "react";
+import Spinner from "../../shared/components/ui/Spinner";
 
 const signInSchema = z.object({
   email: z.email("Enter a valid email address.").min(1, "Email is required."),
@@ -47,6 +44,10 @@ export function SignInForm() {
   const navigate = useNavigate();
   const setToken = useAuthStore((s) => s.setAccessToken);
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+
   const { mutate, isPending } = useMutation({
     mutationFn: signIn,
     onSuccess: async (res) => {
@@ -59,175 +60,119 @@ export function SignInForm() {
         return;
       }
 
-      const message = res?.errors?.map((e: any) => e.description).join(", ");
-      console.error("Sign-in failed:", message);
+      const message = res?.errors
+        ?.map((err: ApiError) => err.description)
+        .join(", ");
+
+      setErrorMessage(message);
     },
   });
 
   const handleSubmit = form.handleSubmit((payload) => mutate(payload));
 
   return (
-    <>
-      <div className="min-h-[calc(100vh-56px)] bg-white px-4 py-10 dark:bg-black">
-        <div className="mx-auto w-full max-w-5xl">
-          <div className="grid gap-8 lg:grid-cols-2 lg:items-stretch">
-            <section className="hidden lg:block">
-              <div className="relative h-full overflow-hidden rounded-2xl border border-black/10 bg-linear-to-br from-black/5 via-transparent to-black/10 p-8 dark:border-white/10 dark:bg-white/5 dark:from-white/10 dark:via-white/5 dark:to-white/15">
-                <div className="flex h-full flex-col justify-between gap-8">
-                  <div>
-                    <div className="text-sm font-medium text-black/70 dark:text-white/80">
-                      Nexa
-                    </div>
-                    <h1 className="mt-3 text-3xl font-semibold leading-tight text-black dark:text-white">
-                      Welcome back
-                    </h1>
-                    <p className="mt-2 max-w-md text-base text-black/70 dark:text-white/75">
-                      Sign in to continue and manage your workspaces and
-                      projects.
-                    </p>
-                  </div>
+    <div className="min-h-[calc(100vh-56px)] bg-white px-4 py-12 dark:bg-black">
+      <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-8">
+        <header className="text-center">
+          <h1 className="text-2xl font-semibold tracking-tight text-black dark:text-white">
+            Welcome back
+          </h1>
+        </header>
 
-                  <ul className="grid gap-3 text-sm text-black/70 dark:text-white/80">
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-black/40 dark:bg-white/60" />
-                      Clean, fast UI with theme support
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-black/40 dark:bg-white/60" />
-                      Built with modern React + TanStack Router
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-black/40 dark:bg-white/60" />
-                      Ready to connect to auth APIs later
-                    </li>
-                  </ul>
+        <Card className="w-full px-6 py-7">
+          <CardContent>
+            <div className="grid gap-6">
+              <Button
+                variant="ghost"
+                className="relative h-12 w-full justify-center rounded-xl border border-black/15 bg-transparent hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
+                onClick={() => {}}
+              >
+                <span className="absolute left-4 inline-flex items-center">
+                  <GoogleIcon className="text-black/80 dark:text-white/80" />
+                </span>
+                <span className="text-sm font-medium text-black dark:text-white">
+                  Sign in with Google
+                </span>
+              </Button>
 
-                  <div className="text-xs text-black/50 dark:text-white/50">
-                    UI-only preview. Authentication is not wired yet.
-                  </div>
-                </div>
+              <Separator className="my-2" />
 
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-black/5 blur-3xl dark:bg-white/10"
-                />
-              </div>
-            </section>
-
-            <section className="flex items-center justify-center">
-              <Card className="w-full max-w-md">
-                <CardHeader>
-                  <CardTitle>Sign in</CardTitle>
-                  <CardDescription>Sign in to continue</CardDescription>
-                </CardHeader>
-
-                <CardContent>
-                  <div className="grid gap-4">
-                    <Button
-                      variant="secondary"
-                      className="w-full"
-                      onClick={() => {
-                        /* no-op (UI only) */
-                      }}
-                    >
-                      <GoogleIcon className="text-black/80 dark:text-white/80" />
-                      Login with Google
-                    </Button>
-
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <Separator />
-                      </div>
-                      <div className="relative flex justify-center">
-                        <span className="bg-white/80 px-2 text-xs text-black/60 dark:bg-black/60 dark:text-white/60">
-                          or continue with
-                        </span>
-                      </div>
-                    </div>
-
-                    <Form {...form}>
-                      <form className="grid gap-4" onSubmit={handleSubmit}>
-                        <div className="grid gap-1.5">
-                          <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Email</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    placeholder="m@example.com"
-                                    className="h-12!"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
+              <Form {...form}>
+                <form className="grid gap-5" onSubmit={handleSubmit}>
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm">Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder=""
+                            autoComplete="email"
+                            className="h-12 rounded-xl"
+                            {...field}
                           />
-                        </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                        <div className="grid gap-1.5">
-                          <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel>Password</FormLabel>
-                                <FormControl>
-                                  <Input
-                                    placeholder="••••••••••"
-                                    autoComplete="current-password"
-                                    {...field}
-                                    type="password"
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-
+                  <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                      <FormItem>
                         <div className="flex items-center justify-between gap-4">
-                          {/* <Checkbox
-                          label="Remember me"
-                          {...rememberMeProps}
-                          ref={rememberMeRef}
-                        /> */}
+                          <FormLabel className="text-sm">Password</FormLabel>
                           <Link
-                            className="text-sm text-black/70 underline-offset-4 hover:underline dark:text-white/70"
+                            className="text-sm text-black/60 underline-offset-4 hover:underline dark:text-white/60"
                             to="/forgot-password"
                           >
-                            Forgot password?
+                            Forgot your password?
                           </Link>
                         </div>
+                        <FormControl>
+                          <PasswordInput
+                            placeholder=""
+                            autoComplete="current-password"
+                            className="h-12 rounded-xl"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {errorMessage ? (
+                    <p className="text-center text-sm font-medium text-red-600 dark:text-red-500">
+                      {errorMessage}
+                    </p>
+                  ) : null}
+                  <Button
+                    variant="muted"
+                    className="h-12 w-full rounded-xl"
+                    type="submit"
+                    disabled={isPending}
+                  >
+                    {isPending ? <Spinner /> : "Sign In"}
+                  </Button>
 
-                        <Button
-                          className="w-full"
-                          type="submit"
-                          disabled={isPending}
-                        >
-                          Sign in
-                        </Button>
-
-                        <div className="text-center text-sm text-black/60 dark:text-white/60">
-                          Don’t have an account?{" "}
-                          <a
-                            className="font-medium text-black underline-offset-4 hover:underline dark:text-white"
-                            href="/sign-up"
-                          >
-                            Create account
-                          </a>
-                        </div>
-                      </form>
-                    </Form>
+                  <div className="text-center text-sm text-black/60 dark:text-white/60">
+                    Don&apos;t have an account?{" "}
+                    <Link
+                      className="font-medium text-black underline-offset-4 hover:underline dark:text-white"
+                      to="/sign-up"
+                    >
+                      Sign up
+                    </Link>
                   </div>
-                </CardContent>
-              </Card>
-            </section>
-          </div>
-        </div>
+                </form>
+              </Form>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-    </>
+    </div>
   );
 }

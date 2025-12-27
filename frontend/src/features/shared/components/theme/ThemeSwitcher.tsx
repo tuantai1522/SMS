@@ -1,27 +1,29 @@
 import { useTheme } from "../../lib/theme/ThemeContext";
-import type { ThemeMode } from "../../lib/theme/themeTypes";
+import type { UserTheme } from "../../lib/theme/themeTypes";
 
-const OPTIONS: Array<{ value: ThemeMode; label: string }> = [
-  { value: "light", label: "Light" },
-  { value: "dark", label: "Dark" },
-  { value: "system", label: "System" },
-];
+const themeConfig: Record<UserTheme, { icon: string; label: string }> = {
+  light: { icon: "☀️", label: "Light" },
+  dark: { icon: "🌙", label: "Dark" },
+  system: { icon: "💻", label: "System" },
+};
 
 export function ThemeSwitcher() {
   const { themeMode, setThemeMode } = useTheme();
 
   return (
     <label className="inline-flex items-center gap-2">
-      <span className="text-sm">Theme</span>
       <select
         className="border rounded px-2 py-1 text-sm"
         value={themeMode}
-        onChange={(e) => setThemeMode(e.target.value as ThemeMode)}
+        onChange={(e) => setThemeMode(e.target.value as UserTheme)}
         aria-label="Theme"
       >
-        {OPTIONS.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
+        {Object.entries(themeConfig).map(([key, theme]) => (
+          <option key={key} value={key}>
+            <span className="not-system:light:inline hidden">
+              {theme.label}
+              <span className="ml-1">{theme.icon}</span>
+            </span>
           </option>
         ))}
       </select>

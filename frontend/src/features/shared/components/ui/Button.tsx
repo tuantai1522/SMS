@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cn } from "../../../../lib/utils/cn";
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "muted";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: ButtonVariant;
@@ -17,6 +17,8 @@ const VARIANT: Record<ButtonVariant, string> = {
     "bg-black/5 text-black hover:bg-black/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/15",
   ghost:
     "bg-transparent text-black hover:bg-black/5 dark:text-white dark:hover:bg-white/10",
+  muted:
+    "bg-black/20 text-black hover:bg-black/25 dark:bg-white/20 dark:text-white dark:hover:bg-white/25",
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
