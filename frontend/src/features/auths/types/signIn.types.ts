@@ -1,11 +1,11 @@
-export type SignInRequest = {
+export interface SignInRequest {
   email: string;
   password: string;
-};
+}
 
-export type SignInResponse = {
+export interface SignInResponse {
   token: string;
   userId: string;
   email: string;
   nickName: string;
-};
+}

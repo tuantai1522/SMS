@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { Button } from "../../shared/components/ui/Button";
 import { Card, CardContent } from "../../shared/components/ui/Card";
 import {
@@ -11,64 +11,12 @@ import {
 } from "../../shared/components/ui/Form";
 import { Input, PasswordInput, Separator } from "../../shared/components/ui";
 import { GoogleIcon } from "../../shared/components/icons/GoogleIcon";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuthStore } from "../stores/auth.store";
-import { useMutation } from "@tanstack/react-query";
-import { signIn } from "../apis/signIn.api";
-import type { ApiError } from "../../shared/types/baseResult";
-import { useState } from "react";
+
 import Spinner from "../../shared/components/ui/Spinner";
-
-const signInSchema = z.object({
-  email: z.email("Enter a valid email address.").min(1, "Email is required."),
-  password: z.string().min(1, "Password is required."),
-  rememberMe: z.boolean().optional(),
-});
-
-type SignInFormValues = z.infer<typeof signInSchema>;
+import { useSignIn } from "../hooks/useSignIn";
 
 export function SignInForm() {
-  const form = useForm<SignInFormValues>({
-    resolver: zodResolver(signInSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-      rememberMe: false,
-    },
-    mode: "onTouched",
-  });
-
-  const router = useRouter();
-  const navigate = useNavigate();
-  const setToken = useAuthStore((s) => s.setAccessToken);
-
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined
-  );
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: signIn,
-    onSuccess: async (res) => {
-      if (res.success && res.data) {
-        setToken(res.data.token);
-
-        router.invalidate();
-
-        navigate({ to: "/", replace: true });
-        return;
-      }
-
-      const message = res?.errors
-        ?.map((err: ApiError) => err.description)
-        .join(", ");
-
-      setErrorMessage(message);
-    },
-  });
-
-  const handleSubmit = form.handleSubmit((payload) => mutate(payload));
+  const { form, handleSubmit, errorMessage, isPending } = useSignIn();
 
   return (
     <div className="min-h-[calc(100vh-56px)] bg-white px-4 py-12 dark:bg-black">

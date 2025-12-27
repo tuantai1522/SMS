@@ -1,5 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { getMeQueryOptions } from "../features/users/hooks/getMeQueryOptions";
+import { getMeQueryOptions } from "../features/users/queries/getMeQueryOptions";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async ({ context }) => {
