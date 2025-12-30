@@ -10,6 +10,7 @@ namespace SMS.UseCases.Features.Users.SignUp;
 internal sealed class SignUpCommandHandler(
     IUnitOfWork unitOfWork,
     IUserRepository userRepository,
+    IUserProvider userProvider,
     IPasswordHasher passwordHasher): IRequestHandler<SignUpCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(SignUpCommand command, CancellationToken cancellationToken)
@@ -20,25 +21,11 @@ internal sealed class SignUpCommandHandler(
         {
             return Result.Failure<Guid>(UserErrors.EmailNotUnique);
         }
+
+        var (token, expiredAt) = userProvider.GenerateTokenAndExpiredAtForUserSignedUp();
         
-        var verifyNickName = await userRepository.VerifyExistedNickNameAsync(command.NickName, cancellationToken);
-
-        if (verifyNickName)
-        {
-            return Result.Failure<Guid>(UserErrors.NickNameNotUnique);
-        }
-
-        var user = User.CreateUser(
-            command.FirstName,
-            command.MiddleName, 
-            command.LastName, 
-            command.NickName, 
-            command.Email, 
-            passwordHasher.Hash(command.Password),
-            command.DateOfBirth, 
-            command.GenderType, 
-            command.Street, 
-            command.CityId);
+        // Todo: To add service sending email to verify mail
+        var user = User.CreateUser(command.Email, passwordHasher.Hash(command.Password), UserStatus.Active, token, expiredAt);
         
         await userRepository.AddUserAsync(user, cancellationToken);
 

@@ -24,12 +24,6 @@ public sealed class UserRepository(ApplicationDbContext context) : IUserReposito
             .AnyAsync(x => x.Email == email, cancellationToken);
     }
 
-    public async Task<bool> VerifyExistedNickNameAsync(string nickName, CancellationToken cancellationToken)
-    {
-        return await context.Set<User>()
-            .AnyAsync(x => x.NickName == nickName, cancellationToken);
-    }
-
     public async Task<bool> VerifyExistedUserIdsAsync(IReadOnlyList<Guid> userIds, CancellationToken cancellationToken)
     {
         return await context.Set<User>()

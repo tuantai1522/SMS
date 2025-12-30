@@ -11,13 +11,13 @@ using Microsoft.IdentityModel.Tokens;
 using SMS.Core.Common;
 using SMS.Core.Errors.Authentications;
 using SMS.Core.Features.Channels;
-using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.Infrastructure.Queries.Countries;
 using SMS.Infrastructure.Queries.Projects;
 using SMS.Infrastructure.Queries.Tasks;
 using SMS.Infrastructure.Queries.Workspaces;
@@ -26,6 +26,7 @@ using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
+using SMS.UseCases.Queries.Countries;
 using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
 using SMS.UseCases.Queries.Workspaces;
@@ -68,7 +69,6 @@ public static class DependencyInjection
             .AddScoped<IChannelRepository, ChannelRepository>()
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()
-            .AddScoped<ICountryRepository, CountryRepository>()
             
             .AddScoped<IUserRepository, UserRepository>();
 
@@ -156,6 +156,8 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
+            .AddScoped<IGetCountriesService, GetCountriesService>()
+            
             .AddScoped<IGetProjectByIdAndLockService, GetProjectByIdAndLockService>()
             
             .AddScoped<IGetRoleByNameService, GetRoleByNameService>()

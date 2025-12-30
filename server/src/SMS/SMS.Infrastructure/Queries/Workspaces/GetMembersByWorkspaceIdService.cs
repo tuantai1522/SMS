@@ -15,10 +15,11 @@ public sealed class GetMembersByWorkspaceIdService(IApplicationDbContext context
             from m in context.Set<WorkspaceMember>()
             join u in context.Set<User>() on m.UserId equals u.Id
             join r in context.Set<Role>() on m.RoleId equals r.Id
+            join up in context.Set<UserProfile>() on u.Id equals up.UserId
             where m.WorkspaceId == query.WorkspaceId &&
                   !m.DeletedAt.HasValue
             orderby m.CreatedAt descending
-            select new GetMembersByWorkspaceIdResponse(u.Id, u.FirstName, u.MiddleName, u.LastName, u.Email, r.Id, r.Name, m.CreatedAt);
+            select new GetMembersByWorkspaceIdResponse(u.Id, up.GivenName, u.Email, r.Id, r.Name, m.CreatedAt);
 
         return await OffsetPaginationResponse<GetMembersByWorkspaceIdResponse>.CreateAsync(
             baseQuery,

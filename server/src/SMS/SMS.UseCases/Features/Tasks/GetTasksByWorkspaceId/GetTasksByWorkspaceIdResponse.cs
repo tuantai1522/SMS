@@ -5,9 +5,7 @@ public sealed record GetTasksByWorkspaceIdResponse(
     string Code, 
     string Title, 
     string ProjectName,
-    string? FirstName,
-    string? MiddleName,
-    string? LastName,
+    string? GivenName,
     long? DueDate, 
     string StatusName,
     string PriorityName);

@@ -5,24 +5,20 @@ namespace SMS.Core.Features.Users;
 
 public sealed class User : AggregateRoot, IDateTracking
 {
-    public string FirstName { get; private set; } = null!;
-    public string? MiddleName { get; private set; }
-    public string? LastName { get; private set; }
-    public string NickName { get; private set; } = null!;
-
     public string Email { get; private set; } = null!;
     public string Password { get; private set; } = null!;
-
-    public DateOnly DateOfBirth { get; private set; }
 
     public long CreatedAt { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
     public long? UpdatedAt { get; private set; }
-    
-    public Address? Address { get; private set; }
 
-    public GenderType GenderType { get; private set; } = GenderType.Male;
+    public UserStatus Status { get; private set; } = UserStatus.PendingConfirmation;
     
+    public string? VerificationToken { get; private set; }
+    public long? VerificationTokenExpiredAt { get; private set; }
+    
+    public UserProfile? UserProfile { get; private set; }
+
     /// <summary>
     /// List refresh tokens of this user.
     /// </summary>
@@ -30,28 +26,36 @@ public sealed class User : AggregateRoot, IDateTracking
     
     public IReadOnlyList<RefreshToken> RefreshTokens => _refreshTokens.ToList();
     
+    /// <summary>
+    /// List user sign-ins of this user.
+    /// </summary>
+    private readonly List<UserSignIn> _userSignIns = [];
+    
+    public IReadOnlyList<UserSignIn> UserSignIns => _userSignIns.ToList();
+    
     private User() { }
 
-    public static User CreateUser(string firstName, string? middleName, string? lastName, string nickName, string email,
-        string password, DateOnly dateOfBirth, GenderType genderType, string street, int cityId)
+    public static User CreateUser(string email, string password, UserStatus status, string? verificationToken, long? verificationTokenExpiredAt)
     {
         var user = new User
         {
-            FirstName = firstName,
-            MiddleName = middleName,
-            LastName = lastName,
-            NickName = nickName,
             Email = email,
             Password = password,
-            DateOfBirth = dateOfBirth,
-            GenderType = genderType,
-            Address = Address.CreateAddress(street, cityId)
+            Status = status,
+            VerificationToken = verificationToken,
+            VerificationTokenExpiredAt = verificationTokenExpiredAt,
         };
-
-        // Raise domain event 
-        user.RaiseDomainEvent(new UserSignedUpDomainEvent(user.Id));
         
         return user;
+    }
+    
+    public void CreateUserProfile(string givenName, DateOnly dateOfBirth, GenderType genderType, string? avatarUrl, int countryId)
+    {
+        UserProfile = UserProfile.CreateUserProfile(Id, givenName, dateOfBirth, genderType, avatarUrl, countryId);
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        
+        // Raise domain event 
+        RaiseDomainEvent(new UserSignedUpDomainEvent(Id));
     }
     
     public void AddRefreshToken(string token, long expiredAt)
@@ -64,5 +68,10 @@ public sealed class User : AggregateRoot, IDateTracking
         var refreshToken = _refreshTokens.FirstOrDefault(currentToken => currentToken.Id == refreshTokenId);
 
         refreshToken?.Update(token, expiredAt);
+    }
+    
+    public void AddUserSignIns(ProviderType providerType, string providerKey, string? providerEmail)
+    {
+        _userSignIns.Add(UserSignIn.CreateUserSignIn(Id, providerType, providerKey, providerEmail));
     }
 }

@@ -8,10 +8,6 @@ public sealed class Country : AggregateRoot
     
     public string Name { get; private set; } = null!;
 
-    private readonly List<City> _cities = [];
-    
-    public IReadOnlyList<City> Cities => _cities.ToList();
-
     private Country()
     {
         
@@ -27,16 +23,5 @@ public sealed class Country : AggregateRoot
         {
             Name = name,
         };
-    }
-
-    /// <summary>
-    /// Add city into list of cities
-    /// </summary>
-    /// <param name="city"></param>
-    public Result<City> AddCity(City city)
-    {
-        _cities.Add(city);
-        
-        return Result.Success(city);
     }
 }

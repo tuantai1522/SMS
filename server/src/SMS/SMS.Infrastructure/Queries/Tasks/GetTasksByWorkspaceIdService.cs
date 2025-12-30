@@ -80,8 +80,8 @@ public sealed class GetTasksByWorkspaceIdService(IApplicationDbContext context) 
                 ? baseQuery.OrderBy(t => t.Project.Name)
                 : baseQuery.OrderByDescending(t => t.Project.Name),
             GetTasksOrder.AssignedTo => query.IsAscending
-                ? baseQuery.OrderBy(t => t.AssignedTo!.FirstName)
-                : baseQuery.OrderByDescending(t => t.AssignedTo!.FirstName),
+                ? baseQuery.OrderBy(t => t.AssignedTo!.UserProfile!.GivenName)
+                : baseQuery.OrderByDescending(t => t.AssignedTo!.UserProfile!.GivenName),
             GetTasksOrder.DueDate => query.IsAscending
                 ? baseQuery.OrderBy(t => t.DueDate)
                 : baseQuery.OrderByDescending(t => t.DueDate),
@@ -109,9 +109,7 @@ public sealed class GetTasksByWorkspaceIdService(IApplicationDbContext context) 
                 task.Code,
                 task.Name,
                 task.Project.Name,
-                task.AssignedTo != null ? task.AssignedTo.FirstName : null,
-                task.AssignedTo != null ? task.AssignedTo.MiddleName : null,
-                task.AssignedTo != null ? task.AssignedTo.LastName : null,
+                task.AssignedTo != null ? task.AssignedTo.UserProfile!.GivenName : null,
                 task.DueDate,
                 task.TaskStatus.Name,
                 task.TaskPriority.Name

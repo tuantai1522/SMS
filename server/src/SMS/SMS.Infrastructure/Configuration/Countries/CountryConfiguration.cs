@@ -13,10 +13,5 @@ public class CountryConfiguration : IEntityTypeConfiguration<Country>
         
         builder.Property(p => p.Name).IsRequired();
         builder.Property(p => p.Name).HasMaxLength(64);
-
-        // One country has multiple cities
-        builder.HasMany(country => country.Cities)
-            .WithOne(city => city.Country)
-            .HasForeignKey(p => p.CountryId);
     }
 }

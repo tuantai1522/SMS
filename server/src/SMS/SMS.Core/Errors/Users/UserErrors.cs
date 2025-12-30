@@ -8,10 +8,6 @@ public static class UserErrors
         UserErrorCode.EmailNotUnique,
         "The provided email is already existed.");
 
-    public static readonly Error NickNameNotUnique = Error.Validation(
-        UserErrorCode.NickNameNotUnique,
-        "The provided nick name is not unique");
-
     public static readonly Error InvalidPassword = Error.Validation(
         UserErrorCode.InvalidPassword,
         "Password is not correct. Please try again.");

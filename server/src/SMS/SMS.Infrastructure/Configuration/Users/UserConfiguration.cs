@@ -11,35 +11,32 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         // Rename to snake case
         builder.ToTable("users");
         
-        builder.Property(p => p.FirstName).IsRequired();
-        builder.Property(p => p.FirstName).HasMaxLength(128);
-
-        builder.Property(p => p.MiddleName).HasMaxLength(128);
-        
-        builder.Property(p => p.LastName).HasMaxLength(128);
-        
-        builder.Property(p => p.NickName).HasMaxLength(256);
-        builder.HasIndex(p => p.NickName).IsUnique();
-        
         builder.Property(p => p.Email).HasMaxLength(128);
         builder.HasIndex(p => p.Email).IsUnique();
         
         builder.Property(p => p.Password).HasMaxLength(256);
+        builder.Property(p => p.VerificationToken).HasMaxLength(256);
         
-        // To store string in database with enum GenderType
-        builder.Property(p => p.GenderType)
+        // To store string in database with enum UserStatus
+        builder.Property(p => p.Status)
             .HasConversion(
                 v => v.ToString(),
-                v => Enum.Parse<GenderType>(v));
-        builder.Property(p => p.GenderType).HasMaxLength(64);
+                v => Enum.Parse<UserStatus>(v));
+        builder.Property(p => p.Status).HasMaxLength(64);
 
         builder
-            .HasOne(e => e.Address)
-            .WithOne(e => e.User)
-            .HasForeignKey<Address>(e => e.UserId);
+            .HasOne(u => u.UserProfile)
+            .WithOne(up => up.User)
+            .OnDelete(DeleteBehavior.Restrict);
+;
         
         // One user has multiple RefreshTokens
         builder.HasMany(x => x.RefreshTokens)
+            .WithOne()
+            .HasForeignKey(u => u.UserId);
+        
+        // One user has multiple UserSignIns
+        builder.HasMany(x => x.UserSignIns)
             .WithOne()
             .HasForeignKey(u => u.UserId);
 

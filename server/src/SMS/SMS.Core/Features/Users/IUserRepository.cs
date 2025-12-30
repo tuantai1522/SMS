@@ -6,7 +6,6 @@ public interface IUserRepository
     Task<User?> FindUserByIdAsync(Guid id, CancellationToken cancellationToken);
 
     Task<bool> VerifyExistedEmailAsync(string email, CancellationToken cancellationToken);
-    Task<bool> VerifyExistedNickNameAsync(string nickName, CancellationToken cancellationToken);
     
     /// <summary>
     /// Verify list userIds must be in database
