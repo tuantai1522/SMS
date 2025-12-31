@@ -13,9 +13,9 @@ import {
   Input,
   PasswordInput,
   Separator,
+  Spinner,
 } from "../../shared";
 import { useSignIn } from "../hooks/useSignIn";
-import Spinner from "../../shared/components/ui/Spinner";
 
 export function SignInForm() {
   const { form, handleSubmit, errorMessage, isPending, googleUrl } =

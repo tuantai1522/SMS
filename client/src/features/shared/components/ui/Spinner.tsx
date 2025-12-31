@@ -3,7 +3,7 @@ import { cn } from "../../../../lib/utils/cn";
 
 type SpinnerProps = HTMLAttributes<HTMLDivElement>;
 
-function Spinner({ className, ...props }: SpinnerProps) {
+export const Spinner = ({ className, ...props }: SpinnerProps) => {
   return (
     <div
       className={cn(
@@ -13,6 +13,4 @@ function Spinner({ className, ...props }: SpinnerProps) {
       {...props}
     />
   );
-}
-
-export default Spinner;
+};
