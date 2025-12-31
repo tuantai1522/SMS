@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace SMS.UseCases.Features.Users.GoogleSignIn
+namespace SMS.UseCases.Features.Auths.GoogleSignIn
 {
     /// <summary>
     /// Response from Google return after logging in successfully

@@ -11,4 +11,8 @@ public static class AuthenticationErrors
     public static readonly Error UnAuthenticated = Error.Authentication(
         AuthenticationErrorCode.UnAuthenticated,
         "Unauthenticated access");
+    
+    public static readonly Error GoogleSignInError = Error.Authentication(
+        AuthenticationErrorCode.GoogleSignInError,
+        "There was an error during Google Sign In process. Please try again.");
 }

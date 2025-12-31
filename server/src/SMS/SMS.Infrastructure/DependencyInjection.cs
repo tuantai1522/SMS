@@ -1,5 +1,4 @@
-﻿using System.Net;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +16,8 @@ using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Database;
+using SMS.Infrastructure.ExternalServices;
+using SMS.Infrastructure.Options;
 using SMS.Infrastructure.Queries.Countries;
 using SMS.Infrastructure.Queries.Projects;
 using SMS.Infrastructure.Queries.Tasks;
@@ -26,6 +27,7 @@ using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
+using SMS.UseCases.Interfaces;
 using SMS.UseCases.Queries.Countries;
 using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
@@ -43,6 +45,8 @@ public static class DependencyInjection
             .AddAuthenticationInternal(configuration)
             .AddAuthorizationInternal()
             .AddWebStorages()
+            .AddExternalServices()
+            .AddApplicationOptions(configuration)
             .AddQueriesService();
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
@@ -170,6 +174,26 @@ public static class DependencyInjection
             .AddScoped<IGetProjectsByWorkspaceIdService, GetProjectsByWorkspaceIdService>()
             .AddScoped<IVerifyExistedProjectCodeByWorkspaceIdService, VerifyExistedProjectCodeByWorkspaceIdService>()
             .AddScoped<IGetRoleByWorkspaceIdAndUserIdService, GetRoleByWorkspaceIdAndUserIdService>();
+
+        return services;
+    }
+
+    /// <summary>
+    /// To add services from 3rd parties
+    /// </summary>
+    private static IServiceCollection AddExternalServices(this IServiceCollection services)
+    {
+        services.AddHttpClient<GoogleAuthentication>();
+        
+        services
+            .AddScoped<IGoogleAuthentication, GoogleAuthentication>();
+
+        return services;
+    }
+
+    private static IServiceCollection AddApplicationOptions(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<GoogleAuthenticationOptions>(configuration.GetSection(nameof(GoogleAuthenticationOptions)));
 
         return services;
     }
