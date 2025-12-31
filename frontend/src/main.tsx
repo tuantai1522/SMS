@@ -5,6 +5,7 @@ import "./index.css";
 
 import { createRouter } from "./router";
 import { ThemeProvider } from "./features/shared";
+import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
 const router = createRouter();
 
@@ -13,5 +14,6 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider>
       <RouterProvider router={router} />
     </ThemeProvider>
+    <TanStackRouterDevtools router={router} position="top-right" />
   </StrictMode>
 );

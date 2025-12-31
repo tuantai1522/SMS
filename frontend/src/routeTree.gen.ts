@@ -13,6 +13,7 @@ import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
+import { Route as AuthGoogleSignInRouteImport } from './routes/_auth/google-sign-in'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
 
 const ProtectedRoute = ProtectedRouteImport.update({
@@ -34,6 +35,11 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
   path: '/sign-in',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthGoogleSignInRoute = AuthGoogleSignInRouteImport.update({
+  id: '/_auth/google-sign-in',
+  path: '/google-sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   id: '/_auth/forgot-password',
   path: '/forgot-password',
@@ -43,12 +49,14 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
+  '/google-sign-in': typeof AuthGoogleSignInRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/forgot-password': typeof AuthForgotPasswordRoute
+  '/google-sign-in': typeof AuthGoogleSignInRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
 }
@@ -57,19 +65,26 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_protected': typeof ProtectedRoute
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/_auth/google-sign-in': typeof AuthGoogleSignInRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/forgot-password' | '/sign-in' | '/sign-up'
+  fullPaths:
+    | '/'
+    | '/forgot-password'
+    | '/google-sign-in'
+    | '/sign-in'
+    | '/sign-up'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgot-password' | '/sign-in' | '/sign-up'
+  to: '/' | '/forgot-password' | '/google-sign-in' | '/sign-in' | '/sign-up'
   id:
     | '__root__'
     | '/'
     | '/_protected'
     | '/_auth/forgot-password'
+    | '/_auth/google-sign-in'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
   fileRoutesById: FileRoutesById
@@ -78,6 +93,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProtectedRoute: typeof ProtectedRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthGoogleSignInRoute: typeof AuthGoogleSignInRoute
   AuthSignInRoute: typeof AuthSignInRoute
   AuthSignUpRoute: typeof AuthSignUpRoute
 }
@@ -112,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSignInRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/google-sign-in': {
+      id: '/_auth/google-sign-in'
+      path: '/google-sign-in'
+      fullPath: '/google-sign-in'
+      preLoaderRoute: typeof AuthGoogleSignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth/forgot-password': {
       id: '/_auth/forgot-password'
       path: '/forgot-password'
@@ -126,6 +149,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProtectedRoute: ProtectedRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthGoogleSignInRoute: AuthGoogleSignInRoute,
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
 }

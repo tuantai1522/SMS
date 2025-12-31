@@ -18,7 +18,8 @@ import { useSignIn } from "../hooks/useSignIn";
 import Spinner from "../../shared/components/ui/Spinner";
 
 export function SignInForm() {
-  const { form, handleSubmit, errorMessage, isPending } = useSignIn();
+  const { form, handleSubmit, errorMessage, isPending, googleUrl } =
+    useSignIn();
 
   return (
     <div className="min-h-[calc(100vh-56px)] bg-white px-4 py-12 dark:bg-black">
@@ -34,8 +35,8 @@ export function SignInForm() {
             <div className="grid gap-6">
               <Button
                 variant="ghost"
-                className="relative h-12 w-full justify-center rounded-xl border border-black/15 bg-transparent hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10"
-                onClick={() => {}}
+                className="relative h-12 w-full justify-center rounded-xl border border-black/15 bg-transparent hover:bg-black/5 dark:border-white/15 dark:hover:bg-white/10 cursor-pointer"
+                onClick={() => (window.location.href = googleUrl.data!.url)}
               >
                 <span className="absolute left-4 inline-flex items-center">
                   <GoogleIcon className="text-black/80 dark:text-white/80" />
@@ -101,7 +102,7 @@ export function SignInForm() {
                   ) : null}
                   <Button
                     variant="muted"
-                    className="h-12 w-full rounded-xl"
+                    className="h-12 w-full rounded-xl cursor-pointer"
                     type="submit"
                     disabled={isPending}
                   >

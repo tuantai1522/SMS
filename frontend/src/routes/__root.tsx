@@ -10,8 +10,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: () => (
     <>
       <div>
-
-
         <main>
           <Outlet />
         </main>
