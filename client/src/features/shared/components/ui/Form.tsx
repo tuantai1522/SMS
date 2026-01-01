@@ -93,7 +93,7 @@ const FormLabel = function FormLabel({
 
   return (
     <Label
-      className={cn(error && "text-red-500", className)}
+      className={cn("font-bold", error && "text-red-500", className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -152,7 +152,7 @@ function FormMessage({
   return (
     <p
       id={formMessageId}
-      className={cn("text-sm font-medium text-red-500", className)}
+      className={cn("text-sm font-normal text-red-500", className)}
       {...props}
     >
       {body}

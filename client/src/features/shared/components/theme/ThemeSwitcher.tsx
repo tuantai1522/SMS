@@ -1,5 +1,5 @@
-import { useTheme } from "../../lib/theme/ThemeContext";
 import type { UserTheme } from "../../lib/theme/themeTypes";
+import { useTheme } from "../../lib/theme/ThemeContext";
 
 const themeConfig: Record<UserTheme, { icon: string; label: string }> = {
   light: { icon: "☀️", label: "Light" },

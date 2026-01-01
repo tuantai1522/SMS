@@ -60,5 +60,6 @@ export function useSignIn() {
     errorMessage,
     isPending,
     googleUrl,
+    navigate,
   };
 }

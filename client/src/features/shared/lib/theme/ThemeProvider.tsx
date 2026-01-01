@@ -4,9 +4,9 @@ import { ThemeContext } from "./ThemeContext";
 import { UserThemeSchema, type UserTheme } from "./themeTypes";
 import {
   getStoredUserTheme,
-  handleThemeChange,
+  handleChangeTheme,
   setStoredTheme,
-  setupPreferredListener,
+  handleChangeSystemTheme,
 } from "./themeStorage";
 type ThemeProviderProps = {
   children: ReactNode;
@@ -16,13 +16,12 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [userTheme, setUserTheme] = useState<UserTheme>(getStoredUserTheme);
 
   useLayoutEffect(() => {
-    handleThemeChange(userTheme);
+    handleChangeTheme(userTheme);
   }, []);
 
   // This will handle theme related to "System" preference changes
   useEffect(() => {
-    if (userTheme !== "system") return;
-    return setupPreferredListener();
+    if (userTheme === "system") return handleChangeSystemTheme();
   }, [userTheme]);
 
   // const appTheme = userTheme === "system" ? getSystemTheme() : userTheme;
@@ -31,7 +30,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     const validatedTheme = UserThemeSchema.parse(newUserTheme);
     setUserTheme(validatedTheme);
     setStoredTheme(validatedTheme);
-    handleThemeChange(validatedTheme);
+    handleChangeTheme(validatedTheme);
   };
 
   return (

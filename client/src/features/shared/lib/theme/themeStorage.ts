@@ -32,27 +32,34 @@ export function getSystemTheme(): AppTheme {
     : "light";
 }
 
-export function handleThemeChange(userTheme: UserTheme): void {
+export function handleChangeTheme(userTheme: UserTheme): void {
   if (!isBrowser) return;
 
   const validatedTheme = UserThemeSchema.parse(userTheme);
 
-  const root = document.documentElement;
-  root.classList.remove("light", "dark", "system");
-
   if (validatedTheme === "system") {
-    const systemTheme = getSystemTheme();
-    root.classList.add(systemTheme, "system");
+    applyTheme(getSystemTheme());
   } else {
-    root.classList.add(validatedTheme);
+    applyTheme(validatedTheme);
   }
 }
 
-export function setupPreferredListener(): () => void {
+export function handleChangeSystemTheme(): () => void {
   if (!isBrowser) return () => {};
 
   const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-  const handler = () => handleThemeChange("system");
+
+  const handler = (e: MediaQueryListEvent) => {
+    applyTheme(e.matches ? "dark" : "light");
+  };
+
   mediaQuery.addEventListener("change", handler);
+
   return () => mediaQuery.removeEventListener("change", handler);
+}
+
+function applyTheme(theme: "light" | "dark") {
+  const root = document.documentElement;
+  root.classList.remove("light", "dark", "system");
+  root.setAttribute("data-theme", theme);
 }

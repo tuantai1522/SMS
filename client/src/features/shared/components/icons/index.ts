@@ -1,1 +1,1 @@
-export * from "./GoogleIcon";
+export * from "./GoogleIconButton";

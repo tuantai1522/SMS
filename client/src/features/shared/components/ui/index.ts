@@ -6,4 +6,5 @@ export * from "./Input";
 export * from "./Label";
 export * from "./PasswordInput";
 export * from "./Separator";
+export * from "./Link";
 export * from "./Spinner";
