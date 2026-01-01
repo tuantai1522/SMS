@@ -4,16 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useAuthStore } from "../stores/auth.store";
 import { useState } from "react";
-import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { signIn } from "../apis/signIn.api";
 import type { ApiError } from "../../shared";
-import { getGoogleAuthenticationUrlQueryOptions } from "../queries/getGoogleAuthenticationUrlQueryOptions";
+import { useMutation } from "@tanstack/react-query";
 
 export function useSignIn() {
-  const { data: googleUrl } = useSuspenseQuery(
-    getGoogleAuthenticationUrlQueryOptions
-  );
-
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -59,7 +54,6 @@ export function useSignIn() {
     handleSubmit,
     errorMessage,
     isPending,
-    googleUrl,
     navigate,
   };
 }

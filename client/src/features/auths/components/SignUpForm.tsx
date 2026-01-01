@@ -12,24 +12,23 @@ import {
   Separator,
   Spinner,
 } from "../../shared";
-import { useSignIn } from "../hooks/useSignIn";
+import { useSignUp } from "../hooks/useSignUp";
 import { GoogleButton } from "./GoogleButton";
 
-export function SignInForm() {
-  const { form, handleSubmit, errorMessage, isPending, navigate } = useSignIn();
-
+export function SignUpForm() {
+  const { form, handleSubmit, errorMessage, isPending, navigate } = useSignUp();
   return (
     <div className="min-h-[calc(100vh-56px)] px-4 py-12">
       <div className="mx-auto flex w-full max-w-sm flex-col items-center justify-center gap-8">
         <header className="text-center">
           <h1 className="text-2xl font-semibold tracking-tight">
-            Welcome back
+            Create an account
           </h1>
         </header>
 
         <div className="grid w-full gap-6">
           <div className="grid w-full gap-3">
-            <GoogleButton titlte="Sign in with Google" />
+            <GoogleButton titlte="Sign up with Google" />
           </div>
 
           <Separator className="my-4" />
@@ -64,12 +63,6 @@ export function SignInForm() {
                   <FormItem>
                     <div className="flex items-center justify-between">
                       <FormLabel className="text-sm">Password</FormLabel>
-                      <Link
-                        variant="primary"
-                        onClick={() => navigate({ to: "/forgot-password" })}
-                      >
-                        Forgot password
-                      </Link>
                     </div>
                     <FormControl>
                       <PasswordInput
@@ -95,16 +88,16 @@ export function SignInForm() {
                 type="submit"
                 className="h-12 w-full rounded-xl"
               >
-                {isPending ? <Spinner /> : "Sign in"}
+                {isPending ? <Spinner /> : "Sign up"}
               </Button>
 
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Already registered{" "}
                 <Link
                   variant="primary"
-                  onClick={() => navigate({ to: "/sign-up" })}
+                  onClick={() => navigate({ to: "/sign-in" })}
                 >
-                  Sign up
+                  Sign in
                 </Link>
               </div>
             </form>

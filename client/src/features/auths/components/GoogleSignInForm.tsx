@@ -15,9 +15,9 @@ interface GoogleSignInFormProps {
 }
 export function GoogleSignInForm({ code }: GoogleSignInFormProps) {
   const { errorMessage, isPending } = useGoogleSignIn({ code });
-  
+
   return (
-    <div className="min-h-[calc(100vh-56px)] bg-white px-4 py-12 dark:bg-black">
+    <div className="min-h-[calc(100vh-56px)] px-4 py-12 ">
       <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center gap-8">
         <Card className="w-full px-6 py-7">
           <CardHeader>
@@ -43,7 +43,7 @@ export function GoogleSignInForm({ code }: GoogleSignInFormProps) {
             ) : (
               <div className="flex items-center justify-center gap-3 py-3">
                 <Spinner />
-                <p className="text-sm text-black/70 dark:text-white/70">
+                <p className="text-sm">
                   {isPending ? "Signing you in…" : "Redirecting…"}
                 </p>
               </div>
