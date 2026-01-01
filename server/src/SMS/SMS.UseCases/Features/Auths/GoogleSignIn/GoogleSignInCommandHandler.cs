@@ -7,7 +7,7 @@ using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 using SMS.UseCases.Interfaces;
 
-namespace SMS.UseCases.Features.Auths.GoogleSignIn.GoogleSignIn;
+namespace SMS.UseCases.Features.Auths.GoogleSignIn;
 
 internal sealed class GoogleSignInCommandHandler(
     IGoogleAuthentication googleAuthentication,

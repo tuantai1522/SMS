@@ -1,15 +1,15 @@
 ﻿using MediatR;
-using SMS.UseCases.Features.RefreshTokens.GetAccessToken;
+using SMS.UseCases.Features.Auths.RefreshToken;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 
-namespace SMS.Web.Endpoints.RefreshTokens;
+namespace SMS.Web.Endpoints.Auths;
 
 internal sealed class RefreshToken : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("tokens/refresh-token", async (
+        app.MapGet("auths/refresh-token", async (
                 IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
@@ -19,6 +19,6 @@ internal sealed class RefreshToken : IEndpoint
 
                 return result.Match(CustomResults.Ok, CustomResults.Problem);
             })
-            .WithTags(Tags.Tokens);
+            .WithTags(Tags.Auths);
     }
 }

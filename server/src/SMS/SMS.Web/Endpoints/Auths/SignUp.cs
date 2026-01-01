@@ -1,10 +1,9 @@
 ﻿using MediatR;
-using SMS.Core.Features.Users;
-using SMS.UseCases.Features.Users.SignUp;
+using SMS.UseCases.Features.Auths.SignUp;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 
-namespace SMS.Web.Endpoints.Users;
+namespace SMS.Web.Endpoints.Auths;
 
 internal sealed class SignUp : IEndpoint
 {
@@ -12,7 +11,7 @@ internal sealed class SignUp : IEndpoint
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPost("users", async (
+        app.MapPost("/auths/sign-up", async (
             Request request,
             IMediator mediator,
             CancellationToken cancellationToken) =>
@@ -23,6 +22,6 @@ internal sealed class SignUp : IEndpoint
 
             return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.Users);
+        .WithTags(Tags.Auths);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SMS.UseCases.Features.Auths.GoogleSignIn.GoogleSignIn;
+using SMS.UseCases.Features.Auths.GoogleSignIn;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 

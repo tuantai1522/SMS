@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using SMS.Core.Errors.Users;
 
-namespace SMS.UseCases.Features.Users.SignUp;
+namespace SMS.UseCases.Features.Auths.SignUp;
 
 internal sealed class SignUpCommandValidator : AbstractValidator<SignUpCommand>
 {

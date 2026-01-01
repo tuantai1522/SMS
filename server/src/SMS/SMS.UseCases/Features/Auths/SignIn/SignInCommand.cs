@@ -1,7 +1,7 @@
 using MediatR;
 using SMS.Core.Common;
 
-namespace SMS.UseCases.Features.Users.SignIn;
+namespace SMS.UseCases.Features.Auths.SignIn;
 
 public sealed record SignInCommand(
     string Email, 

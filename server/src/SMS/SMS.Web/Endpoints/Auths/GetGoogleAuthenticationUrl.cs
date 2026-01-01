@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SMS.UseCases.Features.Auths.GoogleSignIn.GetGoogleAuthenticationUrl;
+using SMS.UseCases.Features.Auths.GetGoogleAuthenticationUrl;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 

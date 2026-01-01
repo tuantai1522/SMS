@@ -1,15 +1,15 @@
 ﻿using MediatR;
-using SMS.UseCases.Features.Users.SignOut;
+using SMS.UseCases.Features.Auths.SignOut;
 using SMS.Web.Extensions;
 using SMS.Web.Infrastructure;
 
-namespace SMS.Web.Endpoints.Users;
+namespace SMS.Web.Endpoints.Auths;
 
 internal sealed class SignOut : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet("users/sign-out", async (
+        app.MapGet("auths/sign-out", async (
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
@@ -19,7 +19,7 @@ internal sealed class SignOut : IEndpoint
             
             return result.Match(CustomResults.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.Users)
+        .WithTags(Tags.Auths)
         .RequireAuthorization();
     }
 }

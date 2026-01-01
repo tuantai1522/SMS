@@ -4,7 +4,7 @@ using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
 
-namespace SMS.UseCases.Features.Users.SignUp;
+namespace SMS.UseCases.Features.Auths.SignUp;
 
 internal sealed class CreateWorkspaceOnUserSignedUpDomainEventHandler(
     IRepository<Workspace> workspaceRepository,

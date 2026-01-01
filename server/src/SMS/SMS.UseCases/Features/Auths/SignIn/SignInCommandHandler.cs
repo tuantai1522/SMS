@@ -6,7 +6,7 @@ using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 
-namespace SMS.UseCases.Features.Users.SignIn;
+namespace SMS.UseCases.Features.Auths.SignIn;
 
 internal sealed class SignInCommandHandler(
     ITokenProvider tokenProvider,

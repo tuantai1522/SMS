@@ -5,7 +5,7 @@ using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 
-namespace SMS.UseCases.Features.Users.SignUp;
+namespace SMS.UseCases.Features.Auths.SignUp;
 
 internal sealed class SignUpCommandHandler(
     IUnitOfWork unitOfWork,

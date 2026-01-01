@@ -7,7 +7,7 @@ using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
 
-namespace SMS.UseCases.Features.RefreshTokens.GetAccessToken;
+namespace SMS.UseCases.Features.Auths.RefreshToken;
 
 internal sealed class RefreshTokenCommandHandler(
     IUnitOfWork unitOfWork,

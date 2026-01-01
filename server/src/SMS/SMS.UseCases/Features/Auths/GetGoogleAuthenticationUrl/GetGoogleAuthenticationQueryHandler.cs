@@ -2,7 +2,7 @@
 using SMS.Core.Common;
 using SMS.UseCases.Interfaces;
 
-namespace SMS.UseCases.Features.Auths.GoogleSignIn.GetGoogleAuthenticationUrl;
+namespace SMS.UseCases.Features.Auths.GetGoogleAuthenticationUrl;
 
 internal sealed class GetGoogleAuthenticationQueryHandler(
     IGoogleAuthentication googleAuthentication): IRequestHandler<GetGoogleAuthenticationQuery, Result<GetGoogleAuthenticationResponse>>
