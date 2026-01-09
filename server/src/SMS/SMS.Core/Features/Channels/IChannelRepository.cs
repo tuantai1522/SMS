@@ -2,7 +2,7 @@ namespace SMS.Core.Features.Channels;
 
 public interface IChannelRepository
 {
-    Task<IReadOnlyList<Channel>> GetChannelsByUserIdAndTeamIdAsync(Guid userId, Guid teamId, CancellationToken cancellationToken);
+    Task<IReadOnlyList<Channel>> GetChannelsByUserIdAsync(Guid userId, CancellationToken cancellationToken);
     
     Task<Channel?> FindChannelByIdAsync(Guid id, CancellationToken cancellationToken);
     

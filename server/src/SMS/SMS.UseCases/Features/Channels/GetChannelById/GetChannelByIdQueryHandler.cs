@@ -2,8 +2,6 @@
 using SMS.Core.Common;
 using SMS.Core.Errors.Channels;
 using SMS.Core.Features.Channels;
-using SMS.Core.Features.Teams;
-using SMS.UseCases.Features.Teams.GetTeamById;
 
 namespace SMS.UseCases.Features.Channels.GetChannelById;
 

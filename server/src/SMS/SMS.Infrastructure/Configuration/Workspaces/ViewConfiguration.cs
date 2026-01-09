@@ -21,7 +21,7 @@ public class ViewConfiguration : IEntityTypeConfiguration<View>
         builder.Property(p => p.Icon).HasMaxLength(256);
         
         // One view has multiple view roles
-        builder.HasMany(team => team.ViewRoles)
+        builder.HasMany(view => view.ViewRoles)
             .WithOne()
             .HasForeignKey(p => p.ViewId);
         

@@ -6,10 +6,10 @@ namespace SMS.Infrastructure.Repositories;
 
 public sealed class ChannelRepository(ApplicationDbContext context) : IChannelRepository
 {
-    public async Task<IReadOnlyList<Channel>> GetChannelsByUserIdAndTeamIdAsync(Guid userId, Guid teamId, CancellationToken cancellationToken)
+    public async Task<IReadOnlyList<Channel>> GetChannelsByUserIdAsync(Guid userId, CancellationToken cancellationToken)
     {
         return await context.Set<Channel>()
-            .Where(channel => channel.TeamId == teamId && channel.ChannelMembers.Any(m => m.UserId == userId))
+            .Where(channel => channel.ChannelMembers.Any(m => m.UserId == userId))
             .ToListAsync(cancellationToken);
     }
 

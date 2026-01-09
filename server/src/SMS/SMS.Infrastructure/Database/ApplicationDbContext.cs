@@ -8,7 +8,6 @@ using SMS.Core.Features.Channels;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.Projects;
 using SMS.Core.Features.RefreshTokens;
-using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Core.Features.Workspaces;
 using SMS.UseCases.Abstractions.Data;
@@ -24,7 +23,6 @@ namespace SMS.Infrastructure.Database;
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator) : DbContext(options), IUnitOfWork, IApplicationDbContext
 {
     public DbSet<User> Users => Set<User>();
-    public DbSet<Team> Teams => Set<Team>();
     public DbSet<Channel> Channels => Set<Channel>();
     public DbSet<Post> Posts => Set<Post>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();

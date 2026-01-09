@@ -12,7 +12,6 @@ using SMS.Core.Errors.Authentications;
 using SMS.Core.Features.Channels;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.RefreshTokens;
-using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
 using SMS.Infrastructure.Commands.Users;
@@ -70,7 +69,6 @@ public static class DependencyInjection
     {
         services
             .AddScoped(typeof(IRepository<>), typeof(EfRepository<>))
-            .AddScoped<ITeamRepository, TeamRepository>()
             .AddScoped<IChannelRepository, ChannelRepository>()
             .AddScoped<IPostRepository, PostRepository>()
             .AddScoped<IRefreshTokenRepository, RefreshTokenRepository>()

@@ -1,5 +1,4 @@
 ﻿using SMS.Core.Common;
-using SMS.Core.Errors.Teams;
 
 namespace SMS.Core.Features.Channels;
 
@@ -12,7 +11,6 @@ public sealed class Channel : AggregateRoot, IDateTracking, ISoftDelete
     public long CreatedAt { get; init; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
     public long? UpdatedAt { get; private set; }
     
-    public Guid TeamId { get; private set; }
     
     private readonly List<ChannelMember> _channelMembers = [];
     
@@ -20,13 +18,12 @@ public sealed class Channel : AggregateRoot, IDateTracking, ISoftDelete
     
     private Channel() { }
 
-    public static Channel CreateChannel(string displayName, string? description, Guid teamId, IReadOnlyList<Guid> ownerIds, IReadOnlyList<Guid> memberIds)
+    public static Channel CreateChannel(string displayName, string? description, IReadOnlyList<Guid> ownerIds, IReadOnlyList<Guid> memberIds)
     {
         var channel = new Channel
         {
             DisplayName = displayName,
             Description = description,
-            TeamId = teamId,
         };
         
         // Add owners
@@ -46,11 +43,6 @@ public sealed class Channel : AggregateRoot, IDateTracking, ISoftDelete
 
     public Result AddChannelMember(Guid userId, ChannelMemberRole role)
     {
-        if (_channelMembers.Any(channelMember => channelMember.UserId == userId))
-        {
-            return Result.Failure(TeamErrors.UserAlreadyExistedInTeam);
-        }
-        
         _channelMembers.Add(ChannelMember.CreateChannelMember(Id, userId, role));
         
         return Result.Success();

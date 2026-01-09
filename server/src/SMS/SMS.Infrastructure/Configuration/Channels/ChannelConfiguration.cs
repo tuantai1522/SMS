@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SMS.Core.Features.Channels;
-using SMS.Core.Features.Teams;
 
 namespace SMS.Infrastructure.Configuration.Channels;
 
@@ -17,13 +16,8 @@ public class ChannelConfiguration : IEntityTypeConfiguration<Channel>
         
         builder.Property(p => p.Description).HasMaxLength(1024);
         
-        // One channel belongs to one team
-        builder.HasOne<Team>()
-            .WithMany()
-            .HasForeignKey(c => c.TeamId);
-        
         // One channel has multiple channel members
-        builder.HasMany(team => team.ChannelMembers)
+        builder.HasMany(channel => channel.ChannelMembers)
             .WithOne()
             .HasForeignKey(p => p.ChannelId);
     }
