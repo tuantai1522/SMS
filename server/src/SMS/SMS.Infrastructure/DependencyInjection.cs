@@ -15,10 +15,10 @@ using SMS.Core.Features.RefreshTokens;
 using SMS.Core.Features.Teams;
 using SMS.Core.Features.Users;
 using SMS.Infrastructure.Authentication;
+using SMS.Infrastructure.Commands.Users;
 using SMS.Infrastructure.Database;
 using SMS.Infrastructure.ExternalServices;
 using SMS.Infrastructure.Options;
-using SMS.Infrastructure.Queries.Countries;
 using SMS.Infrastructure.Queries.Projects;
 using SMS.Infrastructure.Queries.Tasks;
 using SMS.Infrastructure.Queries.Workspaces;
@@ -27,8 +27,8 @@ using SMS.Infrastructure.WebStorages;
 using SMS.UseCases.Abstractions.Authentication;
 using SMS.UseCases.Abstractions.Data;
 using SMS.UseCases.Abstractions.WebStorages;
+using SMS.UseCases.Commands.Users;
 using SMS.UseCases.Interfaces;
-using SMS.UseCases.Queries.Countries;
 using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
 using SMS.UseCases.Queries.Workspaces;
@@ -47,6 +47,7 @@ public static class DependencyInjection
             .AddWebStorages()
             .AddExternalServices()
             .AddApplicationOptions(configuration)
+            .AddCommandServices()
             .AddQueriesService();
     
     private static IServiceCollection AddDatabase(this IServiceCollection services, IConfiguration configuration)
@@ -160,8 +161,6 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
-            .AddScoped<IGetCountriesService, GetCountriesService>()
-            
             .AddScoped<IGetProjectByIdAndLockService, GetProjectByIdAndLockService>()
             
             .AddScoped<IGetRoleByNameService, GetRoleByNameService>()
@@ -178,6 +177,14 @@ public static class DependencyInjection
         return services;
     }
 
+    private static IServiceCollection AddCommandServices(this IServiceCollection services)
+    {
+        services
+            .AddScoped<IUpdateUserProfileService, UpdateUserProfileService>();
+
+        return services;
+    }
+    
     /// <summary>
     /// To add services from 3rd parties
     /// </summary>

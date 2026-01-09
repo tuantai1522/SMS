@@ -20,7 +20,7 @@ internal sealed class GetMeQueryHandler(
             return Result.Failure<GetMeResponse>(UserErrors.IdNotFound);
         }
 
-        var response = new GetMeResponse(user.Id, user.UserProfile?.GivenName, user.Email);
+        var response = new GetMeResponse(user.Id, user.UserProfile?.GivenName, user.Email, user.Status);
         
         return Result.Success(response);
     }

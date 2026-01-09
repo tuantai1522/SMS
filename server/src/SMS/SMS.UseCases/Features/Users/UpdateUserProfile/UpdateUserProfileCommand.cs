@@ -4,4 +4,4 @@ using SMS.Core.Features.Users;
 
 namespace SMS.UseCases.Features.Users.UpdateUserProfile;
 
-public sealed record UpdateUserProfileCommand(Guid Id, string GivenName, DateOnly DateOfBirth, GenderType GenderType, string? AvatarUrl, int CountryId) : IRequest<Result<Guid>>;
+public sealed record UpdateUserProfileCommand(string GivenName, string? AvatarUrl) : IRequest<Result<Guid>>;

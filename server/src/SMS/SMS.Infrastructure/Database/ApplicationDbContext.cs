@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 using SMS.Core.Common;
 using SMS.Core.Features.Channels;
-using SMS.Core.Features.Countries;
 using SMS.Core.Features.Posts;
 using SMS.Core.Features.Projects;
 using SMS.Core.Features.RefreshTokens;
@@ -24,7 +23,6 @@ namespace SMS.Infrastructure.Database;
 
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IMediator mediator) : DbContext(options), IUnitOfWork, IApplicationDbContext
 {
-    public DbSet<Country> Countries => Set<Country>();
     public DbSet<User> Users => Set<User>();
     public DbSet<Team> Teams => Set<Team>();
     public DbSet<Channel> Channels => Set<Channel>();

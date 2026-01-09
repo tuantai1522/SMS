@@ -9,7 +9,6 @@ namespace SMS.Core.Features.Users;
 public enum UserStatus
 {
     PendingConfirmation = 1,
-    OnboardingRequired = 2,
-    Active = 3,
-    Deleted = 4
+    Active = 2,
+    Deleted = 3
 }

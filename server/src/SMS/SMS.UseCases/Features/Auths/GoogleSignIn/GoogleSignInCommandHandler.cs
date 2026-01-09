@@ -31,7 +31,9 @@ internal sealed class GoogleSignInCommandHandler(
         // Step 2: To check if user exists
         if (user == null)
         {
-            var newUser = User.CreateUser(googleUser.Email, string.Empty, UserStatus.OnboardingRequired, null, null);
+            var newUser = User.CreateUser(googleUser.Email, string.Empty, UserStatus.Active, null, null);
+            newUser.CreateUserProfile(googleUser.GivenName, null);
+            
             await userRepository.AddUserAsync(newUser, cancellationToken);
             
             newUser.AddUserSignIns(ProviderType.Facebook, googleUser.Id, googleUser.Email);

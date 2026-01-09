@@ -7,7 +7,7 @@ namespace SMS.Web.Endpoints.Auths;
 
 internal sealed class SignUp : IEndpoint
 {
-    private sealed record Request(string Email, string Password);
+    private sealed record Request(string GivenName, string Email, string Password);
     
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
@@ -16,7 +16,7 @@ internal sealed class SignUp : IEndpoint
             IMediator mediator,
             CancellationToken cancellationToken) =>
         {
-            var command = new SignUpCommand(request.Email, request.Password);
+            var command = new SignUpCommand(request.GivenName, request.Email, request.Password);
 
             var result = await mediator.Send(command, cancellationToken);
 

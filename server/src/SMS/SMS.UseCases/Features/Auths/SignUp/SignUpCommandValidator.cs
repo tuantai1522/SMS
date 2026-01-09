@@ -7,6 +7,11 @@ internal sealed class SignUpCommandValidator : AbstractValidator<SignUpCommand>
 {
     public SignUpCommandValidator()
     {
+        RuleFor(c => c.GivenName)
+            .NotEmpty()
+            .WithErrorCode(UserErrorCode.GivenNameEmpty.ToString())
+            .WithMessage("Given name can not be empty.");
+        
         RuleFor(c => c.Email)
             .NotEmpty()
             .WithErrorCode(UserErrorCode.EmailEmpty.ToString())

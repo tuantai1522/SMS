@@ -12,12 +12,12 @@ public sealed class User : AggregateRoot, IDateTracking
 
     public long? UpdatedAt { get; private set; }
 
-    public UserStatus Status { get; private set; } = UserStatus.PendingConfirmation;
+    public UserStatus Status { get; private set; } = UserStatus.Active;
     
     public string? VerificationToken { get; private set; }
     public long? VerificationTokenExpiredAt { get; private set; }
     
-    public UserProfile? UserProfile { get; private set; }
+    public UserProfile UserProfile { get; private set; } = null!;
 
     /// <summary>
     /// List refresh tokens of this user.
@@ -48,16 +48,22 @@ public sealed class User : AggregateRoot, IDateTracking
         
         return user;
     }
-    
-    public void CreateUserProfile(string givenName, DateOnly dateOfBirth, GenderType genderType, string? avatarUrl, int countryId)
+
+    public void CreateUserProfile(string givenName, string? avatarUrl)
     {
-        UserProfile = UserProfile.CreateUserProfile(Id, givenName, dateOfBirth, genderType, avatarUrl, countryId);
-        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        
-        // Raise domain event 
+        UserProfile = UserProfile.CreateUserProfile(Id, givenName, avatarUrl);
+
+        Status = UserStatus.Active;
         RaiseDomainEvent(new UserSignedUpDomainEvent(Id));
     }
-    
+
+    public void UpdateUserProfile(string givenName, string? avatarUrl)
+    {
+        UserProfile.Update(givenName, avatarUrl);
+
+        UpdatedAt = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+    }
+
     public void AddRefreshToken(string token, long expiredAt)
     {
         _refreshTokens.Add(RefreshToken.Create(token, Id, expiredAt));

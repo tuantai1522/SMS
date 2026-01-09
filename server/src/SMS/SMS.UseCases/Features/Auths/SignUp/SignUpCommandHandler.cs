@@ -25,7 +25,9 @@ internal sealed class SignUpCommandHandler(
         var (token, expiredAt) = userProvider.GenerateTokenAndExpiredAtForUserSignedUp();
         
         // Todo: To add service sending email to verify mail
+        // Make this account as inactive but I have to verify mail until mark this account as active
         var user = User.CreateUser(command.Email, passwordHasher.Hash(command.Password), UserStatus.Active, token, expiredAt);
+        user.CreateUserProfile(command.GivenName, null);
         
         await userRepository.AddUserAsync(user, cancellationToken);
 

@@ -8,17 +8,16 @@ namespace SMS.Web.Endpoints.Users;
 
 internal sealed class UpdateUserProfile : IEndpoint
 {
-    private sealed record Request(string GivenName, DateOnly DateOfBirth, GenderType GenderType, string? AvatarUrl, int CountryId);
+    private sealed record Request(string GivenName, string? AvatarUrl);
 
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapPut("users/{id:guid}", async (
-                Guid id,
+        app.MapPut("users", async (
                 Request request,
                 IMediator mediator,
                 CancellationToken cancellationToken) =>
             {
-                var command = new UpdateUserProfileCommand(id, request.GivenName, request.DateOfBirth, request.GenderType, request.AvatarUrl, request.CountryId);
+                var command = new UpdateUserProfileCommand(request.GivenName, request.AvatarUrl);
 
                 var result = await mediator.Send(command, cancellationToken);
 
