@@ -37,6 +37,27 @@ export function SignUpForm() {
             <form className="grid w-full gap-5" onSubmit={handleSubmit}>
               <FormField
                 control={form.control}
+                name="givenName"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="text-sm">Given name</FormLabel>
+                    </div>
+                    <FormControl>
+                      <Input
+                        placeholder=""
+                        autoComplete="given-name"
+                        className="h-12 w-full rounded-xl"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -68,6 +89,29 @@ export function SignUpForm() {
                       <PasswordInput
                         placeholder=""
                         autoComplete="current-password"
+                        className="h-12 w-full rounded-xl"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="confirmPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex items-center justify-between">
+                      <FormLabel className="text-sm">
+                        Confirm password
+                      </FormLabel>
+                    </div>
+                    <FormControl>
+                      <PasswordInput
+                        placeholder=""
+                        autoComplete="current-confirm-password"
                         className="h-12 w-full rounded-xl"
                         {...field}
                       />

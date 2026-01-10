@@ -1,8 +1,17 @@
 import { z } from "zod";
 
-export const signUpSchema = z.object({
-  email: z.email("Enter a valid email address."),
-  password: z.string().min(8, "Password is required. Minimum 8 characters."),
-});
+export const signUpSchema = z
+  .object({
+    email: z.string().email("Enter a valid email address."),
+    givenName: z.string().min(1, "Given name is required."),
+    password: z.string().min(8, "Password must be at least 8 characters."),
+    confirmPassword: z
+      .string()
+      .min(8, "Password must be at least 8 characters."),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match.",
+    path: ["confirmPassword"],
+  });
 
 export type SignUpFormValues = z.infer<typeof signUpSchema>;

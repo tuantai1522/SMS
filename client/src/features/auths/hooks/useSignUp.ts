@@ -16,10 +16,7 @@ export function useSignUp() {
 
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: {},
     mode: "onTouched",
   });
 
@@ -54,7 +51,13 @@ export function useSignUp() {
     },
   });
 
-  const handleSubmit = form.handleSubmit((payload) => mutate(payload));
+  const handleSubmit = form.handleSubmit((payload) =>
+    mutate({
+      email: payload.email,
+      password: payload.password,
+      givenName: payload.givenName,
+    })
+  );
 
   return {
     form,
