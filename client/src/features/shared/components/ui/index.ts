@@ -8,3 +8,4 @@ export * from "./PasswordInput";
 export * from "./Separator";
 export * from "./Link";
 export * from "./Spinner";
+export * from "./Sidebar";

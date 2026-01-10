@@ -15,6 +15,12 @@ import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as AuthGoogleSignInRouteImport } from './routes/_auth/google-sign-in'
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
+import { Route as ProtectedWorkspacesWorkspaceIdRouteRouteImport } from './routes/_protected/workspaces/$workspaceId/route'
+import { Route as ProtectedWorkspacesWorkspaceIdTaskIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/task/index'
+import { Route as ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/settings/index'
+import { Route as ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/members/index'
+import { Route as ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/dashboard/index'
+import { Route as ProtectedWorkspacesWorkspaceIdChatIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/chat/index'
 
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
@@ -45,6 +51,42 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedWorkspacesWorkspaceIdRouteRoute =
+  ProtectedWorkspacesWorkspaceIdRouteRouteImport.update({
+    id: '/workspaces/$workspaceId',
+    path: '/workspaces/$workspaceId',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdTaskIndexRoute =
+  ProtectedWorkspacesWorkspaceIdTaskIndexRouteImport.update({
+    id: '/task/',
+    path: '/task/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdSettingsIndexRoute =
+  ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport.update({
+    id: '/settings/',
+    path: '/settings/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdMembersIndexRoute =
+  ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport.update({
+    id: '/members/',
+    path: '/members/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdDashboardIndexRoute =
+  ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport.update({
+    id: '/dashboard/',
+    path: '/dashboard/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
+const ProtectedWorkspacesWorkspaceIdChatIndexRoute =
+  ProtectedWorkspacesWorkspaceIdChatIndexRouteImport.update({
+    id: '/chat/',
+    path: '/chat/',
+    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -52,6 +94,12 @@ export interface FileRoutesByFullPath {
   '/google-sign-in': typeof AuthGoogleSignInRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/workspaces/$workspaceId/chat': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
+  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/workspaces/$workspaceId/task': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -59,15 +107,27 @@ export interface FileRoutesByTo {
   '/google-sign-in': typeof AuthGoogleSignInRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/workspaces/$workspaceId/chat': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
+  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/workspaces/$workspaceId/task': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_protected': typeof ProtectedRoute
+  '/_protected': typeof ProtectedRouteWithChildren
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
   '/_auth/google-sign-in': typeof AuthGoogleSignInRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
+  '/_protected/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+  '/_protected/workspaces/$workspaceId/chat/': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
+  '/_protected/workspaces/$workspaceId/dashboard/': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  '/_protected/workspaces/$workspaceId/members/': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/_protected/workspaces/$workspaceId/settings/': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  '/_protected/workspaces/$workspaceId/task/': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -77,8 +137,25 @@ export interface FileRouteTypes {
     | '/google-sign-in'
     | '/sign-in'
     | '/sign-up'
+    | '/workspaces/$workspaceId'
+    | '/workspaces/$workspaceId/chat'
+    | '/workspaces/$workspaceId/dashboard'
+    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/task'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/forgot-password' | '/google-sign-in' | '/sign-in' | '/sign-up'
+  to:
+    | '/'
+    | '/forgot-password'
+    | '/google-sign-in'
+    | '/sign-in'
+    | '/sign-up'
+    | '/workspaces/$workspaceId'
+    | '/workspaces/$workspaceId/chat'
+    | '/workspaces/$workspaceId/dashboard'
+    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/settings'
+    | '/workspaces/$workspaceId/task'
   id:
     | '__root__'
     | '/'
@@ -87,11 +164,17 @@ export interface FileRouteTypes {
     | '/_auth/google-sign-in'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
+    | '/_protected/workspaces/$workspaceId'
+    | '/_protected/workspaces/$workspaceId/chat/'
+    | '/_protected/workspaces/$workspaceId/dashboard/'
+    | '/_protected/workspaces/$workspaceId/members/'
+    | '/_protected/workspaces/$workspaceId/settings/'
+    | '/_protected/workspaces/$workspaceId/task/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ProtectedRoute: typeof ProtectedRoute
+  ProtectedRoute: typeof ProtectedRouteWithChildren
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthGoogleSignInRoute: typeof AuthGoogleSignInRoute
   AuthSignInRoute: typeof AuthSignInRoute
@@ -142,12 +225,94 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_protected/workspaces/$workspaceId': {
+      id: '/_protected/workspaces/$workspaceId'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/workspaces/$workspaceId/task/': {
+      id: '/_protected/workspaces/$workspaceId/task/'
+      path: '/task'
+      fullPath: '/workspaces/$workspaceId/task'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdTaskIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/settings/': {
+      id: '/_protected/workspaces/$workspaceId/settings/'
+      path: '/settings'
+      fullPath: '/workspaces/$workspaceId/settings'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/members/': {
+      id: '/_protected/workspaces/$workspaceId/members/'
+      path: '/members'
+      fullPath: '/workspaces/$workspaceId/members'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/dashboard/': {
+      id: '/_protected/workspaces/$workspaceId/dashboard/'
+      path: '/dashboard'
+      fullPath: '/workspaces/$workspaceId/dashboard'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
+    '/_protected/workspaces/$workspaceId/chat/': {
+      id: '/_protected/workspaces/$workspaceId/chat/'
+      path: '/chat'
+      fullPath: '/workspaces/$workspaceId/chat'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdChatIndexRouteImport
+      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
+    }
   }
 }
 
+interface ProtectedWorkspacesWorkspaceIdRouteRouteChildren {
+  ProtectedWorkspacesWorkspaceIdChatIndexRoute: typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
+  ProtectedWorkspacesWorkspaceIdDashboardIndexRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
+  ProtectedWorkspacesWorkspaceIdMembersIndexRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  ProtectedWorkspacesWorkspaceIdSettingsIndexRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
+  ProtectedWorkspacesWorkspaceIdTaskIndexRoute: typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
+}
+
+const ProtectedWorkspacesWorkspaceIdRouteRouteChildren: ProtectedWorkspacesWorkspaceIdRouteRouteChildren =
+  {
+    ProtectedWorkspacesWorkspaceIdChatIndexRoute:
+      ProtectedWorkspacesWorkspaceIdChatIndexRoute,
+    ProtectedWorkspacesWorkspaceIdDashboardIndexRoute:
+      ProtectedWorkspacesWorkspaceIdDashboardIndexRoute,
+    ProtectedWorkspacesWorkspaceIdMembersIndexRoute:
+      ProtectedWorkspacesWorkspaceIdMembersIndexRoute,
+    ProtectedWorkspacesWorkspaceIdSettingsIndexRoute:
+      ProtectedWorkspacesWorkspaceIdSettingsIndexRoute,
+    ProtectedWorkspacesWorkspaceIdTaskIndexRoute:
+      ProtectedWorkspacesWorkspaceIdTaskIndexRoute,
+  }
+
+const ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren =
+  ProtectedWorkspacesWorkspaceIdRouteRoute._addFileChildren(
+    ProtectedWorkspacesWorkspaceIdRouteRouteChildren,
+  )
+
+interface ProtectedRouteChildren {
+  ProtectedWorkspacesWorkspaceIdRouteRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
+}
+
+const ProtectedRouteChildren: ProtectedRouteChildren = {
+  ProtectedWorkspacesWorkspaceIdRouteRoute:
+    ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren,
+}
+
+const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
+  ProtectedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ProtectedRoute: ProtectedRoute,
+  ProtectedRoute: ProtectedRouteWithChildren,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthGoogleSignInRoute: AuthGoogleSignInRoute,
   AuthSignInRoute: AuthSignInRoute,

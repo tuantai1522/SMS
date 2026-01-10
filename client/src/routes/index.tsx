@@ -1,5 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getMeQueryOptions } from "../features/users/queries/getMeQueryOptions";
+import {
+  getMenuViewsByWorkspaceIdQueryOptions,
+  getWorkspacesQueryOptions,
+} from "../features/workspaces";
 
 export const Route = createFileRoute("/")({
   beforeLoad: async ({ context }) => {
@@ -8,6 +12,21 @@ export const Route = createFileRoute("/")({
     if (data.success == false) {
       throw redirect({
         to: "/sign-in",
+      });
+    }
+
+    const { data: workspaces } = await context.queryClient.ensureQueryData(
+      getWorkspacesQueryOptions
+    );
+
+    if (workspaces && workspaces.length) {
+      await context.queryClient.ensureQueryData(
+        getMenuViewsByWorkspaceIdQueryOptions(workspaces[0].id)
+      );
+
+      throw redirect({
+        to: "/workspaces/$workspaceId/dashboard",
+        params: { workspaceId: workspaces[0].id },
       });
     }
   },

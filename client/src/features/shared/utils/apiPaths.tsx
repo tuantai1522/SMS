@@ -9,4 +9,8 @@ export const API_PATHS = {
   USERS: {
     GET_ME: "/users/me",
   },
+  WORKSPACES: {
+    GET_WORKSPACES: "/workspaces",
+    GET_VIEWS: "/workspaces/views",
+  },
 };

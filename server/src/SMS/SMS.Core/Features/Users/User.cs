@@ -53,7 +53,6 @@ public sealed class User : AggregateRoot, IDateTracking
     {
         UserProfile = UserProfile.CreateUserProfile(Id, givenName, avatarUrl);
 
-        Status = UserStatus.Active;
         RaiseDomainEvent(new UserSignedUpDomainEvent(Id));
     }
 
