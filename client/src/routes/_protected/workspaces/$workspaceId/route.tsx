@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Sidebar } from "../../../../features/shared";
+import { Sidebar, Navbar } from "../../../../features/shared";
 
 // This will basically be workspace layout of application
 export const Route = createFileRoute("/_protected/workspaces/$workspaceId")({
@@ -14,6 +14,7 @@ function WorkspacePage() {
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
+          <Navbar />
           <div className="p-4">
             <Outlet />
           </div>

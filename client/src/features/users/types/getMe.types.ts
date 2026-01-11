@@ -1,5 +1,6 @@
 export type GetMeResponse = {
   id: string;
-  nickName: string;
+  givenName: string;
   email: string;
+  avatarUrl: string | null;
 };
