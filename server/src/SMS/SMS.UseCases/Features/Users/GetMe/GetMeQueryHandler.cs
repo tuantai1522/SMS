@@ -1,27 +1,20 @@
 ﻿using MediatR;
 using SMS.Core.Common;
 using SMS.Core.Errors.Users;
-using SMS.Core.Features.Users;
 using SMS.UseCases.Abstractions.Authentication;
+using SMS.UseCases.Queries.Users;
 
 namespace SMS.UseCases.Features.Users.GetMe;
 
 internal sealed class GetMeQueryHandler(
     IUserProvider userProvider,
-    IUserRepository userRepository): IRequestHandler<GetMeQuery, Result<GetMeResponse>>
+    IGetMeService getMeService): IRequestHandler<GetMeQuery, Result<GetMeResponse>>
 {
     public async Task<Result<GetMeResponse>> Handle(GetMeQuery query, CancellationToken cancellationToken)
     {
         var userId = userProvider.UserId;
-        var user = await userRepository.FindUserByIdAsync(userId, cancellationToken);
+        var user = await getMeService.Handle(userId, cancellationToken);
         
-        if (user is null)
-        {
-            return Result.Failure<GetMeResponse>(UserErrors.IdNotFound);
-        }
-
-        var response = new GetMeResponse(user.Id, user.UserProfile?.GivenName, user.Email, user.Status);
-        
-        return Result.Success(response);
+        return user is null ? Result.Failure<GetMeResponse>(UserErrors.IdNotFound) : Result.Success(user);
     }
 }

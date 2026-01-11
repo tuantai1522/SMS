@@ -20,6 +20,7 @@ using SMS.Infrastructure.ExternalServices;
 using SMS.Infrastructure.Options;
 using SMS.Infrastructure.Queries.Projects;
 using SMS.Infrastructure.Queries.Tasks;
+using SMS.Infrastructure.Queries.Users;
 using SMS.Infrastructure.Queries.Workspaces;
 using SMS.Infrastructure.Repositories;
 using SMS.Infrastructure.WebStorages;
@@ -30,6 +31,7 @@ using SMS.UseCases.Commands.Users;
 using SMS.UseCases.Interfaces;
 using SMS.UseCases.Queries.Projects;
 using SMS.UseCases.Queries.Tasks;
+using SMS.UseCases.Queries.Users;
 using SMS.UseCases.Queries.Workspaces;
 
 namespace SMS.Infrastructure;
@@ -159,6 +161,8 @@ public static class DependencyInjection
     private static IServiceCollection AddQueriesService(this IServiceCollection services)
     {
         services
+            .AddScoped<IGetMeService, GetMeService>()
+            
             .AddScoped<IGetProjectByIdAndLockService, GetProjectByIdAndLockService>()
             
             .AddScoped<IGetRoleByNameService, GetRoleByNameService>()
