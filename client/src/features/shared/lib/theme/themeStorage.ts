@@ -1,10 +1,4 @@
-import { z } from "zod";
-
-const UserThemeSchema = z.enum(["light", "dark", "system"]).catch("system");
-const AppThemeSchema = z.enum(["light", "dark"]).catch("light");
-
-export type UserTheme = z.infer<typeof UserThemeSchema>;
-export type AppTheme = z.infer<typeof AppThemeSchema>;
+import { UserThemeSchema, type AppTheme, type UserTheme } from "./themeTypes";
 
 export const THEME_STORAGE_KEY = "sms.theme";
 

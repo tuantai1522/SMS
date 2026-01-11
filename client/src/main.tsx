@@ -14,6 +14,6 @@ createRoot(document.getElementById("root")!).render(
     <ThemeProvider>
       <RouterProvider router={router} />
     </ThemeProvider>
-    <TanStackRouterDevtools router={router} position="top-right" />
+    <TanStackRouterDevtools router={router} position="bottom-right" />
   </StrictMode>
 );

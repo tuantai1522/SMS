@@ -9,3 +9,4 @@ export * from "./Separator";
 export * from "./Link";
 export * from "./Spinner";
 export * from "./Sidebar";
+export * from "./Navbar";
