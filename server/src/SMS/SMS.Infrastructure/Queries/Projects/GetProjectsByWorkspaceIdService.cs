@@ -13,8 +13,7 @@ public sealed class GetProjectsByWorkspaceIdService(IApplicationDbContext contex
     {
         var baseQuery = 
             from p in context.Set<Project>() 
-            join w in context.Set<Workspace>() on workspaceId equals w.Id
-            join wm in context.Set<WorkspaceMember>() on w.Id equals wm.WorkspaceId
+            where p.WorkspaceId == workspaceId && p.DeletedAt == null
             orderby p.CreatedAt descending
             select new GetProjectsByWorkspaceIdResponse(p.Id, p.Name, p.Emoji);
         
