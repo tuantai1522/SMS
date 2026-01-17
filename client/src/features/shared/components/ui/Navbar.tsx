@@ -1,9 +1,11 @@
-import { WorkspaceSwitcher } from "../../../workspaces";
 import { Separator } from "./Separator";
 import { Check } from "lucide-react";
 import type { UserTheme } from "../../lib/theme/themeTypes";
 import { useTheme } from "../../lib";
-import { UserAvatar } from "../../../users";
+import { getMeQueryOptions, UserAvatar } from "../../../users";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getAvatarNames } from "../../utils";
+import { WorkspaceSwitcher } from "../../../workspaces";
 
 interface NavbarProps {
   workspaceId: string;
@@ -24,6 +26,10 @@ export const Navbar = ({ workspaceId }: NavbarProps) => {
               tabIndex={-1}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
+              <li>
+                <UserDataDropdown />
+              </li>
+              <Separator className="m-0" />
               <li>
                 <a>Settings</a>
               </li>
@@ -78,6 +84,39 @@ function ThemeSwitcher() {
             );
           })}
         </ul>
+      </div>
+    </>
+  );
+}
+
+function UserDataDropdown() {
+  const { data } = useSuspenseQuery(getMeQueryOptions);
+  const avatarUrl = data.data?.avatarUrl;
+  const givenName = data.data?.givenName;
+
+  return (
+    <>
+      <div className="flex items-center gap-3">
+        {avatarUrl ? (
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+            <img
+              alt={givenName}
+              src={avatarUrl}
+              className="h-6 w-6 rounded-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="flex h-6 w-6 items-center justify-center rounded-full bg-white">
+            <span className="text-base font-bold text-gray-800">
+              {getAvatarNames(givenName)}
+            </span>
+          </div>
+        )}
+        <div className="flex flex-col">
+          <span className="font-bold text-white">
+            {givenName}
+          </span>
+        </div>
       </div>
     </>
   );

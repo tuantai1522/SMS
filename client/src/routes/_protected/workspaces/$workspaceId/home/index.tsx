@@ -5,10 +5,10 @@ import { Panel } from "../../../../../features/shared";
 export const Route = createFileRoute(
   "/_protected/workspaces/$workspaceId/home/"
 )({
-  component: RouteComponent,
+  component: HomeComponent,
 });
 
-function RouteComponent() {
+function HomeComponent() {
   const { workspaceId } = Route.useParams();
 
   return <>
@@ -16,7 +16,7 @@ function RouteComponent() {
       <Panel title="Home">
         <ProjectPanel workspaceId={workspaceId} />
       </Panel>
+      <h1>Home</h1>
     </div>
   </>
-
 }
