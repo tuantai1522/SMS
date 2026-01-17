@@ -1,11 +1,11 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { GoogleIcon } from "../../shared/components/icons";
-import { getGoogleAuthenticationUrlQueryOptions } from "../queries/getGoogleAuthenticationUrlQueryOptions";
+import { GoogleIcon } from "../../shared";
+import { getGoogleAuthenticationUrlQueryOptions } from "../queries";
 
 interface GoogleButtonProps {
-  titlte: string;
+  title: string;
 }
-export function GoogleButton({ titlte }: GoogleButtonProps) {
+export function GoogleButton({ title }: GoogleButtonProps) {
   const { data: googleUrl } = useSuspenseQuery(
     getGoogleAuthenticationUrlQueryOptions
   );
@@ -16,7 +16,7 @@ export function GoogleButton({ titlte }: GoogleButtonProps) {
       className="btn bg-white text-black border-[#e5e5e5]"
     >
       <GoogleIcon />
-      {titlte}
+      {title}
     </button>
   );
 }

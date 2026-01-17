@@ -1,5 +1,4 @@
-import { api, API_PATHS, type BaseResult } from "../../shared";
-import type { OffsetPaginationResponse } from "../../shared/types/pagination.types";
+import { api, API_PATHS, type BaseResult, type OffsetPaginationResponse } from "../../shared";
 import type {
   GetProjectsByWorkspaceIdRequest,
   GetProjectsByWorkspaceIdResponse,

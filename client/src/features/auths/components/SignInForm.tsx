@@ -29,7 +29,7 @@ export function SignInForm() {
 
         <div className="grid w-full gap-6">
           <div className="grid w-full gap-3">
-            <GoogleButton titlte="Sign in with Google" />
+            <GoogleButton title="Sign in with Google" />
           </div>
 
           <Separator className="my-4" />

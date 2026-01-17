@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getProjectsByWorkspaceIdQueryOptions } from "..";
-import { PanelSection, type PanelItem } from "../../shared/components/ui/PanelSection";
+import { PanelSection, type PanelItem } from "../../shared";
 
 interface ProjectPanelProps {
   workspaceId: string;

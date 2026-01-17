@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils";
 
 type ButtonVariant = "default" | "neutral" | "primary" | "secondary" | "accent";
 type ButtonAppearance = "default" | "soft" | "active";

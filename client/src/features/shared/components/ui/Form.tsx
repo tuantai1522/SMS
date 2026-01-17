@@ -11,7 +11,7 @@ import {
 
 import { Label } from "./Label";
 import { useContext } from "react";
-import { cn } from "../../utils/cn";
+import { cn } from "../../utils";
 
 const Form = FormProvider;
 
