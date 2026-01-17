@@ -11,5 +11,6 @@ export * from "./Link";
 export * from "./Spinner";
 export * from "../../../menuViews/components/SidebarView";
 export * from "./Navbar";
-export * from "./HomePanel";
+export * from "./Panel";
 export * from "./MaterialIcon";
+

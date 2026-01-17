@@ -24,7 +24,7 @@ export function WorkspaceSwitcher({
 
   const handleSelectWorkspace = (workspaceId: string) => {
     navigate({
-      to: "/workspaces/$workspaceId/dashboard",
+      to: "/workspaces/$workspaceId/home",
       params: { workspaceId },
     });
   };

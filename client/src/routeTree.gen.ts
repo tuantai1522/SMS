@@ -18,9 +18,7 @@ import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-pa
 import { Route as ProtectedWorkspacesWorkspaceIdRouteRouteImport } from './routes/_protected/workspaces/$workspaceId/route'
 import { Route as ProtectedWorkspacesWorkspaceIdTaskIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/task/index'
 import { Route as ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/settings/index'
-import { Route as ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/members/index'
-import { Route as ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/dashboard/index'
-import { Route as ProtectedWorkspacesWorkspaceIdChatIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/chat/index'
+import { Route as ProtectedWorkspacesWorkspaceIdHomeIndexRouteImport } from './routes/_protected/workspaces/$workspaceId/home/index'
 
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
@@ -69,22 +67,10 @@ const ProtectedWorkspacesWorkspaceIdSettingsIndexRoute =
     path: '/settings/',
     getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
   } as any)
-const ProtectedWorkspacesWorkspaceIdMembersIndexRoute =
-  ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport.update({
-    id: '/members/',
-    path: '/members/',
-    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
-  } as any)
-const ProtectedWorkspacesWorkspaceIdDashboardIndexRoute =
-  ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport.update({
-    id: '/dashboard/',
-    path: '/dashboard/',
-    getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
-  } as any)
-const ProtectedWorkspacesWorkspaceIdChatIndexRoute =
-  ProtectedWorkspacesWorkspaceIdChatIndexRouteImport.update({
-    id: '/chat/',
-    path: '/chat/',
+const ProtectedWorkspacesWorkspaceIdHomeIndexRoute =
+  ProtectedWorkspacesWorkspaceIdHomeIndexRouteImport.update({
+    id: '/home/',
+    path: '/home/',
     getParentRoute: () => ProtectedWorkspacesWorkspaceIdRouteRoute,
   } as any)
 
@@ -95,9 +81,7 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
-  '/workspaces/$workspaceId/chat': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
-  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/home': typeof ProtectedWorkspacesWorkspaceIdHomeIndexRoute
   '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
   '/workspaces/$workspaceId/task': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
@@ -108,9 +92,7 @@ export interface FileRoutesByTo {
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
   '/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
-  '/workspaces/$workspaceId/chat': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
-  '/workspaces/$workspaceId/dashboard': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/workspaces/$workspaceId/members': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/workspaces/$workspaceId/home': typeof ProtectedWorkspacesWorkspaceIdHomeIndexRoute
   '/workspaces/$workspaceId/settings': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
   '/workspaces/$workspaceId/task': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
@@ -123,9 +105,7 @@ export interface FileRoutesById {
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_protected/workspaces/$workspaceId': typeof ProtectedWorkspacesWorkspaceIdRouteRouteWithChildren
-  '/_protected/workspaces/$workspaceId/chat/': typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
-  '/_protected/workspaces/$workspaceId/dashboard/': typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  '/_protected/workspaces/$workspaceId/members/': typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  '/_protected/workspaces/$workspaceId/home/': typeof ProtectedWorkspacesWorkspaceIdHomeIndexRoute
   '/_protected/workspaces/$workspaceId/settings/': typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
   '/_protected/workspaces/$workspaceId/task/': typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
@@ -138,9 +118,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/workspaces/$workspaceId'
-    | '/workspaces/$workspaceId/chat'
-    | '/workspaces/$workspaceId/dashboard'
-    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/home'
     | '/workspaces/$workspaceId/settings'
     | '/workspaces/$workspaceId/task'
   fileRoutesByTo: FileRoutesByTo
@@ -151,9 +129,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sign-up'
     | '/workspaces/$workspaceId'
-    | '/workspaces/$workspaceId/chat'
-    | '/workspaces/$workspaceId/dashboard'
-    | '/workspaces/$workspaceId/members'
+    | '/workspaces/$workspaceId/home'
     | '/workspaces/$workspaceId/settings'
     | '/workspaces/$workspaceId/task'
   id:
@@ -165,9 +141,7 @@ export interface FileRouteTypes {
     | '/_auth/sign-in'
     | '/_auth/sign-up'
     | '/_protected/workspaces/$workspaceId'
-    | '/_protected/workspaces/$workspaceId/chat/'
-    | '/_protected/workspaces/$workspaceId/dashboard/'
-    | '/_protected/workspaces/$workspaceId/members/'
+    | '/_protected/workspaces/$workspaceId/home/'
     | '/_protected/workspaces/$workspaceId/settings/'
     | '/_protected/workspaces/$workspaceId/task/'
   fileRoutesById: FileRoutesById
@@ -246,46 +220,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRouteImport
       parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
     }
-    '/_protected/workspaces/$workspaceId/members/': {
-      id: '/_protected/workspaces/$workspaceId/members/'
-      path: '/members'
-      fullPath: '/workspaces/$workspaceId/members'
-      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRouteImport
-      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
-    }
-    '/_protected/workspaces/$workspaceId/dashboard/': {
-      id: '/_protected/workspaces/$workspaceId/dashboard/'
-      path: '/dashboard'
-      fullPath: '/workspaces/$workspaceId/dashboard'
-      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRouteImport
-      parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
-    }
-    '/_protected/workspaces/$workspaceId/chat/': {
-      id: '/_protected/workspaces/$workspaceId/chat/'
-      path: '/chat'
-      fullPath: '/workspaces/$workspaceId/chat'
-      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdChatIndexRouteImport
+    '/_protected/workspaces/$workspaceId/home/': {
+      id: '/_protected/workspaces/$workspaceId/home/'
+      path: '/home'
+      fullPath: '/workspaces/$workspaceId/home'
+      preLoaderRoute: typeof ProtectedWorkspacesWorkspaceIdHomeIndexRouteImport
       parentRoute: typeof ProtectedWorkspacesWorkspaceIdRouteRoute
     }
   }
 }
 
 interface ProtectedWorkspacesWorkspaceIdRouteRouteChildren {
-  ProtectedWorkspacesWorkspaceIdChatIndexRoute: typeof ProtectedWorkspacesWorkspaceIdChatIndexRoute
-  ProtectedWorkspacesWorkspaceIdDashboardIndexRoute: typeof ProtectedWorkspacesWorkspaceIdDashboardIndexRoute
-  ProtectedWorkspacesWorkspaceIdMembersIndexRoute: typeof ProtectedWorkspacesWorkspaceIdMembersIndexRoute
+  ProtectedWorkspacesWorkspaceIdHomeIndexRoute: typeof ProtectedWorkspacesWorkspaceIdHomeIndexRoute
   ProtectedWorkspacesWorkspaceIdSettingsIndexRoute: typeof ProtectedWorkspacesWorkspaceIdSettingsIndexRoute
   ProtectedWorkspacesWorkspaceIdTaskIndexRoute: typeof ProtectedWorkspacesWorkspaceIdTaskIndexRoute
 }
 
 const ProtectedWorkspacesWorkspaceIdRouteRouteChildren: ProtectedWorkspacesWorkspaceIdRouteRouteChildren =
   {
-    ProtectedWorkspacesWorkspaceIdChatIndexRoute:
-      ProtectedWorkspacesWorkspaceIdChatIndexRoute,
-    ProtectedWorkspacesWorkspaceIdDashboardIndexRoute:
-      ProtectedWorkspacesWorkspaceIdDashboardIndexRoute,
-    ProtectedWorkspacesWorkspaceIdMembersIndexRoute:
-      ProtectedWorkspacesWorkspaceIdMembersIndexRoute,
+    ProtectedWorkspacesWorkspaceIdHomeIndexRoute:
+      ProtectedWorkspacesWorkspaceIdHomeIndexRoute,
     ProtectedWorkspacesWorkspaceIdSettingsIndexRoute:
       ProtectedWorkspacesWorkspaceIdSettingsIndexRoute,
     ProtectedWorkspacesWorkspaceIdTaskIndexRoute:

@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
       );
 
       throw redirect({
-        to: "/workspaces/$workspaceId/dashboard",
+        to: "/workspaces/$workspaceId/home",
         params: { workspaceId: workspaces[0].id },
       });
     }
