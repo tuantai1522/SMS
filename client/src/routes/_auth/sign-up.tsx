@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SignUpForm } from "../../features/auths";
-import { getGoogleAuthenticationUrlQueryOptions } from "../../features/auths/queries/getGoogleAuthenticationUrlQueryOptions";
+import { getGoogleAuthenticationUrlQueryOptions, SignUpForm } from "../../features/auths";
 
 export const Route = createFileRoute("/_auth/sign-up")({
   component: SignUpPage,

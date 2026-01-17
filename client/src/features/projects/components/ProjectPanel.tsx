@@ -1,12 +1,12 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getProjectsByWorkspaceIdQueryOptions } from "../../../projects";
-import { PanelSection, type PanelItem } from "./PanelSection";
+import { getProjectsByWorkspaceIdQueryOptions } from "..";
+import { PanelSection, type PanelItem } from "../../shared/components/ui/PanelSection";
 
-interface ProjectListProps {
+interface ProjectPanelProps {
   workspaceId: string;
 }
 
-export function ProjectList({ workspaceId }: ProjectListProps) {
+export function ProjectPanel({ workspaceId }: ProjectPanelProps) {
   const { data } = useSuspenseQuery(
     getProjectsByWorkspaceIdQueryOptions(workspaceId)
   );

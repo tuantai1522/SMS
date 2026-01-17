@@ -9,6 +9,7 @@ export * from "./PasswordInput";
 export * from "./Separator";
 export * from "./Link";
 export * from "./Spinner";
-export * from "./Sidebar";
+export * from "../../../menuViews/components/SidebarView";
 export * from "./Navbar";
 export * from "./HomePanel";
+export * from "./MaterialIcon";

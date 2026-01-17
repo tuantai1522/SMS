@@ -1,15 +1,15 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getMenuViewsByWorkspaceIdQueryOptions } from "../../../workspaces";
-import { MaterialIcon } from "./MaterialIcon";
 import { Link } from "@tanstack/react-router";
+import { getMenuViewsByWorkspaceIdQueryOptions } from "../queries";
+import { MaterialIcon } from "../../shared";
 
 interface SidebarProps {
   workspaceId: string;
 }
 
-export function Sidebar({ workspaceId }: SidebarProps) {
+export function SidebarView({ workspaceId }: SidebarProps) {
   const { data } = useSuspenseQuery(
-    getMenuViewsByWorkspaceIdQueryOptions(workspaceId)
+    getMenuViewsByWorkspaceIdQueryOptions(workspaceId),
   );
 
   return (

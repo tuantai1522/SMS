@@ -1,19 +1,15 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getMeQueryOptions } from "../../../users/queries/getMeQueryOptions";
 import { WorkspaceSwitcher } from "../../../workspaces";
-import { getAvatarNames } from "../../utils/helpers";
 import { Separator } from "./Separator";
 import { Check } from "lucide-react";
 import type { UserTheme } from "../../lib/theme/themeTypes";
 import { useTheme } from "../../lib";
+import { UserAvatar } from "../../../users";
 
 interface NavbarProps {
   workspaceId: string;
 }
 
 export const Navbar = ({ workspaceId }: NavbarProps) => {
-  const { data } = useSuspenseQuery(getMeQueryOptions);
-
   return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
@@ -22,10 +18,7 @@ export const Navbar = ({ workspaceId }: NavbarProps) => {
         </div>
         <div className="flex gap-2">
           <div className="dropdown dropdown-end">
-            <UserAvatar
-              avatarUrl={data.data?.avatarUrl}
-              givenName={data.data?.givenName}
-            />
+            <UserAvatar />
 
             <ul
               tabIndex={-1}
@@ -49,40 +42,6 @@ export const Navbar = ({ workspaceId }: NavbarProps) => {
     </>
   );
 };
-
-// --------------------------------------- UserAvatar ---------------------------------------
-interface UserAvatarProps {
-  avatarUrl?: string | null;
-  givenName?: string;
-}
-
-function UserAvatar({ avatarUrl, givenName }: UserAvatarProps) {
-  return (
-    <>
-      <div
-        tabIndex={0}
-        role="button"
-        className="btn btn-ghost btn-circle avatar"
-      >
-        {avatarUrl ? (
-          <>
-            <div className="w-10 rounded-full">
-              <img alt={givenName} src={avatarUrl} />
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="avatar avatar-placeholder">
-              <div className="bg-orange-500 text-neutral-content w-8 rounded-full">
-                <span>{getAvatarNames(givenName)}</span>
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </>
-  );
-}
 
 // --------------------------------------- Theme ---------------------------------------
 const themeConfig: Record<UserTheme, { icon: string; label: string }> = {

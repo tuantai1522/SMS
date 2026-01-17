@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { googleSignInSchema } from "../../features/auths/schemas/googleSignIn.schema";
 
-import { GoogleSignInForm } from "../../features/auths";
+import { GoogleSignInForm, googleSignInSchema } from "../../features/auths";
 
 export const Route = createFileRoute("/_auth/google-sign-in")({
   validateSearch: googleSignInSchema,

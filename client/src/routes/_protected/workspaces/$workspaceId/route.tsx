@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Sidebar, Navbar, HomePanel } from "../../../../features/shared";
+import { SidebarView, Navbar, HomePanel } from "../../../../features/shared";
 import { getProjectsByWorkspaceIdQueryOptions } from "../../../../features/projects";
 
 // This will basically be workspace layout of application
@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_protected/workspaces/$workspaceId")({
   component: WorkspacePage,
   loader: async ({ context, params }) => {
     await context.queryClient.ensureQueryData(
-      getProjectsByWorkspaceIdQueryOptions(params.workspaceId)
+      getProjectsByWorkspaceIdQueryOptions(params.workspaceId),
     );
   },
 });
@@ -30,7 +30,7 @@ function WorkspacePage() {
         </div>
         <div className="drawer-side is-drawer-close:overflow-visible">
           <div className="flex min-h-full">
-            <Sidebar workspaceId={workspaceId} />
+            <SidebarView workspaceId={workspaceId} />
           </div>
         </div>
       </div>
