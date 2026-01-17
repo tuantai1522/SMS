@@ -12,5 +12,6 @@ export const API_PATHS = {
   WORKSPACES: {
     GET_WORKSPACES: "/workspaces",
     GET_VIEWS: "/workspaces/views",
+    GET_PROJECTS: "/workspaces/projects",
   },
 };

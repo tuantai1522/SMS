@@ -1,6 +1,7 @@
 export * from "./Button";
 export * from "./Card";
 export * from "./Checkbox";
+export * from "./PanelSection";
 export * from "./Form";
 export * from "./Input";
 export * from "./Label";
@@ -10,3 +11,4 @@ export * from "./Link";
 export * from "./Spinner";
 export * from "./Sidebar";
 export * from "./Navbar";
+export * from "./HomePanel";

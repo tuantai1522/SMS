@@ -1,18 +1,25 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { getMeQueryOptions } from "../../../users/queries/getMeQueryOptions";
+import { WorkspaceSwitcher } from "../../../workspaces";
 import { getAvatarNames } from "../../utils/helpers";
 import { Separator } from "./Separator";
 import { Check } from "lucide-react";
 import type { UserTheme } from "../../lib/theme/themeTypes";
 import { useTheme } from "../../lib";
 
-export const Navbar = () => {
+interface NavbarProps {
+  workspaceId: string;
+}
+
+export const Navbar = ({ workspaceId }: NavbarProps) => {
   const { data } = useSuspenseQuery(getMeQueryOptions);
 
   return (
     <>
       <div className="navbar bg-base-100 shadow-sm">
-        <div className="flex-1"></div>
+        <div className="flex-1">
+          <WorkspaceSwitcher workspaceId={workspaceId} />
+        </div>
         <div className="flex gap-2">
           <div className="dropdown dropdown-end">
             <UserAvatar
